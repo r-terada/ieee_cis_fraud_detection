@@ -68,15 +68,16 @@ def main(conf_name) -> None:
         )
 
     # main
-    feats = [c for c in feature_tr.columns if c not in ["TransactionID", "isFraud", "TransactionDT"]]
+    feats = [c for c in feature_tr.columns if c not in conf.cols_to_drop]
 
     logger.info('start training')
     model.fit(feature_tr[feats], target)
 
     logger.info('start prediction')
-    predictions = model.predict(feature_te)
+    predictions = model.predict(feature_te[feats])
 
     model.results['features'] = conf.features
+    model.results['cols_to_drop'] = conf.cols_to_drop
 
     if hasattr(model, 'results'):
         logger.info('save results')

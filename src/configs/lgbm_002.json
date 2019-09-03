@@ -8,6 +8,7 @@
         ["Numerical", {}],
         ["CategoricalLabelEncode", {}]
     ],
+    "cols_to_drop": ["TransactionID", "isFraud", "TransactionDT"],
     "model": {
         "name": "LightGBM",
         "kfold_params": {
