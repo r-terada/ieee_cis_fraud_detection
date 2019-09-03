@@ -15,7 +15,7 @@ from pandas.core.common import SettingWithCopyWarning
 
 import models
 import features
-from features import create_feature_pipeline, JOIN_KEY_COLUMN, TARGET_COLUMN
+from features import create_feature, JOIN_KEY_COLUMN, TARGET_COLUMN
 from utils import init_logger, logger
 from utils import read_config, create_oof, create_sub
 
@@ -38,7 +38,15 @@ def main(conf_name) -> None:
     conf = read_config(conf_name)
 
     # feature_pipeline
-    feature_pipe = create_feature_pipeline(conf.features)
+    logger.info('read train data')
+    train_df = features.read_train()
+
+    logger.info('read test data')
+    test_df = features.read_test()
+
+    feature_tr, feature_te = create_feature(conf.features, train_df, test_df)
+
+    target = train_df[TARGET_COLUMN]
 
     # classifier pipeline
     model_class = getattr(models, conf.model.name)
@@ -60,26 +68,15 @@ def main(conf_name) -> None:
         )
 
     # main
-    full_pipe = Pipeline(steps=[
-        ('feature_extraction', feature_pipe),
-        ('classification', model)
-    ])
-
-    logger.info('read train data')
-    train_df = features.read_train()
-    target = train_df[TARGET_COLUMN]
-    del train_df[TARGET_COLUMN]
+    feats = [c for c in feature_tr.columns if c not in ["TransactionID", "isFraud", "TransactionDT"]]
 
     logger.info('start training')
-    full_pipe.fit(train_df, target)
+    model.fit(feature_tr[feats], target)
 
-    logger.info('read test data')
-    test_df = features.read_test()
     logger.info('start prediction')
-    predictions = full_pipe.predict(test_df)
+    predictions = model.predict(feature_te)
 
-    # save
-    model = full_pipe.named_steps['classification']
+    model.results['features'] = conf.features
 
     if hasattr(model, 'results'):
         logger.info('save results')

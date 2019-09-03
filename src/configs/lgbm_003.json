@@ -1,0 +1,43 @@
+{
+    "descriptions" : "same config as lgbm_002. change code to use sklearn.preprocessing.LabelEncoder instead of category_encoders.OrdinalEncoder and encode labels with test",
+    "resample": {
+        "method": "no_resample",
+        "params": {}
+    },
+    "features": [
+        ["Numerical", {}],
+        ["CategoricalLabelEncode", {}]
+    ],
+    "model": {
+        "name": "LightGBM",
+        "kfold_params": {
+            "n_splits": 5,
+            "shuffle": true,
+            "random_state": 42
+        },
+        "model_params": {
+            "objective": "binary",
+            "boosting_type": "gbdt",
+            "metric": "auc",
+            "n_jobs": -1,
+            "learning_rate": 0.01,
+            "num_leaves": 256,
+            "max_depth": -1,
+            "tree_learner": "serial",
+            "colsample_bytree":  0.5,
+            "subsample_freq": 1,
+            "subsample": 0.7,
+            "max_bin": 255,
+            "verbose": -1,
+            "seed": 1337,
+            "feature_fraction_seed": 1337,
+            "bagging_seed": 1337,
+            "drop_seed": 1337,
+            "data_random_seed": 1337
+        },
+        "fit_params": {
+            "verbose_eval": 100,
+            "early_stopping_rounds": 100
+        }
+    }
+}
