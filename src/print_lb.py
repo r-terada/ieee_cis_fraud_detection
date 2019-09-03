@@ -2,7 +2,7 @@ import os
 
 def main():
     print('print lb score')
-    tmp = os.popen(f'kaggle competitions submissions -c ieee-fraud-detection -v | head -n 5').read()
+    tmp = os.popen(f'kaggle competitions submissions -c ieee-fraud-detection -v | head -n 2').read()
     col, values = tmp.strip().split('\n')
     message = 'SCORE!!!\n'
     for i,j in zip(col.split(','), values.split(',')):
