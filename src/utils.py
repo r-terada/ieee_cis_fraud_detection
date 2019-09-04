@@ -55,10 +55,12 @@ def reduce_mem_usage(data, verbose=True):
     if verbose:
         print('Memory usage of dataframe: {:.2f} MB'.format(start_mem))
 
-    for col in data.columns:
-        col_type = data[col].dtype
+    numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 
-        if str(col_type) not in ['object', 'category']:
+    for col in data.columns:
+        col_type = data[col].dtypes
+
+        if str(col_type) in numerics:
             c_min = data[col].min()
             c_max = data[col].max()
             if str(col_type)[:3] == 'int':
