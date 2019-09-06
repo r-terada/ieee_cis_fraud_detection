@@ -40,7 +40,7 @@ def read_target() -> pd.DataFrame:
         "target.pkl"
     )
     if os.path.exists(cache_path):
-        return pd.read_pickle
+        return pd.read_pickle(cache_path)
     else:
         train_df = read_train()
         target = train_df[TARGET_COLUMN]

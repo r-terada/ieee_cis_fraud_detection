@@ -1,0 +1,31 @@
+2019-09-06 19:26:43,667 [    INFO] {'cols_to_drop': ['TransactionID', 'isFraud'],
+ 'descriptions': 'stacking lgbm_004 and lgbm_005',
+ 'features': [['Prediction', {'conf_name': 'lgbm_004'}],
+              ['Prediction', {'conf_name': 'lgbm_005'}]],
+ 'model': {'fit_params': {},
+           'kfold_class': 'StratifiedKFold',
+           'kfold_params': {'n_splits': 5, 'random_state': 42, 'shuffle': True},
+           'model_params': {'max_iter': 10000, 'solver': 'lbfgs'},
+           'name': 'LogReg',
+           'split_params': {}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-06 19:26:43,668 [    INFO] [Prediction] read predictions from ../data/output/lgbm_004
+2019-09-06 19:26:43,995 [    INFO] [Prediction] read predictions from ../data/output/lgbm_005
+2019-09-06 19:26:44,285 [    INFO] [ID] read features from pickled file.
+2019-09-06 19:26:45,145 [    INFO] start training
+2019-09-06 19:26:45,323 [    INFO] fold 1
+2019-09-06 19:26:46,225 [    INFO] train_score: 0.949042, valid_score: 0.954784
+2019-09-06 19:26:46,236 [    INFO] fold 2
+2019-09-06 19:26:47,076 [    INFO] train_score: 0.950110, valid_score: 0.948336
+2019-09-06 19:26:47,090 [    INFO] fold 3
+2019-09-06 19:26:47,802 [    INFO] train_score: 0.949067, valid_score: 0.941994
+2019-09-06 19:26:47,814 [    INFO] fold 4
+2019-09-06 19:26:48,438 [    INFO] train_score: 0.949065, valid_score: 0.947588
+2019-09-06 19:26:48,446 [    INFO] fold 5
+2019-09-06 19:26:49,061 [    INFO] train_score: 0.950286, valid_score: 0.954092
+2019-09-06 19:26:49,252 [    INFO] CV score: 0.9495102
+2019-09-06 19:26:49,257 [    INFO] start prediction
+2019-09-06 19:26:49,336 [    INFO] [ID] read features from pickled file.
+2019-09-06 19:26:49,343 [    INFO] save results
+2019-09-06 19:26:49,344 [    INFO] save oof
+2019-09-06 19:26:51,530 [    INFO] save submission
