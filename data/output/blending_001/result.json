@@ -1,0 +1,55 @@
+{
+  "folds": "StratifiedKFold(n_splits=5, random_state=42, shuffle=True)",
+  "model_params": {},
+  "fit_params": {},
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9721454905131102,
+      "val_score": 0.971011746696844,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold2": {
+      "trn_score": 0.9718144325793192,
+      "val_score": 0.9723414398701585,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold3": {
+      "trn_score": 0.9719398319126453,
+      "val_score": 0.9718300570518099,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold4": {
+      "trn_score": 0.9721511970440646,
+      "val_score": 0.9709891755868576,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold5": {
+      "trn_score": 0.9715473775838597,
+      "val_score": 0.9734004332143456,
+      "elapsed_time": "0.00 min."
+    },
+    "Full": {
+      "val_score": 0.9719200056137591,
+      "val_score_mean": 0.9719145704840031,
+      "val_score_std": 0.0009020636954009151
+    }
+  },
+  "features": [
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_004"
+      }
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_005"
+      }
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "isFraud"
+  ]
+}

@@ -16,7 +16,7 @@ from pandas.core.common import SettingWithCopyWarning
 
 import models
 import features
-from features import create_feature, JOIN_KEY_COLUMN, TARGET_COLUMN
+from features import create_feature, ID, read_target, JOIN_KEY_COLUMN, TARGET_COLUMN
 from utils import init_logger, logger
 from utils import read_config, create_oof, create_sub
 
@@ -39,15 +39,9 @@ def main(conf_name) -> None:
     conf = read_config(conf_name)
 
     # create feature
-    logger.info('read train data')
-    train_df = features.read_train()
+    feature_tr, feature_te = create_feature(conf.features)
 
-    logger.info('read test data')
-    test_df = features.read_test()
-
-    feature_tr, feature_te = create_feature(conf.features, train_df, test_df)
-
-    target = train_df[TARGET_COLUMN]
+    target = read_target()
 
     # classifier pipeline
     model_class = getattr(models, conf.model.name)
@@ -73,6 +67,8 @@ def main(conf_name) -> None:
     model.results['features'] = conf.features
     model.results['cols_to_drop'] = conf.cols_to_drop
 
+    id_tr, id_te = ID().create_feature()
+
     if hasattr(model, 'results'):
         logger.info('save results')
         result_path = os.path.join(out_dir, 'result.json')
@@ -83,12 +79,12 @@ def main(conf_name) -> None:
 
     if hasattr(model, 'oof'):
         logger.info('save oof')
-        oof_df = create_oof(train_df, model.oof)
+        oof_df = create_oof(id_tr, model.oof)
         oof_path = os.path.join(out_dir, 'oof.csv')
         oof_df.to_csv(oof_path, index=False)
 
     logger.info('save submission')
-    sub_df = create_sub(test_df, predictions)
+    sub_df = create_sub(id_te, predictions)
     sub_path = os.path.join(out_dir, 'submission.csv')
     sub_df.to_csv(sub_path, index=False)
 

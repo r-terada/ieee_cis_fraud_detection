@@ -34,22 +34,34 @@ def read_test() -> pd.DataFrame:
     return pd.merge(df_transaction, df_identity, on=JOIN_KEY_COLUMN, how='left')
 
 
+def read_target() -> pd.DataFrame:
+    cache_path = os.path.join(
+        CACHE_DIR,
+        "target.pkl"
+    )
+    if os.path.exists(cache_path):
+        return pd.read_pickle
+    else:
+        train_df = read_train()
+        target = train_df[TARGET_COLUMN]
+        target.to_pickle(cache_path)
+        return target
+
+
 def read_sample_submission() -> pd.DataFrame:
     return pd.read_csv("../data/input/sample_submission.csv")
 
 
 def create_feature(
         feature_config: List[Tuple[str, dict]],
-        train_df: pd.DataFrame,
-        test_df: pd.DataFrame
     ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     features = [
         eval(feature_name)(**feature_params)
         for feature_name, feature_params in feature_config
     ]
-    feature_tr, feature_te = ID().create_feature(train_df, test_df)
+    feature_tr, feature_te = ID().create_feature()
     for f in features:
-        f_tr, f_te = f.create_feature(train_df, test_df)
+        f_tr, f_te = f.create_feature()
         feature_tr = pd.merge(
             feature_tr, f_tr, how='left', on=JOIN_KEY_COLUMN
         )
@@ -59,12 +71,27 @@ def create_feature(
     return (feature_tr, feature_te)
 
 
+class Raw:
+    train_df = None
+    test_df = None
+
+    @classmethod
+    def read_csvs(cls):
+        if cls.train_df is None:
+            logger.info(f'[{cls.__name__}] read train.')
+            cls.train_df = read_train()
+        if cls.test_df is None:
+            logger.info(f'[{cls.__name__}] read test.')
+            cls.test_df = read_test()
+        return cls.train_df, cls.test_df
+
+
 class BaseFeature:
 
     def __init__(self) -> None:
         pass
 
-    def create_feature(self, train_df, test_df) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def create_feature(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         fpath_tr = self._train_cache_fpath()
         fpath_te = self._test_cache_fpath()
         if os.path.exists(fpath_tr) and os.path.exists(fpath_te):
@@ -72,6 +99,7 @@ class BaseFeature:
             return self._read_pickle(fpath_tr), self._read_pickle(fpath_te)
         else:
             self._log(f"no pickled file. create feature.")
+            train_df, test_df = Raw.read_csvs()
             feature_tr, feature_te = self._create_feature(train_df, test_df)
             feature_tr = reduce_mem_usage(feature_tr)
             feature_te = reduce_mem_usage(feature_te)
@@ -152,6 +180,20 @@ class CategoricalLabelEncode(BaseFeature):
             train_df[col] = train_df[col].astype('category')
             test_df[col] = test_df[col].astype('category')
         return train_df[categorical_columns + [JOIN_KEY_COLUMN]], test_df[categorical_columns + [JOIN_KEY_COLUMN]]
+
+
+class Prediction:
+
+    def __init__(self, conf_name):
+        out_dir = os.path.join('../data/output/', conf_name)
+        logger.info(f"[{self.__class__.__name__}] read predictions from {out_dir}")
+        oof_path = os.path.join(out_dir, 'oof.csv')
+        sub_path = os.path.join(out_dir, 'submission.csv')
+        self.oof = pd.read_csv(oof_path).rename(columns={TARGET_COLUMN: conf_name})
+        self.sub = pd.read_csv(sub_path).rename(columns={TARGET_COLUMN: conf_name})
+
+    def create_feature(self):
+        return self.oof, self.sub
 
 
 class KonstantinFeature(BaseFeature):
