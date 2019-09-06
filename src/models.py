@@ -15,7 +15,7 @@ from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GroupKFold
 
 from utils import logger
 
@@ -212,19 +212,28 @@ class KFoldModel(BaseEstimator, TransformerMixin):
             'fit_params': copy.deepcopy(fit_params)
         }
 
-    def fit(self, X: pd.DataFrame, y: pd.Series):
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None, split_params={}):
         from sklearn.metrics import roc_auc_score
+
+        if feats_list is None:
+            feats_list = list(X.columns)
 
         trials = {}
         self.oof = np.zeros(len(y))
-        for n_fold, (trn_idx, val_idx) in enumerate(self.folds.split(X.values, y.values)):
+
+        if isinstance(self.folds, GroupKFold) and 'group_key' in split_params:
+            iterator = self.folds.split(X.values, y.values, groups=X[split_params['group_key']])
+        else:
+            iterator = self.folds.split(X.values, y.values)
+
+        for n_fold, (trn_idx, val_idx) in enumerate(iterator):
             logger.info("fold {}".format(n_fold + 1))
             X_tr, y_tr = getattr(
                 Resampler, self.resample_method
             )(X.iloc[trn_idx], y.iloc[trn_idx], **self.resample_params)
             X_val, y_val = X.iloc[val_idx], y.iloc[val_idx]
             model = self.model_class(self.model_params, self.fit_params)
-            oof_preds, results = model.train_and_validate(X_tr, y_tr, X_val, y_val)
+            oof_preds, results = model.train_and_validate(X_tr[feats_list], y_tr, X_val[feats_list], y_val)
             self.oof[val_idx] = oof_preds
             trials[f'Fold{n_fold + 1}'] = results
             self.models.append(model)
@@ -238,10 +247,12 @@ class KFoldModel(BaseEstimator, TransformerMixin):
         self.results['trials'] = trials
         logger.info(f"CV score: {score:.7f}")
 
-    def predict(self, X):
+    def predict(self, X: pd.DataFrame, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
         predictions = np.zeros(len(X))
         for model in self.models:
-            predictions += model.predict(X) / len(self.models)
+            predictions += model.predict(X[feats_list]) / len(self.models)
         return predictions
 
 

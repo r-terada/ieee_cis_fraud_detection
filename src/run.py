@@ -2,6 +2,7 @@ import gc
 import os
 import json
 import click
+import sklearn
 import warnings
 import subprocess
 import numpy as np
@@ -37,7 +38,7 @@ def main(conf_name) -> None:
     # read config
     conf = read_config(conf_name)
 
-    # feature_pipeline
+    # create feature
     logger.info('read train data')
     train_df = features.read_train()
 
@@ -50,31 +51,24 @@ def main(conf_name) -> None:
 
     # classifier pipeline
     model_class = getattr(models, conf.model.name)
-    if 'kfold_params' in conf.model:
-        folds = StratifiedKFold(**conf.model.kfold_params)
-        model = models.KFoldModel(
-            folds,
-            model_class,
-            conf.model.model_params,
-            conf.model.fit_params,
-            conf.get("resample", None)
-        )
-    else:
-        model = models.TrainValSplit(
-            model_class,
-            conf.model.model_params,
-            conf.model.fit_params,
-            conf.get("resample", None)
-        )
+    kfold_class = getattr(sklearn.model_selection, conf.model.get('kfold_class', 'StratifiedKFold'))
+    folds = kfold_class(**conf.model.kfold_params)
+    model = models.KFoldModel(
+        folds,
+        model_class,
+        conf.model.model_params,
+        conf.model.fit_params,
+        conf.get("resample", None)
+    )
 
     # main
     feats = [c for c in feature_tr.columns if c not in conf.cols_to_drop]
 
     logger.info('start training')
-    model.fit(feature_tr[feats], target)
+    model.fit(feature_tr, target, feats, conf.model.get("split_params", {}))
 
     logger.info('start prediction')
-    predictions = model.predict(feature_te[feats])
+    predictions = model.predict(feature_te, feats)
 
     model.results['features'] = conf.features
     model.results['cols_to_drop'] = conf.cols_to_drop

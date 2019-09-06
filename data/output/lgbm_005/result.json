@@ -1,0 +1,152 @@
+{
+  "folds": "GroupKFold(n_splits=5)",
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.005,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9998321085037397,
+      "val_score": 0.9216503461191456,
+      "best_iteration": 2634,
+      "elapsed_time": "37.32 min.",
+      "feature_importance_top10": {
+        "V258": 540835.2504553795,
+        "C1_fq_enc": 253630.6105992794,
+        "TransactionAmt": 217699.3676110506,
+        "R_emaildomain": 200292.99221515656,
+        "C14": 186464.81638765335,
+        "C13": 186281.710526824,
+        "uid3_TransactionAmt_std": 185003.61673343182,
+        "V201": 182371.56695353985,
+        "C1": 179386.65794038773,
+        "uid3_TransactionAmt_mean": 175906.1179395914
+      }
+    },
+    "Fold2": {
+      "trn_score": 0.9998166757463502,
+      "val_score": 0.9445148096101467,
+      "best_iteration": 2523,
+      "elapsed_time": "30.58 min.",
+      "feature_importance_top10": {
+        "V258": 518103.28500545025,
+        "V201": 261918.1880223751,
+        "C13": 220651.23790848255,
+        "C1_fq_enc": 216194.24291443825,
+        "TransactionAmt": 199863.7138043642,
+        "C14": 190458.04715633392,
+        "V294": 181123.1727067232,
+        "uid3_TransactionAmt_std": 170259.84707713127,
+        "C1": 165046.5871822834,
+        "card1": 162699.92844974995
+      }
+    },
+    "Fold3": {
+      "trn_score": 0.9998271184605558,
+      "val_score": 0.9454447610752978,
+      "best_iteration": 2692,
+      "elapsed_time": "42.00 min.",
+      "feature_importance_top10": {
+        "V258": 534028.381203413,
+        "C13": 228578.78329491615,
+        "TransactionAmt": 214549.85979747772,
+        "C1_fq_enc": 213124.69974577427,
+        "V201": 188003.27195250988,
+        "C14": 187745.13096749783,
+        "uid3_TransactionAmt_std": 181766.7273235321,
+        "V294": 173276.42449319363,
+        "uid3_TransactionAmt_mean": 171824.53194916248,
+        "card1": 171391.19922602177
+      }
+    },
+    "Fold4": {
+      "trn_score": 0.9990718310305552,
+      "val_score": 0.9377743773984765,
+      "best_iteration": 1933,
+      "elapsed_time": "28.08 min.",
+      "feature_importance_top10": {
+        "V258": 606141.8927431107,
+        "V257": 274267.5274412632,
+        "C14": 225108.81958913803,
+        "C13": 206700.40796422958,
+        "C1_fq_enc": 205916.85274720192,
+        "TransactionAmt": 183834.5625720024,
+        "C1": 175857.8853366375,
+        "uid3_TransactionAmt_std": 171454.90295433998,
+        "V294": 161081.87605905533,
+        "uid3_TransactionAmt_mean": 160549.99020719528
+      }
+    },
+    "Fold5": {
+      "trn_score": 0.9996838370545122,
+      "val_score": 0.950386236036387,
+      "best_iteration": 2117,
+      "elapsed_time": "27.94 min.",
+      "feature_importance_top10": {
+        "V258": 470425.80528366566,
+        "C13": 191089.01483535767,
+        "C1_fq_enc": 186228.51151371002,
+        "TransactionAmt": 185161.5353474617,
+        "V201": 165647.48219776154,
+        "C14": 158239.35449242592,
+        "uid3_TransactionAmt_std": 154603.0024650097,
+        "card1": 139809.40686774254,
+        "V294": 137738.7831954956,
+        "uid3_TransactionAmt_mean": 135785.40184748173
+      }
+    },
+    "Full": {
+      "val_score": 0.9408343721982786,
+      "val_score_mean": 0.9399541060478909,
+      "val_score_std": 0.009995553913854508
+    }
+  },
+  "features": [
+    [
+      "KonstantinFeature",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "uid",
+    "uid2",
+    "uid3",
+    "bank_type",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day",
+    "DT_D_total",
+    "DT_W_total",
+    "DT_M_total",
+    "id_30",
+    "id_31",
+    "id_33"
+  ]
+}
