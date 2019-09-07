@@ -1,0 +1,152 @@
+{
+  "folds": "KFold(n_splits=5, random_state=42, shuffle=True)",
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.005,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9999999990651905,
+      "val_score": 0.9784880166305145,
+      "best_iteration": 6442,
+      "elapsed_time": "591.74 min.",
+      "feature_importance_top10": {
+        "V258": 590125.816501379,
+        "TransactionAmt": 263114.60120889544,
+        "V257": 262950.7068833411,
+        "C14": 214479.8381150961,
+        "uid3_TransactionAmt_std": 213472.3043998778,
+        "uid3_TransactionAmt_mean": 200054.29337021708,
+        "C13": 196269.1152112782,
+        "card1": 193309.53105211258,
+        "C1_fq_enc": 191317.49203816056,
+        "uid3_fq_enc": 190264.0155401528
+      }
+    },
+    "Fold2": {
+      "trn_score": 0.9999999954991167,
+      "val_score": 0.979037048083526,
+      "best_iteration": 6186,
+      "elapsed_time": "83.18 min.",
+      "feature_importance_top10": {
+        "V258": 518201.0800410211,
+        "TransactionAmt": 255532.5138437748,
+        "C1_fq_enc": 224713.5760219097,
+        "C13": 218798.35205236077,
+        "uid3_TransactionAmt_std": 209481.10903716087,
+        "uid3_TransactionAmt_mean": 197465.42234784365,
+        "card1": 197316.8141760528,
+        "V201": 197238.1018526554,
+        "C14": 196271.5329003334,
+        "uid3_fq_enc": 190857.06031814218
+      }
+    },
+    "Fold3": {
+      "trn_score": 0.9999996799948275,
+      "val_score": 0.9772941080299384,
+      "best_iteration": 5119,
+      "elapsed_time": "47.70 min.",
+      "feature_importance_top10": {
+        "V258": 532947.9611244798,
+        "TransactionAmt": 246383.21706151962,
+        "C13": 224298.46767023206,
+        "C1_fq_enc": 221170.39473375678,
+        "uid3_TransactionAmt_std": 207755.56776192784,
+        "uid3_TransactionAmt_mean": 194777.64504036307,
+        "C14": 188188.63209992647,
+        "card1": 187680.38045823574,
+        "V201": 179598.26236712933,
+        "uid3_fq_enc": 176106.89418959618
+      }
+    },
+    "Fold4": {
+      "trn_score": 0.9999999965617469,
+      "val_score": 0.9752607738819664,
+      "best_iteration": 6161,
+      "elapsed_time": "60.20 min.",
+      "feature_importance_top10": {
+        "V258": 535516.9932041764,
+        "TransactionAmt": 258341.7938014269,
+        "C13": 226792.72861295938,
+        "C1_fq_enc": 223199.37445741892,
+        "uid3_TransactionAmt_std": 211873.7386444509,
+        "uid3_TransactionAmt_mean": 196622.8809055388,
+        "card1": 193087.1782373488,
+        "C14": 191849.77155029774,
+        "uid3_fq_enc": 187621.93517684937,
+        "addr1": 180632.8863016963
+      }
+    },
+    "Fold5": {
+      "trn_score": 0.9999998908426532,
+      "val_score": 0.9747970837756508,
+      "best_iteration": 5339,
+      "elapsed_time": "53.34 min.",
+      "feature_importance_top10": {
+        "V258": 536376.5847953558,
+        "TransactionAmt": 245692.43599134684,
+        "C13": 230535.52362832427,
+        "C1_fq_enc": 225430.7235749364,
+        "uid3_TransactionAmt_std": 201846.8443994522,
+        "C14": 191973.02581962943,
+        "card1": 190239.17157012224,
+        "uid3_TransactionAmt_mean": 190114.78301745653,
+        "V294": 186982.57676261663,
+        "uid3_fq_enc": 179611.5672312081
+      }
+    },
+    "Full": {
+      "val_score": 0.976786335974329,
+      "val_score_mean": 0.9769754060803193,
+      "val_score_std": 0.001692629965307475
+    }
+  },
+  "features": [
+    [
+      "KonstantinFeature",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "uid",
+    "uid2",
+    "uid3",
+    "bank_type",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day",
+    "DT_D_total",
+    "DT_W_total",
+    "DT_M_total",
+    "id_30",
+    "id_31",
+    "id_33"
+  ]
+}
