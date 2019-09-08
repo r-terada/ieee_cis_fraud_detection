@@ -1,0 +1,175 @@
+2019-09-08 08:54:32,597 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'use parameters from '
+                 'https://www.kaggle.com/kyakovlev/ieee-lgbm-with-groupkfold-cv',
+ 'features': [['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-08 08:54:32,599 [    INFO] [ID] read features from pickled file.
+2019-09-08 08:54:32,618 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-08 08:56:26,921 [    INFO] start training
+2019-09-08 08:57:40,219 [    INFO] fold 1
+2019-09-08 09:00:01,647 [   DEBUG] [100]	training's auc: 0.942681	valid_1's auc: 0.872937
+2019-09-08 09:01:33,809 [   DEBUG] [200]	training's auc: 0.964499	valid_1's auc: 0.884219
+2019-09-08 09:03:12,508 [   DEBUG] [300]	training's auc: 0.979286	valid_1's auc: 0.893492
+2019-09-08 09:04:54,345 [   DEBUG] [400]	training's auc: 0.987903	valid_1's auc: 0.898767
+2019-09-08 09:06:35,983 [   DEBUG] [500]	training's auc: 0.992863	valid_1's auc: 0.902255
+2019-09-08 09:08:23,276 [   DEBUG] [600]	training's auc: 0.995833	valid_1's auc: 0.905335
+2019-09-08 09:10:10,626 [   DEBUG] [700]	training's auc: 0.997572	valid_1's auc: 0.907707
+2019-09-08 09:11:57,859 [   DEBUG] [800]	training's auc: 0.998573	valid_1's auc: 0.909463
+2019-09-08 09:13:47,564 [   DEBUG] [900]	training's auc: 0.999171	valid_1's auc: 0.911153
+2019-09-08 09:15:42,210 [   DEBUG] [1000]	training's auc: 0.999516	valid_1's auc: 0.912487
+2019-09-08 09:17:30,409 [   DEBUG] [1100]	training's auc: 0.999712	valid_1's auc: 0.913201
+2019-09-08 09:19:18,289 [   DEBUG] [1200]	training's auc: 0.999831	valid_1's auc: 0.914389
+2019-09-08 09:21:08,789 [   DEBUG] [1300]	training's auc: 0.999901	valid_1's auc: 0.915279
+2019-09-08 09:22:59,088 [   DEBUG] [1400]	training's auc: 0.999943	valid_1's auc: 0.915898
+2019-09-08 09:24:48,578 [   DEBUG] [1500]	training's auc: 0.999968	valid_1's auc: 0.916423
+2019-09-08 09:26:35,223 [   DEBUG] [1600]	training's auc: 0.999982	valid_1's auc: 0.916883
+2019-09-08 09:28:22,635 [   DEBUG] [1700]	training's auc: 0.99999	valid_1's auc: 0.917187
+2019-09-08 09:30:10,350 [   DEBUG] [1800]	training's auc: 0.999995	valid_1's auc: 0.917705
+2019-09-08 09:31:57,664 [   DEBUG] [1900]	training's auc: 0.999998	valid_1's auc: 0.917836
+2019-09-08 09:33:42,565 [   DEBUG] [2000]	training's auc: 0.999999	valid_1's auc: 0.918141
+2019-09-08 09:35:25,769 [   DEBUG] [2100]	training's auc: 0.999999	valid_1's auc: 0.918249
+2019-09-08 09:37:10,651 [   DEBUG] [2200]	training's auc: 1	valid_1's auc: 0.918257
+2019-09-08 09:38:55,512 [   DEBUG] [2300]	training's auc: 1	valid_1's auc: 0.918735
+2019-09-08 09:40:43,949 [   DEBUG] [2400]	training's auc: 1	valid_1's auc: 0.918627
+2019-09-08 09:42:12,298 [    INFO] best_iteration: 2332, train_score: 1.000000, valid_score: 0.918835
+2019-09-08 09:42:12,476 [    INFO] fold 2
+2019-09-08 09:44:28,258 [   DEBUG] [100]	training's auc: 0.939094	valid_1's auc: 0.904199
+2019-09-08 09:46:03,539 [   DEBUG] [200]	training's auc: 0.964663	valid_1's auc: 0.920395
+2019-09-08 09:47:42,684 [   DEBUG] [300]	training's auc: 0.979067	valid_1's auc: 0.929186
+2019-09-08 09:49:26,310 [   DEBUG] [400]	training's auc: 0.987829	valid_1's auc: 0.935627
+2019-09-08 09:51:13,142 [   DEBUG] [500]	training's auc: 0.99295	valid_1's auc: 0.939298
+2019-09-08 09:52:58,583 [   DEBUG] [600]	training's auc: 0.99599	valid_1's auc: 0.942026
+2019-09-08 09:54:46,982 [   DEBUG] [700]	training's auc: 0.997703	valid_1's auc: 0.943503
+2019-09-08 09:56:37,121 [   DEBUG] [800]	training's auc: 0.998702	valid_1's auc: 0.944689
+2019-09-08 09:58:30,114 [   DEBUG] [900]	training's auc: 0.999255	valid_1's auc: 0.945703
+2019-09-08 10:00:24,027 [   DEBUG] [1000]	training's auc: 0.999559	valid_1's auc: 0.946326
+2019-09-08 10:02:14,537 [   DEBUG] [1100]	training's auc: 0.999738	valid_1's auc: 0.946762
+2019-09-08 10:04:07,146 [   DEBUG] [1200]	training's auc: 0.999839	valid_1's auc: 0.947019
+2019-09-08 10:06:00,275 [   DEBUG] [1300]	training's auc: 0.999903	valid_1's auc: 0.947262
+2019-09-08 10:07:53,575 [   DEBUG] [1400]	training's auc: 0.999943	valid_1's auc: 0.947432
+2019-09-08 10:09:57,759 [   DEBUG] [1500]	training's auc: 0.999967	valid_1's auc: 0.947544
+2019-09-08 10:11:49,139 [   DEBUG] [1600]	training's auc: 0.999981	valid_1's auc: 0.94763
+2019-09-08 10:13:42,094 [   DEBUG] [1700]	training's auc: 0.999989	valid_1's auc: 0.947752
+2019-09-08 10:15:32,689 [   DEBUG] [1800]	training's auc: 0.999994	valid_1's auc: 0.947854
+2019-09-08 10:17:26,499 [   DEBUG] [1900]	training's auc: 0.999996	valid_1's auc: 0.947897
+2019-09-08 10:19:14,250 [   DEBUG] [2000]	training's auc: 0.999997	valid_1's auc: 0.947906
+2019-09-08 10:20:32,062 [    INFO] best_iteration: 1940, train_score: 0.999997, valid_score: 0.947983
+2019-09-08 10:20:32,189 [    INFO] fold 3
+2019-09-08 10:22:49,320 [   DEBUG] [100]	training's auc: 0.936337	valid_1's auc: 0.899906
+2019-09-08 10:24:27,106 [   DEBUG] [200]	training's auc: 0.961479	valid_1's auc: 0.913851
+2019-09-08 10:26:07,413 [   DEBUG] [300]	training's auc: 0.977454	valid_1's auc: 0.924087
+2019-09-08 10:27:50,523 [   DEBUG] [400]	training's auc: 0.986929	valid_1's auc: 0.930317
+2019-09-08 10:29:36,517 [   DEBUG] [500]	training's auc: 0.992418	valid_1's auc: 0.9345
+2019-09-08 10:31:25,631 [   DEBUG] [600]	training's auc: 0.995514	valid_1's auc: 0.937205
+2019-09-08 10:33:18,163 [   DEBUG] [700]	training's auc: 0.997412	valid_1's auc: 0.938793
+2019-09-08 10:35:08,428 [   DEBUG] [800]	training's auc: 0.998501	valid_1's auc: 0.94006
+2019-09-08 10:37:01,647 [   DEBUG] [900]	training's auc: 0.999124	valid_1's auc: 0.941022
+2019-09-08 10:38:56,453 [   DEBUG] [1000]	training's auc: 0.999471	valid_1's auc: 0.941852
+2019-09-08 10:40:49,423 [   DEBUG] [1100]	training's auc: 0.999681	valid_1's auc: 0.942438
+2019-09-08 10:42:42,831 [   DEBUG] [1200]	training's auc: 0.999808	valid_1's auc: 0.942795
+2019-09-08 10:44:37,616 [   DEBUG] [1300]	training's auc: 0.999884	valid_1's auc: 0.943151
+2019-09-08 10:46:31,220 [   DEBUG] [1400]	training's auc: 0.999932	valid_1's auc: 0.9434
+2019-09-08 10:48:25,482 [   DEBUG] [1500]	training's auc: 0.999961	valid_1's auc: 0.943722
+2019-09-08 10:50:17,459 [   DEBUG] [1600]	training's auc: 0.999979	valid_1's auc: 0.943848
+2019-09-08 10:52:10,356 [   DEBUG] [1700]	training's auc: 0.999988	valid_1's auc: 0.943905
+2019-09-08 10:53:25,049 [    INFO] best_iteration: 1642, train_score: 0.999983, valid_score: 0.943941
+2019-09-08 10:53:25,174 [    INFO] fold 4
+2019-09-08 10:55:43,954 [   DEBUG] [100]	training's auc: 0.937282	valid_1's auc: 0.897409
+2019-09-08 10:57:21,591 [   DEBUG] [200]	training's auc: 0.961393	valid_1's auc: 0.910915
+2019-09-08 10:59:01,211 [   DEBUG] [300]	training's auc: 0.977154	valid_1's auc: 0.920946
+2019-09-08 11:00:45,496 [   DEBUG] [400]	training's auc: 0.986254	valid_1's auc: 0.927793
+2019-09-08 11:02:32,749 [   DEBUG] [500]	training's auc: 0.991846	valid_1's auc: 0.932805
+2019-09-08 11:04:21,919 [   DEBUG] [600]	training's auc: 0.995196	valid_1's auc: 0.936191
+2019-09-08 11:06:13,249 [   DEBUG] [700]	training's auc: 0.997227	valid_1's auc: 0.938177
+2019-09-08 11:08:05,609 [   DEBUG] [800]	training's auc: 0.998382	valid_1's auc: 0.939379
+2019-09-08 11:10:00,101 [   DEBUG] [900]	training's auc: 0.999053	valid_1's auc: 0.940284
+2019-09-08 11:11:52,935 [   DEBUG] [1000]	training's auc: 0.999434	valid_1's auc: 0.94093
+2019-09-08 11:13:46,710 [   DEBUG] [1100]	training's auc: 0.999657	valid_1's auc: 0.941383
+2019-09-08 11:15:41,762 [   DEBUG] [1200]	training's auc: 0.999788	valid_1's auc: 0.941783
+2019-09-08 11:17:38,007 [   DEBUG] [1300]	training's auc: 0.999871	valid_1's auc: 0.941781
+2019-09-08 11:18:05,663 [    INFO] best_iteration: 1207, train_score: 0.999796, valid_score: 0.941815
+2019-09-08 11:18:05,778 [    INFO] fold 5
+2019-09-08 11:20:27,009 [   DEBUG] [100]	training's auc: 0.936893	valid_1's auc: 0.919066
+2019-09-08 11:22:04,817 [   DEBUG] [200]	training's auc: 0.961801	valid_1's auc: 0.931155
+2019-09-08 11:23:45,389 [   DEBUG] [300]	training's auc: 0.977312	valid_1's auc: 0.938649
+2019-09-08 11:25:31,428 [   DEBUG] [400]	training's auc: 0.986593	valid_1's auc: 0.943029
+2019-09-08 11:27:20,746 [   DEBUG] [500]	training's auc: 0.991935	valid_1's auc: 0.94598
+2019-09-08 11:29:12,010 [   DEBUG] [600]	training's auc: 0.995213	valid_1's auc: 0.947892
+2019-09-08 11:31:04,526 [   DEBUG] [700]	training's auc: 0.997143	valid_1's auc: 0.949514
+2019-09-08 11:32:56,623 [   DEBUG] [800]	training's auc: 0.998325	valid_1's auc: 0.950575
+2019-09-08 11:34:49,220 [   DEBUG] [900]	training's auc: 0.998989	valid_1's auc: 0.951155
+2019-09-08 11:36:40,793 [   DEBUG] [1000]	training's auc: 0.999387	valid_1's auc: 0.951591
+2019-09-08 11:38:35,642 [   DEBUG] [1100]	training's auc: 0.999628	valid_1's auc: 0.951951
+2019-09-08 11:40:29,625 [   DEBUG] [1200]	training's auc: 0.999775	valid_1's auc: 0.952208
+2019-09-08 11:42:24,571 [   DEBUG] [1300]	training's auc: 0.999863	valid_1's auc: 0.952361
+2019-09-08 11:44:18,417 [   DEBUG] [1400]	training's auc: 0.999917	valid_1's auc: 0.952527
+2019-09-08 11:46:09,590 [   DEBUG] [1500]	training's auc: 0.99995	valid_1's auc: 0.9525
+2019-09-08 11:46:56,121 [    INFO] best_iteration: 1421, train_score: 0.999926, valid_score: 0.952573
+2019-09-08 11:46:56,239 [    INFO] fold 6
+2019-09-08 11:49:18,556 [   DEBUG] [100]	training's auc: 0.936443	valid_1's auc: 0.905271
+2019-09-08 11:50:56,487 [   DEBUG] [200]	training's auc: 0.962023	valid_1's auc: 0.924612
+2019-09-08 11:52:38,737 [   DEBUG] [300]	training's auc: 0.97658	valid_1's auc: 0.935653
+2019-09-08 11:54:25,006 [   DEBUG] [400]	training's auc: 0.985944	valid_1's auc: 0.942967
+2019-09-08 11:56:14,811 [   DEBUG] [500]	training's auc: 0.991569	valid_1's auc: 0.9476
+2019-09-08 11:58:04,111 [   DEBUG] [600]	training's auc: 0.994928	valid_1's auc: 0.950655
+2019-09-08 12:00:10,138 [   DEBUG] [700]	training's auc: 0.997018	valid_1's auc: 0.952943
+2019-09-08 12:02:20,848 [   DEBUG] [800]	training's auc: 0.998219	valid_1's auc: 0.954687
+2019-09-08 12:04:38,977 [   DEBUG] [900]	training's auc: 0.998948	valid_1's auc: 0.95561
+2019-09-08 12:06:31,928 [   DEBUG] [1000]	training's auc: 0.999362	valid_1's auc: 0.956473
+2019-09-08 12:08:26,686 [   DEBUG] [1100]	training's auc: 0.999607	valid_1's auc: 0.957223
+2019-09-08 12:10:21,278 [   DEBUG] [1200]	training's auc: 0.999759	valid_1's auc: 0.957705
+2019-09-08 12:12:16,929 [   DEBUG] [1300]	training's auc: 0.999849	valid_1's auc: 0.958009
+2019-09-08 12:14:10,987 [   DEBUG] [1400]	training's auc: 0.999909	valid_1's auc: 0.958286
+2019-09-08 12:16:04,675 [   DEBUG] [1500]	training's auc: 0.999945	valid_1's auc: 0.958458
+2019-09-08 12:17:59,029 [   DEBUG] [1600]	training's auc: 0.999967	valid_1's auc: 0.958622
+2019-09-08 12:19:53,717 [   DEBUG] [1700]	training's auc: 0.999981	valid_1's auc: 0.958836
+2019-09-08 12:21:46,188 [   DEBUG] [1800]	training's auc: 0.99999	valid_1's auc: 0.958917
+2019-09-08 12:23:38,313 [   DEBUG] [1900]	training's auc: 0.999994	valid_1's auc: 0.958909
+2019-09-08 12:24:16,926 [    INFO] best_iteration: 1811, train_score: 0.999991, valid_score: 0.958951
+2019-09-08 12:24:50,614 [    INFO] CV score: 0.9418133
+2019-09-08 12:24:50,702 [    INFO] start prediction
+2019-09-08 12:39:10,061 [    INFO] [ID] read features from pickled file.
+2019-09-08 12:39:10,124 [    INFO] save results
+2019-09-08 12:39:10,126 [    INFO] save oof
+2019-09-08 12:39:12,230 [    INFO] save submission
