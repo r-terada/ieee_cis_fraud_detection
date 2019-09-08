@@ -7,6 +7,7 @@ import pandas as pd
 import lightgbm as lgb
 
 from tqdm import tqdm
+from catboost import CatBoostClassifier
 from lightgbm.callback import _format_eval_result
 from scipy.stats import norm
 from sklearn.metrics import roc_auc_score
@@ -93,6 +94,60 @@ class LightGBM(BaseModel):
 
     def predict(self, X):
         return self.clf.predict(X, num_iteration=self.clf.best_iteration)
+
+
+class CatBoost(BaseModel):
+
+    def __init__(self, model_params, fit_params):
+        self.clf = None
+        self.fit_params = fit_params
+        self.model_params = model_params
+
+    def train_and_validate(
+        self,
+        X_tr: pd.DataFrame,
+        y_tr: pd.Series,
+        X_val: pd.DataFrame,
+        y_val: pd.DataFrame
+    ):
+        st_time = time.time()
+        cat_columns = [c for c in X_tr.columns if str(X_tr[c].dtypes) in ['category', 'object']]
+        self.clf = CatBoostClassifier(**self.model_params)
+        self.clf.fit(
+            X_tr,
+            y_tr,
+            cat_features=cat_columns,
+            eval_set=(X_val, y_val),
+            **self.fit_params
+        )
+
+        # make outputs
+        trn_preds = self.clf.predict_proba(X_tr)[:, 1]
+        trn_score = roc_auc_score(y_tr, trn_preds)
+        oof_preds = self.clf.predict_proba(X_val)[:, 1]
+        val_score = roc_auc_score(y_val, oof_preds)
+        feature_importance = pd.DataFrame.from_dict({
+            "feature": list(X_tr.columns),
+            "importance": self.clf.get_feature_importance(),
+        })
+        result = {
+            "trn_score": trn_score,
+            "val_score": val_score,
+            "best_iteration": self.clf.get_best_iteration(),
+            "elapsed_time": f'{(time.time() - st_time) / 60:.2f} min.',
+            "feature_importance_top10": {
+                row["feature"]: row["importance"] for i, row in feature_importance.sort_values("importance", ascending=False).head(10).iterrows()
+            }
+        }
+        logger.info(
+            f"best_iteration: {result['best_iteration']}, "
+            f"train_score: {result['trn_score']:.6f}, "
+            f"valid_score: {result['val_score']:.6f}"
+        )
+        return oof_preds, result
+
+    def predict(self, X):
+        return self.clf.predict_proba(X)[:, 1]
 
 
 class Blender(BaseModel):

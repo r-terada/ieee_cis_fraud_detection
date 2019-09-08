@@ -1,0 +1,40 @@
+2019-09-08 20:07:17,916 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'copy from lgbm_008',
+ 'features': [['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'use_best_model': True, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'early_stopping_rounds': 100,
+                            'eval_metric': 'AUC',
+                            'learning_rate': 0.05,
+                            'loss_function': 'Logloss',
+                            'max_depth': 8,
+                            'n_estimators': 10000,
+                            'random_seed': 1337},
+           'name': 'CatBoost',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-08 20:07:17,917 [    INFO] [ID] read features from pickled file.
+2019-09-08 20:07:17,981 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-08 20:09:16,163 [    INFO] start training
+2019-09-08 20:10:40,864 [    INFO] fold 1
+2019-09-08 22:20:30,090 [    INFO] best_iteration: 2536, train_score: 0.981423, valid_score: 0.912416
+2019-09-08 22:20:30,223 [    INFO] fold 2

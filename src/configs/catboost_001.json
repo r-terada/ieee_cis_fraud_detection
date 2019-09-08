@@ -1,0 +1,54 @@
+{
+    "descriptions" : "copy from lgbm_008",
+    "resample": {
+        "method": "no_resample",
+        "params": {}
+    },
+    "features": [
+        ["KonstantinFeature2", {}]
+    ],
+    "cols_to_drop": [
+        "TransactionID",
+        "TransactionDT",
+        "isFraud",
+        "DT",
+        "DT_M",
+        "DT_W",
+        "DT_D",
+        "DT_hour",
+        "DT_day_week",
+        "DT_day_month",
+        "DT_M_total",
+        "DT_W_total",
+        "DT_D_total",
+        "uid",
+        "uid2",
+        "uid3",
+        "uid4",
+        "uid5",
+        "bank_type"
+    ],
+    "model": {
+        "name": "CatBoost",
+        "kfold_class": "GroupKFold",
+        "kfold_params": {
+            "n_splits": 6
+        },
+        "split_params": {
+            "group_key": "DT_M"
+        },
+        "model_params": {
+            "n_estimators": 10000,
+            "early_stopping_rounds": 100,
+            "loss_function": "Logloss",
+            "eval_metric": "AUC",
+            "learning_rate": 0.05,
+            "max_depth": 8,
+            "random_seed": 1337
+        },
+        "fit_params": {
+            "use_best_model": true,
+            "verbose_eval": 100
+        }
+    }
+}
