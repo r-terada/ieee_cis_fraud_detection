@@ -206,6 +206,17 @@ class Prediction:
         return self.oof, self.sub
 
 
+class DT_M(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        for df in [train_transaction, test_transaction]:
+            # Temporary
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+            df['DT_M'] = ((df['DT'].dt.year-2017)*12 + df['DT'].dt.month).astype(np.int8)
+
+        return train_transaction[[JOIN_KEY_COLUMN, 'DT_M']], test_transaction[[JOIN_KEY_COLUMN, 'DT_M']]
+
+
 class KonstantinFeature(BaseFeature):
     """
     https://www.kaggle.com/kyakovlev/ieee-gb-2-make-amount-useful-again

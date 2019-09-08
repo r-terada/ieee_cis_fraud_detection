@@ -1,0 +1,38 @@
+2019-09-08 16:32:37,406 [    INFO] {'cols_to_drop': ['TransactionID', 'isFraud', 'DT_M'],
+ 'descriptions': 'stacking with StandardScaler and GroupKFOld',
+ 'features': [['DT_M', {}],
+              ['Prediction', {'conf_name': 'lgbm_004'}],
+              ['Prediction', {'conf_name': 'lgbm_005'}]],
+ 'model': {'fit_params': {},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'max_iter': 10000,
+                            'scaler': 'StandardScaler',
+                            'solver': 'lbfgs'},
+           'name': 'LogReg',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-08 16:32:37,407 [    INFO] [Prediction] read predictions from ../data/output/lgbm_004
+2019-09-08 16:32:37,711 [    INFO] [Prediction] read predictions from ../data/output/lgbm_005
+2019-09-08 16:32:37,995 [    INFO] [ID] read features from pickled file.
+2019-09-08 16:32:38,002 [    INFO] [DT_M] read features from pickled file.
+2019-09-08 16:32:39,045 [    INFO] start training
+2019-09-08 16:32:39,093 [    INFO] fold 1
+2019-09-08 16:32:39,116 [    INFO] scale input with StandardScaler
+2019-09-08 16:32:39,657 [    INFO] train_score: 0.944554, valid_score: 0.908331
+2019-09-08 16:32:39,664 [    INFO] fold 2
+2019-09-08 16:32:40,290 [    INFO] train_score: 0.949994, valid_score: 0.951658
+2019-09-08 16:32:40,294 [    INFO] fold 3
+2019-09-08 16:32:40,973 [    INFO] train_score: 0.948888, valid_score: 0.957131
+2019-09-08 16:32:40,978 [    INFO] fold 4
+2019-09-08 16:32:41,628 [    INFO] train_score: 0.948769, valid_score: 0.954988
+2019-09-08 16:32:41,634 [    INFO] fold 5
+2019-09-08 16:32:42,264 [    INFO] train_score: 0.947842, valid_score: 0.958950
+2019-09-08 16:32:42,269 [    INFO] fold 6
+2019-09-08 16:32:42,906 [    INFO] train_score: 0.948139, valid_score: 0.955685
+2019-09-08 16:32:43,088 [    INFO] CV score: 0.9465310
+2019-09-08 16:32:43,093 [    INFO] start prediction
+2019-09-08 16:32:43,182 [    INFO] [ID] read features from pickled file.
+2019-09-08 16:32:43,189 [    INFO] save results
+2019-09-08 16:32:43,190 [    INFO] save oof
+2019-09-08 16:32:45,247 [    INFO] save submission
