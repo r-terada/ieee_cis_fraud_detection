@@ -1,0 +1,169 @@
+{
+  "folds": "GroupKFold(n_splits=6)",
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 1.0,
+      "val_score": 0.9037746112470323,
+      "best_iteration": 1317,
+      "elapsed_time": "6.50 min.",
+      "feature_importance_top10": {
+        "V74": 161796.73639672995,
+        "R_emaildomain": 47071.76774060726,
+        "V294": 42342.862692177296,
+        "C1_fq_enc": 42335.99582493305,
+        "V258": 40487.73052203655,
+        "V34": 40046.05416303873,
+        "V317": 39656.54740023613,
+        "C1": 36214.69494229555,
+        "V94": 32683.30841767788,
+        "C14": 32264.470799326897
+      }
+    },
+    "Fold2": {
+      "trn_score": 1.0,
+      "val_score": 0.9389857878191903,
+      "best_iteration": 1292,
+      "elapsed_time": "6.53 min.",
+      "feature_importance_top10": {
+        "V258": 106309.41486489773,
+        "R_emaildomain": 92773.65404963493,
+        "V294": 51191.81607192755,
+        "C14": 47287.0200791955,
+        "C13": 36468.22909408808,
+        "C1_fq_enc": 33329.083464205265,
+        "V317": 32219.44401228428,
+        "D2_scaled": 30645.888497829437,
+        "C1": 26271.478507757187,
+        "V91": 25219.037878513336
+      }
+    },
+    "Fold3": {
+      "trn_score": 0.9999999617489446,
+      "val_score": 0.9368680177734373,
+      "best_iteration": 1839,
+      "elapsed_time": "10.36 min.",
+      "feature_importance_top10": {
+        "V258": 114266.96592852473,
+        "R_emaildomain": 53635.910589933395,
+        "C14": 48943.50462383032,
+        "V294": 48324.568404465914,
+        "C13": 36642.0502191782,
+        "V201": 35110.59811890125,
+        "V70": 34127.52368661761,
+        "C1_fq_enc": 31505.699485182762,
+        "D2_scaled": 30530.550215393305,
+        "V317": 29860.232662260532
+      }
+    },
+    "Fold4": {
+      "trn_score": 1.0,
+      "val_score": 0.936355633128664,
+      "best_iteration": 1315,
+      "elapsed_time": "8.17 min.",
+      "feature_importance_top10": {
+        "V258": 121805.56818914413,
+        "R_emaildomain": 80412.74983131886,
+        "V294": 52684.194331526756,
+        "C14": 48689.58554339409,
+        "C13": 35826.00390356779,
+        "C1_fq_enc": 35109.92500805855,
+        "V70": 34400.02065265179,
+        "V317": 31410.39689576626,
+        "C1": 28249.266241192818,
+        "D2_scaled": 26978.880967497826
+      }
+    },
+    "Fold5": {
+      "trn_score": 1.0,
+      "val_score": 0.9458768138621152,
+      "best_iteration": 1410,
+      "elapsed_time": "8.42 min.",
+      "feature_importance_top10": {
+        "V258": 111899.033256948,
+        "R_emaildomain": 106948.44806498289,
+        "V294": 49237.7661665678,
+        "C14": 47055.521326839924,
+        "C13": 36127.79036337137,
+        "V317": 33891.70854258537,
+        "C1_fq_enc": 33815.43686687946,
+        "D2_scaled": 29804.21793729067,
+        "C1": 26054.001182556152,
+        "V201": 23594.757772922516
+      }
+    },
+    "Fold6": {
+      "trn_score": 1.0,
+      "val_score": 0.9512357657594391,
+      "best_iteration": 1332,
+      "elapsed_time": "7.98 min.",
+      "feature_importance_top10": {
+        "V258": 145871.15936791897,
+        "V294": 58533.82145488262,
+        "R_emaildomain": 56390.51070713997,
+        "C14": 51510.78309839964,
+        "V70": 42968.5939207077,
+        "C13": 39020.47256523371,
+        "D2_scaled": 36613.143481612206,
+        "C1_fq_enc": 33049.352860331535,
+        "V257": 28968.679502010345,
+        "V317": 28607.297398090363
+      }
+    },
+    "Full": {
+      "val_score": 0.9341708160364042,
+      "val_score_mean": 0.9355161049316464,
+      "val_score_std": 0.015146757753606526
+    }
+  },
+  "features": [
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

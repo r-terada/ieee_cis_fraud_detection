@@ -1,0 +1,223 @@
+2019-09-09 03:56:43,810 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'undersample with ratio 0.5',
+ 'features': [['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 0.5}}}
+2019-09-09 03:56:43,812 [    INFO] [ID] read features from pickled file.
+2019-09-09 03:56:43,828 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-09 03:58:51,898 [    INFO] start training
+2019-09-09 04:00:29,991 [    INFO] fold 1
+2019-09-09 04:00:36,308 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:00:36,350 [   DEBUG] label before sampling: 
+2019-09-09 04:00:36,350 [   DEBUG] 0    436106
+1     17113
+Name: isFraud, dtype: int64
+2019-09-09 04:00:38,617 [   DEBUG] label after sampling: 
+2019-09-09 04:00:38,622 [   DEBUG] 0    34226
+1    17113
+Name: isFraud, dtype: int64
+2019-09-09 04:01:33,602 [   DEBUG] [100]	training's auc: 0.959208	valid_1's auc: 0.873581
+2019-09-09 04:02:13,682 [   DEBUG] [200]	training's auc: 0.971645	valid_1's auc: 0.882449
+2019-09-09 04:02:47,914 [   DEBUG] [300]	training's auc: 0.981333	valid_1's auc: 0.889177
+2019-09-09 04:03:16,441 [   DEBUG] [400]	training's auc: 0.988259	valid_1's auc: 0.893595
+2019-09-09 04:03:48,634 [   DEBUG] [500]	training's auc: 0.99302	valid_1's auc: 0.897441
+2019-09-09 04:04:18,852 [   DEBUG] [600]	training's auc: 0.996049	valid_1's auc: 0.900242
+2019-09-09 04:04:48,822 [   DEBUG] [700]	training's auc: 0.997923	valid_1's auc: 0.902238
+2019-09-09 04:05:17,320 [   DEBUG] [800]	training's auc: 0.998991	valid_1's auc: 0.903983
+2019-09-09 04:05:47,468 [   DEBUG] [900]	training's auc: 0.999563	valid_1's auc: 0.904725
+2019-09-09 04:06:15,972 [   DEBUG] [1000]	training's auc: 0.999836	valid_1's auc: 0.905653
+2019-09-09 04:06:44,324 [   DEBUG] [1100]	training's auc: 0.999947	valid_1's auc: 0.906548
+2019-09-09 04:07:13,914 [   DEBUG] [1200]	training's auc: 0.999984	valid_1's auc: 0.907252
+2019-09-09 04:07:44,420 [   DEBUG] [1300]	training's auc: 0.999997	valid_1's auc: 0.907699
+2019-09-09 04:08:13,213 [   DEBUG] [1400]	training's auc: 1	valid_1's auc: 0.907755
+2019-09-09 04:08:41,433 [   DEBUG] [1500]	training's auc: 1	valid_1's auc: 0.908107
+2019-09-09 04:09:10,710 [   DEBUG] [1600]	training's auc: 1	valid_1's auc: 0.908371
+2019-09-09 04:09:40,716 [   DEBUG] [1700]	training's auc: 1	valid_1's auc: 0.908662
+2019-09-09 04:10:39,317 [    INFO] best_iteration: 1626, train_score: 1.000000, valid_score: 0.908404
+2019-09-09 04:10:39,420 [    INFO] fold 2
+2019-09-09 04:10:41,851 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:10:41,858 [   DEBUG] label before sampling: 
+2019-09-09 04:10:41,858 [   DEBUG] 0    472264
+1     16644
+Name: isFraud, dtype: int64
+2019-09-09 04:10:43,004 [   DEBUG] label after sampling: 
+2019-09-09 04:10:43,006 [   DEBUG] 0    33288
+1    16644
+Name: isFraud, dtype: int64
+2019-09-09 04:11:29,738 [   DEBUG] [100]	training's auc: 0.958699	valid_1's auc: 0.912118
+2019-09-09 04:12:03,153 [   DEBUG] [200]	training's auc: 0.971305	valid_1's auc: 0.919422
+2019-09-09 04:12:35,271 [   DEBUG] [300]	training's auc: 0.981003	valid_1's auc: 0.925523
+2019-09-09 04:13:14,686 [   DEBUG] [400]	training's auc: 0.98814	valid_1's auc: 0.930647
+2019-09-09 04:13:48,491 [   DEBUG] [500]	training's auc: 0.992898	valid_1's auc: 0.934328
+2019-09-09 04:14:24,936 [   DEBUG] [600]	training's auc: 0.995975	valid_1's auc: 0.936412
+2019-09-09 04:14:58,370 [   DEBUG] [700]	training's auc: 0.997855	valid_1's auc: 0.938166
+2019-09-09 04:15:33,675 [   DEBUG] [800]	training's auc: 0.998959	valid_1's auc: 0.939218
+2019-09-09 04:16:07,388 [   DEBUG] [900]	training's auc: 0.999535	valid_1's auc: 0.939841
+2019-09-09 04:16:35,862 [   DEBUG] [1000]	training's auc: 0.999811	valid_1's auc: 0.9406
+2019-09-09 04:17:07,002 [   DEBUG] [1100]	training's auc: 0.999929	valid_1's auc: 0.941088
+2019-09-09 04:17:43,616 [   DEBUG] [1200]	training's auc: 0.999974	valid_1's auc: 0.941505
+2019-09-09 04:18:18,382 [   DEBUG] [1300]	training's auc: 0.999987	valid_1's auc: 0.941853
+2019-09-09 04:18:59,610 [   DEBUG] [1400]	training's auc: 0.999991	valid_1's auc: 0.942034
+2019-09-09 04:19:30,063 [   DEBUG] [1500]	training's auc: 0.999991	valid_1's auc: 0.942109
+2019-09-09 04:20:53,691 [    INFO] best_iteration: 1499, train_score: 0.999991, valid_score: 0.942106
+2019-09-09 04:20:53,930 [    INFO] fold 3
+2019-09-09 04:20:57,427 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:20:57,448 [   DEBUG] label before sampling: 
+2019-09-09 04:20:57,449 [   DEBUG] 0    480997
+1     16958
+Name: isFraud, dtype: int64
+2019-09-09 04:20:59,497 [   DEBUG] label after sampling: 
+2019-09-09 04:20:59,499 [   DEBUG] 0    33916
+1    16958
+Name: isFraud, dtype: int64
+2019-09-09 04:21:47,429 [   DEBUG] [100]	training's auc: 0.955839	valid_1's auc: 0.907371
+2019-09-09 04:22:33,844 [   DEBUG] [200]	training's auc: 0.969514	valid_1's auc: 0.914959
+2019-09-09 04:23:12,290 [   DEBUG] [300]	training's auc: 0.979863	valid_1's auc: 0.92171
+2019-09-09 04:24:06,501 [   DEBUG] [400]	training's auc: 0.987263	valid_1's auc: 0.926849
+2019-09-09 04:24:46,638 [   DEBUG] [500]	training's auc: 0.992337	valid_1's auc: 0.930606
+2019-09-09 04:25:21,070 [   DEBUG] [600]	training's auc: 0.995616	valid_1's auc: 0.933298
+2019-09-09 04:26:01,047 [   DEBUG] [700]	training's auc: 0.997636	valid_1's auc: 0.93521
+2019-09-09 04:26:38,308 [   DEBUG] [800]	training's auc: 0.998831	valid_1's auc: 0.93645
+2019-09-09 04:27:13,902 [   DEBUG] [900]	training's auc: 0.99948	valid_1's auc: 0.937394
+2019-09-09 04:27:44,818 [   DEBUG] [1000]	training's auc: 0.999795	valid_1's auc: 0.938017
+2019-09-09 04:28:14,583 [   DEBUG] [1100]	training's auc: 0.99993	valid_1's auc: 0.938602
+2019-09-09 04:28:49,066 [   DEBUG] [1200]	training's auc: 0.999981	valid_1's auc: 0.9388
+2019-09-09 04:29:29,133 [   DEBUG] [1300]	training's auc: 0.999996	valid_1's auc: 0.9391
+2019-09-09 04:30:30,233 [   DEBUG] [1400]	training's auc: 1	valid_1's auc: 0.939439
+2019-09-09 04:31:03,146 [   DEBUG] [1500]	training's auc: 1	valid_1's auc: 0.939771
+2019-09-09 04:31:34,731 [   DEBUG] [1600]	training's auc: 1	valid_1's auc: 0.939982
+2019-09-09 04:32:07,725 [   DEBUG] [1700]	training's auc: 1	valid_1's auc: 0.939993
+2019-09-09 04:32:49,310 [    INFO] best_iteration: 1627, train_score: 1.000000, valid_score: 0.940003
+2019-09-09 04:32:49,385 [    INFO] fold 4
+2019-09-09 04:32:50,987 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:32:50,993 [   DEBUG] label before sampling: 
+2019-09-09 04:32:50,993 [   DEBUG] 0    483665
+1     17549
+Name: isFraud, dtype: int64
+2019-09-09 04:32:51,860 [   DEBUG] label after sampling: 
+2019-09-09 04:32:51,862 [   DEBUG] 0    35098
+1    17549
+Name: isFraud, dtype: int64
+2019-09-09 04:33:39,976 [   DEBUG] [100]	training's auc: 0.95683	valid_1's auc: 0.9027
+2019-09-09 04:34:11,958 [   DEBUG] [200]	training's auc: 0.970118	valid_1's auc: 0.911975
+2019-09-09 04:34:44,371 [   DEBUG] [300]	training's auc: 0.979831	valid_1's auc: 0.91869
+2019-09-09 04:35:18,913 [   DEBUG] [400]	training's auc: 0.987236	valid_1's auc: 0.92426
+2019-09-09 04:35:48,532 [   DEBUG] [500]	training's auc: 0.992287	valid_1's auc: 0.928033
+2019-09-09 04:36:19,949 [   DEBUG] [600]	training's auc: 0.995575	valid_1's auc: 0.931068
+2019-09-09 04:36:50,258 [   DEBUG] [700]	training's auc: 0.997614	valid_1's auc: 0.933136
+2019-09-09 04:37:23,938 [   DEBUG] [800]	training's auc: 0.998818	valid_1's auc: 0.93425
+2019-09-09 04:37:59,844 [   DEBUG] [900]	training's auc: 0.999462	valid_1's auc: 0.935479
+2019-09-09 04:38:40,345 [   DEBUG] [1000]	training's auc: 0.999776	valid_1's auc: 0.93616
+2019-09-09 04:39:22,189 [   DEBUG] [1100]	training's auc: 0.999916	valid_1's auc: 0.936661
+2019-09-09 04:39:57,461 [   DEBUG] [1200]	training's auc: 0.999973	valid_1's auc: 0.937027
+2019-09-09 04:40:32,595 [   DEBUG] [1300]	training's auc: 0.999993	valid_1's auc: 0.937234
+2019-09-09 04:41:02,737 [   DEBUG] [1400]	training's auc: 0.999999	valid_1's auc: 0.937487
+2019-09-09 04:41:41,067 [   DEBUG] [1500]	training's auc: 1	valid_1's auc: 0.937541
+2019-09-09 04:42:21,781 [   DEBUG] [1600]	training's auc: 1	valid_1's auc: 0.937753
+2019-09-09 04:43:16,737 [   DEBUG] [1700]	training's auc: 1	valid_1's auc: 0.937962
+2019-09-09 04:43:51,216 [    INFO] best_iteration: 1612, train_score: 1.000000, valid_score: 0.937725
+2019-09-09 04:43:51,308 [    INFO] fold 5
+2019-09-09 04:43:53,094 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:43:53,104 [   DEBUG] label before sampling: 
+2019-09-09 04:43:53,104 [   DEBUG] 0    487303
+1     17216
+Name: isFraud, dtype: int64
+2019-09-09 04:43:54,042 [   DEBUG] label after sampling: 
+2019-09-09 04:43:54,046 [   DEBUG] 0    34432
+1    17216
+Name: isFraud, dtype: int64
+2019-09-09 04:44:33,823 [   DEBUG] [100]	training's auc: 0.955628	valid_1's auc: 0.922674
+2019-09-09 04:45:01,322 [   DEBUG] [200]	training's auc: 0.96893	valid_1's auc: 0.929328
+2019-09-09 04:45:29,998 [   DEBUG] [300]	training's auc: 0.979243	valid_1's auc: 0.934658
+2019-09-09 04:46:00,036 [   DEBUG] [400]	training's auc: 0.986777	valid_1's auc: 0.938933
+2019-09-09 04:46:29,239 [   DEBUG] [500]	training's auc: 0.991857	valid_1's auc: 0.941904
+2019-09-09 04:47:01,081 [   DEBUG] [600]	training's auc: 0.99522	valid_1's auc: 0.943977
+2019-09-09 04:47:31,279 [   DEBUG] [700]	training's auc: 0.997361	valid_1's auc: 0.94539
+2019-09-09 04:48:00,941 [   DEBUG] [800]	training's auc: 0.998659	valid_1's auc: 0.946271
+2019-09-09 04:48:35,861 [   DEBUG] [900]	training's auc: 0.999386	valid_1's auc: 0.946851
+2019-09-09 04:49:11,746 [   DEBUG] [1000]	training's auc: 0.999744	valid_1's auc: 0.947388
+2019-09-09 04:49:39,663 [   DEBUG] [1100]	training's auc: 0.99991	valid_1's auc: 0.947793
+2019-09-09 04:50:08,981 [   DEBUG] [1200]	training's auc: 0.999973	valid_1's auc: 0.948096
+2019-09-09 04:50:47,226 [   DEBUG] [1300]	training's auc: 0.999993	valid_1's auc: 0.948471
+2019-09-09 04:51:25,929 [   DEBUG] [1400]	training's auc: 0.999998	valid_1's auc: 0.948729
+2019-09-09 04:51:59,210 [   DEBUG] [1500]	training's auc: 1	valid_1's auc: 0.948831
+2019-09-09 04:52:32,218 [   DEBUG] [1600]	training's auc: 1	valid_1's auc: 0.948985
+2019-09-09 04:53:02,841 [   DEBUG] [1700]	training's auc: 1	valid_1's auc: 0.949106
+2019-09-09 04:53:32,397 [   DEBUG] [1800]	training's auc: 1	valid_1's auc: 0.949145
+2019-09-09 04:54:06,176 [   DEBUG] [1900]	training's auc: 1	valid_1's auc: 0.949265
+2019-09-09 04:54:43,094 [   DEBUG] [2000]	training's auc: 1	valid_1's auc: 0.949297
+2019-09-09 04:55:25,988 [    INFO] best_iteration: 1926, train_score: 1.000000, valid_score: 0.949316
+2019-09-09 04:55:26,072 [    INFO] fold 6
+2019-09-09 04:55:27,813 [    INFO] resample with under_sample: ratio=0.5
+2019-09-09 04:55:27,822 [   DEBUG] label before sampling: 
+2019-09-09 04:55:27,823 [   DEBUG] 0    489050
+1     17835
+Name: isFraud, dtype: int64
+2019-09-09 04:55:28,796 [   DEBUG] label after sampling: 
+2019-09-09 04:55:28,799 [   DEBUG] 0    35670
+1    17835
+Name: isFraud, dtype: int64
+2019-09-09 04:56:15,497 [   DEBUG] [100]	training's auc: 0.955197	valid_1's auc: 0.914355
+2019-09-09 04:56:46,293 [   DEBUG] [200]	training's auc: 0.96803	valid_1's auc: 0.923504
+2019-09-09 04:57:18,119 [   DEBUG] [300]	training's auc: 0.978524	valid_1's auc: 0.931493
+2019-09-09 04:57:49,871 [   DEBUG] [400]	training's auc: 0.98638	valid_1's auc: 0.937485
+2019-09-09 04:58:31,566 [   DEBUG] [500]	training's auc: 0.991603	valid_1's auc: 0.941744
+2019-09-09 04:59:05,968 [   DEBUG] [600]	training's auc: 0.995009	valid_1's auc: 0.944954
+2019-09-09 04:59:47,991 [   DEBUG] [700]	training's auc: 0.997233	valid_1's auc: 0.947314
+2019-09-09 05:00:23,879 [   DEBUG] [800]	training's auc: 0.998556	valid_1's auc: 0.948843
+2019-09-09 05:01:02,366 [   DEBUG] [900]	training's auc: 0.999304	valid_1's auc: 0.950162
+2019-09-09 05:01:33,540 [   DEBUG] [1000]	training's auc: 0.999693	valid_1's auc: 0.950936
+2019-09-09 05:02:13,753 [   DEBUG] [1100]	training's auc: 0.999881	valid_1's auc: 0.951745
+2019-09-09 05:02:52,641 [   DEBUG] [1200]	training's auc: 0.999962	valid_1's auc: 0.952311
+2019-09-09 05:03:30,633 [   DEBUG] [1300]	training's auc: 0.99999	valid_1's auc: 0.952774
+2019-09-09 05:04:11,154 [   DEBUG] [1400]	training's auc: 0.999998	valid_1's auc: 0.953183
+2019-09-09 05:04:43,921 [   DEBUG] [1500]	training's auc: 1	valid_1's auc: 0.953521
+2019-09-09 05:05:22,565 [   DEBUG] [1600]	training's auc: 1	valid_1's auc: 0.953956
+2019-09-09 05:06:04,109 [   DEBUG] [1700]	training's auc: 1	valid_1's auc: 0.954162
+2019-09-09 05:07:07,940 [    INFO] best_iteration: 1669, train_score: 1.000000, valid_score: 0.954058
+2019-09-09 05:07:41,281 [    INFO] CV score: 0.9380505
+2019-09-09 05:07:41,338 [    INFO] start prediction
+2019-09-09 05:27:35,402 [    INFO] [ID] read features from pickled file.
+2019-09-09 05:27:35,473 [    INFO] save results
+2019-09-09 05:27:35,479 [    INFO] save oof
+2019-09-09 05:27:37,739 [    INFO] save submission

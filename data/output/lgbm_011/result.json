@@ -1,0 +1,169 @@
+{
+  "folds": "GroupKFold(n_splits=6)",
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9999999965853382,
+      "val_score": 0.90840448481381,
+      "best_iteration": 1626,
+      "elapsed_time": "9.97 min.",
+      "feature_importance_top10": {
+        "V74": 211422.31554162502,
+        "V258": 88628.09911125898,
+        "C1_fq_enc": 70920.14113408327,
+        "V34": 66745.1388528347,
+        "V317": 64876.59340786934,
+        "R_emaildomain": 63329.744567871094,
+        "C1": 62148.5935536623,
+        "C14": 53376.73521631956,
+        "V294": 46064.06787967682,
+        "C13": 41481.998904109
+      }
+    },
+    "Fold2": {
+      "trn_score": 0.9999911505458526,
+      "val_score": 0.9421058853484071,
+      "best_iteration": 1499,
+      "elapsed_time": "10.15 min.",
+      "feature_importance_top10": {
+        "V258": 172159.89926314354,
+        "R_emaildomain": 85468.50528299809,
+        "V294": 74472.53602421284,
+        "C14": 72035.71268582344,
+        "V201": 64653.81568360329,
+        "C13": 56818.19965553284,
+        "C1_fq_enc": 43301.7911400795,
+        "V317": 41079.13887798786,
+        "D2_scaled": 37614.08818757534,
+        "C1": 35061.26068639755
+      }
+    },
+    "Fold3": {
+      "trn_score": 1.0,
+      "val_score": 0.9400032584230082,
+      "best_iteration": 1627,
+      "elapsed_time": "11.81 min.",
+      "feature_importance_top10": {
+        "V258": 187044.72963434458,
+        "V257": 73858.64534783363,
+        "C14": 73458.76322299242,
+        "V294": 72632.62941145897,
+        "C13": 58194.807776510715,
+        "C8": 49546.95751351118,
+        "D2_scaled": 44963.98409217596,
+        "V317": 40867.5791426301,
+        "V201": 40746.715697824955,
+        "C1_fq_enc": 38603.81267660856
+      }
+    },
+    "Fold4": {
+      "trn_score": 1.0,
+      "val_score": 0.9377253689959846,
+      "best_iteration": 1612,
+      "elapsed_time": "10.97 min.",
+      "feature_importance_top10": {
+        "V258": 193801.63443672657,
+        "C14": 76077.58176153898,
+        "V294": 71107.498691082,
+        "R_emaildomain": 67296.49622547626,
+        "V257": 63747.54812037945,
+        "C13": 57704.65343630314,
+        "C1_fq_enc": 50140.14544570446,
+        "D2_scaled": 39758.14381694794,
+        "V317": 38814.57797038555,
+        "C1": 37690.46148061752
+      }
+    },
+    "Fold5": {
+      "trn_score": 0.9999999966260745,
+      "val_score": 0.9493155523469278,
+      "best_iteration": 1926,
+      "elapsed_time": "11.51 min.",
+      "feature_importance_top10": {
+        "V258": 166807.38919091225,
+        "R_emaildomain": 122291.22327113152,
+        "V294": 75347.16058957577,
+        "C14": 71530.12857425213,
+        "C13": 56998.27491718531,
+        "V257": 47316.07967239618,
+        "C1_fq_enc": 46741.28948575258,
+        "C1": 42200.49081903696,
+        "V317": 41972.23251116276,
+        "D2_scaled": 40855.43990802765
+      }
+    },
+    "Fold6": {
+      "trn_score": 1.0,
+      "val_score": 0.954057909038581,
+      "best_iteration": 1669,
+      "elapsed_time": "11.63 min.",
+      "feature_importance_top10": {
+        "V258": 202182.06851172447,
+        "V294": 86068.23243457079,
+        "C14": 75282.10406333208,
+        "R_emaildomain": 62937.193544983864,
+        "C13": 61859.216323792934,
+        "V257": 56107.164187550545,
+        "D2_scaled": 49308.284462213516,
+        "C1_fq_enc": 46743.32975536585,
+        "V317": 42162.390790104866,
+        "V70": 38443.91626954079
+      }
+    },
+    "Full": {
+      "val_score": 0.9380504753600256,
+      "val_score_mean": 0.938602076494453,
+      "val_score_std": 0.01460915506970632
+    }
+  },
+  "features": [
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

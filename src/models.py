@@ -317,36 +317,22 @@ class Resampler:
         return X, y
 
     @staticmethod
-    def smote(X: pd.DataFrame, y: pd.Series, ratio=0.2, k_neighbors=5):
-        from imblearn.over_sampling import SMOTE
-        logger.info(f'resample with smote: ratio={ratio}, k_neighbors={k_neighbors}')
-        sampler = SMOTE(
-            sampling_strategy=ratio,
-            k_neighbors=k_neighbors,
-            random_state=1993,
-            n_jobs=4
-        )
-        X_resampled, y_resampled = sampler.fit_sample(X.values, y.values)
-        return pd.DataFrame(X_resampled, columns=X.columns), pd.Series(y_resampled)
-
-    @staticmethod
-    def under_sample(X: pd.DataFrame, y: pd.Series, ratio=0.2):
-        from imblearn.under_sampling import RandomUnderSampler
+    def under_sample(X: pd.DataFrame, y: pd.Series, ratio=1.0):
+        '''
+        ratio = y_1 / y_0_new
+        '''
         logger.info(f'resample with under_sample: ratio={ratio}')
-        sampler = RandomUnderSampler(
-            sampling_strategy=ratio,
-            random_state=1993
-        )
-        X_resampled, y_resampled = sampler.fit_sample(X.values, y.values)
-        return pd.DataFrame(X_resampled, columns=X.columns), pd.Series(y_resampled)
-
-    @staticmethod
-    def over_sample(X: pd.DataFrame, y: pd.Series, ratio=0.2):
-        from imblearn.over_sampling import RandomOverSampler
-        logger.info(f'resample with over_sample: ratio={ratio}')
-        sampler = RandomOverSampler(
-            sampling_strategy=ratio,
-            random_state=1993
-        )
-        X_resampled, y_resampled = sampler.fit_sample(X.values, y.values)
-        return pd.DataFrame(X_resampled, columns=X.columns), pd.Series(y_resampled)
+        n_labels = y.value_counts()
+        logger.debug(f'label before sampling: ')
+        logger.debug(n_labels)
+        new_n_neg = int(n_labels[1] / ratio)
+        assert new_n_neg <= n_labels[0], 'ratio must be >= n_pos / n_neg'
+        # resample
+        pos_indices = y[y == 1].index
+        new_neg_indices = np.random.choice(y[y == 0].index, new_n_neg, replace=False)
+        new_X = pd.concat([X.loc[pos_indices], X.loc[new_neg_indices]])
+        new_y = pd.concat([y.loc[pos_indices], y.loc[new_neg_indices]])
+        shuffled_indices = np.random.permutation(new_X.index)
+        logger.debug(f'label after sampling: ')
+        logger.debug(new_y.value_counts())
+        return new_X.loc[shuffled_indices], new_y.loc[shuffled_indices]
