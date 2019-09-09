@@ -1,0 +1,83 @@
+{
+  "folds": "GroupKFold(n_splits=6)",
+  "model_params": {},
+  "fit_params": {},
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9670269896906658,
+      "val_score": 0.9495157406376948,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold2": {
+      "trn_score": 0.9633466575186299,
+      "val_score": 0.9658824822307943,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold3": {
+      "trn_score": 0.963443880949853,
+      "val_score": 0.9652960032845389,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold4": {
+      "trn_score": 0.9637835844489467,
+      "val_score": 0.9645154879663494,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold5": {
+      "trn_score": 0.9626790590849535,
+      "val_score": 0.9696880481474612,
+      "elapsed_time": "0.00 min."
+    },
+    "Fold6": {
+      "trn_score": 0.9626611015612532,
+      "val_score": 0.9704476123756662,
+      "elapsed_time": "0.00 min."
+    },
+    "Full": {
+      "val_score": 0.9638047619678682,
+      "val_score_mean": 0.9642242291070842,
+      "val_score_std": 0.006939101597717421
+    }
+  },
+  "features": [
+    [
+      "DT_M",
+      {}
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_004"
+      }
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_005"
+      }
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_008"
+      }
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "lgbm_012"
+      }
+    ],
+    [
+      "Prediction",
+      {
+        "conf_name": "catboost_001"
+      }
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "isFraud",
+    "DT_M"
+  ]
+}

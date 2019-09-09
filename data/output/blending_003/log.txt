@@ -1,0 +1,41 @@
+2019-09-09 19:50:44,115 [    INFO] {'cols_to_drop': ['TransactionID', 'isFraud', 'DT_M'],
+ 'descriptions': '',
+ 'features': [['DT_M', {}],
+              ['Prediction', {'conf_name': 'lgbm_004'}],
+              ['Prediction', {'conf_name': 'lgbm_005'}],
+              ['Prediction', {'conf_name': 'lgbm_008'}],
+              ['Prediction', {'conf_name': 'lgbm_012'}],
+              ['Prediction', {'conf_name': 'catboost_001'}]],
+ 'model': {'fit_params': {},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {},
+           'name': 'Blender',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-09 19:50:44,117 [    INFO] [Prediction] read predictions from ../data/output/lgbm_004
+2019-09-09 19:50:44,636 [    INFO] [Prediction] read predictions from ../data/output/lgbm_005
+2019-09-09 19:50:44,979 [    INFO] [Prediction] read predictions from ../data/output/lgbm_008
+2019-09-09 19:50:45,366 [    INFO] [Prediction] read predictions from ../data/output/lgbm_012
+2019-09-09 19:50:45,732 [    INFO] [Prediction] read predictions from ../data/output/catboost_001
+2019-09-09 19:50:46,090 [    INFO] [ID] read features from pickled file.
+2019-09-09 19:50:46,147 [    INFO] [DT_M] read features from pickled file.
+2019-09-09 19:50:49,610 [    INFO] start training
+2019-09-09 19:50:49,731 [    INFO] fold 1
+2019-09-09 19:50:50,033 [    INFO] train_score: 0.967027, valid_score: 0.949516
+2019-09-09 19:50:50,039 [    INFO] fold 2
+2019-09-09 19:50:50,392 [    INFO] train_score: 0.963347, valid_score: 0.965882
+2019-09-09 19:50:50,401 [    INFO] fold 3
+2019-09-09 19:50:50,727 [    INFO] train_score: 0.963444, valid_score: 0.965296
+2019-09-09 19:50:50,740 [    INFO] fold 4
+2019-09-09 19:50:51,071 [    INFO] train_score: 0.963784, valid_score: 0.964515
+2019-09-09 19:50:51,081 [    INFO] fold 5
+2019-09-09 19:50:51,390 [    INFO] train_score: 0.962679, valid_score: 0.969688
+2019-09-09 19:50:51,399 [    INFO] fold 6
+2019-09-09 19:50:51,713 [    INFO] train_score: 0.962661, valid_score: 0.970448
+2019-09-09 19:50:51,927 [    INFO] CV score: 0.9638048
+2019-09-09 19:50:51,936 [    INFO] start prediction
+2019-09-09 19:50:52,223 [    INFO] [ID] read features from pickled file.
+2019-09-09 19:50:52,237 [    INFO] save results
+2019-09-09 19:50:52,239 [    INFO] save oof
+2019-09-09 19:50:55,572 [    INFO] save submission
