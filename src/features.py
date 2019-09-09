@@ -928,3 +928,51 @@ class KonstantinFeature2(BaseFeature):
                     del train_df[col], test_df[col]
 
         return train_df, test_df
+
+
+class DaysFromBrowserRelease(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        browser_release_dates = {}
+        with open('./misc/browser_release_date.tsv', 'r') as fp:
+            for line in fp:
+                browser_name, count, release_date = line.split('\t')
+                browser_release_dates[browser_name] = pd.to_datetime(release_date)
+
+        for df in [train_identity, test_identity]:
+            df['browser_release_date'] = df['id_31'].map(browser_release_dates)
+
+        for df in [train_transaction, test_transaction]:
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+
+        train_df = merge_on_id(train_transaction[[JOIN_KEY_COLUMN, 'DT']], train_identity[[JOIN_KEY_COLUMN, 'browser_release_date']])
+        test_df = merge_on_id(test_transaction[[JOIN_KEY_COLUMN, 'DT']], test_identity[[JOIN_KEY_COLUMN, 'browser_release_date']])
+
+        for df in [train_df, test_df]:
+            df['days_from_browser_release'] = (df.DT - df.browser_release_date).dt.days
+
+        return train_df[[JOIN_KEY_COLUMN, 'days_from_browser_release']], test_df[[JOIN_KEY_COLUMN, 'days_from_browser_release']]
+
+
+class DaysFromOSRelease(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        os_release_dates = {}
+        with open('./misc/os_release_date.tsv', 'r') as fp:
+            for line in fp:
+                os_name, count, release_date = line.split('\t')
+                os_release_dates[os_name] = pd.to_datetime(release_date)
+
+        for df in [train_identity, test_identity]:
+            df['os_release_date'] = df['id_30'].map(os_release_dates)
+
+        for df in [train_transaction, test_transaction]:
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+
+        train_df = merge_on_id(train_transaction[[JOIN_KEY_COLUMN, 'DT']], train_identity[[JOIN_KEY_COLUMN, 'os_release_date']])
+        test_df = merge_on_id(test_transaction[[JOIN_KEY_COLUMN, 'DT']], test_identity[[JOIN_KEY_COLUMN, 'os_release_date']])
+
+        for df in [train_df, test_df]:
+            df['days_from_os_release'] = (df.DT - df.os_release_date).dt.days
+
+        return train_df[[JOIN_KEY_COLUMN, 'days_from_os_release']], test_df[[JOIN_KEY_COLUMN, 'days_from_os_release']]
