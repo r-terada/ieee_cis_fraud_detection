@@ -1,0 +1,33 @@
+{
+    "descriptions" : "blending lgbm_004 and lgbm_005",
+    "resample": {
+        "method": "no_resample",
+        "params": {}
+    },
+    "features": [
+        ["DT_M", {}],
+        ["Prediction", {"conf_name": "lgbm_004"}],
+        ["Prediction", {"conf_name": "lgbm_005"}],
+        ["Prediction", {"conf_name": "lgbm_008"}],
+        ["Prediction", {"conf_name": "lgbm_012"}]
+    ],
+    "cols_to_drop": [
+        "TransactionID",
+        "isFraud",
+        "DT_M"
+    ],
+    "model": {
+        "name": "Blender",
+        "kfold_class": "GroupKFold",
+        "kfold_params": {
+            "n_splits": 6
+        },
+        "split_params": {
+            "group_key": "DT_M"
+        },
+        "model_params": {
+        },
+        "fit_params": {
+        }
+    }
+}
