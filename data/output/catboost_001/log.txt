@@ -1,4 +1,4 @@
-2019-09-08 20:07:17,916 [    INFO] {'cols_to_drop': ['TransactionID',
+2019-09-09 12:00:30,463 [    INFO] {'cols_to_drop': ['TransactionID',
                   'TransactionDT',
                   'isFraud',
                   'DT',
@@ -31,10 +31,79 @@
                             'random_seed': 1337},
            'name': 'CatBoost',
            'split_params': {'group_key': 'DT_M'}},
- 'resample': {'method': 'no_resample', 'params': {}}}
-2019-09-08 20:07:17,917 [    INFO] [ID] read features from pickled file.
-2019-09-08 20:07:17,981 [    INFO] [KonstantinFeature2] read features from pickled file.
-2019-09-08 20:09:16,163 [    INFO] start training
-2019-09-08 20:10:40,864 [    INFO] fold 1
-2019-09-08 22:20:30,090 [    INFO] best_iteration: 2536, train_score: 0.981423, valid_score: 0.912416
-2019-09-08 22:20:30,223 [    INFO] fold 2
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 0.1}}}
+2019-09-09 12:00:30,465 [    INFO] [ID] read features from pickled file.
+2019-09-09 12:00:30,516 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-09 12:02:28,995 [    INFO] start training
+2019-09-09 12:03:52,751 [    INFO] fold 1
+2019-09-09 12:03:57,203 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 12:03:57,230 [   DEBUG] label before sampling: 
+2019-09-09 12:03:57,230 [   DEBUG] 0    436106
+1     17113
+Name: isFraud, dtype: int64
+2019-09-09 12:03:59,492 [   DEBUG] label after sampling: 
+2019-09-09 12:03:59,501 [   DEBUG] 0    171130
+1     17113
+Name: isFraud, dtype: int64
+2019-09-09 13:00:14,946 [    INFO] best_iteration: 1716, train_score: 0.984953, valid_score: 0.914737
+2019-09-09 13:00:15,064 [    INFO] fold 2
+2019-09-09 13:00:19,592 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 13:00:19,598 [   DEBUG] label before sampling: 
+2019-09-09 13:00:19,598 [   DEBUG] 0    472264
+1     16644
+Name: isFraud, dtype: int64
+2019-09-09 13:00:21,708 [   DEBUG] label after sampling: 
+2019-09-09 13:00:21,712 [   DEBUG] 0    166440
+1     16644
+Name: isFraud, dtype: int64
+2019-09-09 13:48:41,822 [    INFO] best_iteration: 1891, train_score: 0.985982, valid_score: 0.934036
+2019-09-09 13:48:41,909 [    INFO] fold 3
+2019-09-09 13:48:43,403 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 13:48:43,409 [   DEBUG] label before sampling: 
+2019-09-09 13:48:43,409 [   DEBUG] 0    480997
+1     16958
+Name: isFraud, dtype: int64
+2019-09-09 13:48:45,469 [   DEBUG] label after sampling: 
+2019-09-09 13:48:45,476 [   DEBUG] 0    169580
+1     16958
+Name: isFraud, dtype: int64
+2019-09-09 14:52:45,271 [    INFO] best_iteration: 2244, train_score: 0.988791, valid_score: 0.932072
+2019-09-09 14:52:45,364 [    INFO] fold 4
+2019-09-09 14:52:48,797 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 14:52:48,808 [   DEBUG] label before sampling: 
+2019-09-09 14:52:48,808 [   DEBUG] 0    483665
+1     17549
+Name: isFraud, dtype: int64
+2019-09-09 14:52:51,283 [   DEBUG] label after sampling: 
+2019-09-09 14:52:51,360 [   DEBUG] 0    175490
+1     17549
+Name: isFraud, dtype: int64
+2019-09-09 15:49:00,881 [    INFO] best_iteration: 1632, train_score: 0.981437, valid_score: 0.927331
+2019-09-09 15:49:00,979 [    INFO] fold 5
+2019-09-09 15:49:03,066 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 15:49:03,072 [   DEBUG] label before sampling: 
+2019-09-09 15:49:03,073 [   DEBUG] 0    487303
+1     17216
+Name: isFraud, dtype: int64
+2019-09-09 15:49:05,776 [   DEBUG] label after sampling: 
+2019-09-09 15:49:05,779 [   DEBUG] 0    172160
+1     17216
+Name: isFraud, dtype: int64
+2019-09-09 16:41:37,615 [    INFO] best_iteration: 1664, train_score: 0.982073, valid_score: 0.936682
+2019-09-09 16:41:37,688 [    INFO] fold 6
+2019-09-09 16:41:40,594 [    INFO] resample with under_sample: ratio=0.1
+2019-09-09 16:41:40,601 [   DEBUG] label before sampling: 
+2019-09-09 16:41:40,601 [   DEBUG] 0    489050
+1     17835
+Name: isFraud, dtype: int64
+2019-09-09 16:41:42,564 [   DEBUG] label after sampling: 
+2019-09-09 16:41:42,569 [   DEBUG] 0    178350
+1     17835
+Name: isFraud, dtype: int64
+2019-09-09 18:03:21,593 [    INFO] best_iteration: 2452, train_score: 0.990321, valid_score: 0.942376
+2019-09-09 18:04:02,077 [    INFO] CV score: 0.9309010
+2019-09-09 18:04:02,167 [    INFO] start prediction
+2019-09-09 18:29:05,352 [    INFO] [ID] read features from pickled file.
+2019-09-09 18:29:05,430 [    INFO] save results
+2019-09-09 18:29:05,436 [    INFO] save oof
+2019-09-09 18:29:07,601 [    INFO] save submission

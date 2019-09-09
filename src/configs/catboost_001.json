@@ -1,8 +1,8 @@
 {
     "descriptions" : "copy from lgbm_008",
     "resample": {
-        "method": "no_resample",
-        "params": {}
+        "method": "under_sample",
+        "params": {"ratio": 0.1}
     },
     "features": [
         ["KonstantinFeature2", {}]
