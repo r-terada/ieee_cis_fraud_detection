@@ -976,3 +976,26 @@ class DaysFromOSRelease(BaseFeature):
             df['days_from_os_release'] = (df.DT - df.os_release_date).dt.days
 
         return train_df[[JOIN_KEY_COLUMN, 'days_from_os_release']], test_df[[JOIN_KEY_COLUMN, 'days_from_os_release']]
+
+
+class OSBrowserReleaseDayDiff(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        browser_release_dates = {}
+        with open('./misc/browser_release_date.tsv', 'r') as fp:
+            for line in fp:
+                browser_name, count, release_date = line.split('\t')
+                browser_release_dates[browser_name] = pd.to_datetime(release_date)
+
+        os_release_dates = {}
+        with open('./misc/os_release_date.tsv', 'r') as fp:
+            for line in fp:
+                os_name, count, release_date = line.split('\t')
+                os_release_dates[os_name] = pd.to_datetime(release_date)
+
+        for df in [train_identity, test_identity]:
+            df['browser_release_date'] = df['id_31'].map(browser_release_dates)
+            df['os_release_date'] = df['id_30'].map(os_release_dates)
+            df['os_browser_release_day_diff'] = (df.os_release_date - df.browser_release_date).dt.days
+
+        return train_identity[[JOIN_KEY_COLUMN, 'os_browser_release_day_diff']], test_identity[[JOIN_KEY_COLUMN, 'os_browser_release_day_diff']]
