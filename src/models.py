@@ -19,7 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, GroupKFold
 
-from .utils import logger
+from utils import logger
 
 
 class BaseModel:

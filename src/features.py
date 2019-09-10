@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.mixture import GaussianMixture
 from sklearn.model_selection import StratifiedKFold
 
-from .utils import logger, reduce_mem_usage
+from utils import logger, reduce_mem_usage
 
 
 CACHE_DIR = os.path.join(
@@ -1113,3 +1113,15 @@ class NormalizedEmailDomain(BaseFeature):
 
         return train_transaction[retcols], test_transaction[retcols]
 
+
+class RowVColumnsAggregation(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        v_cols = [c for c in train_transaction if c[0] == 'V']
+        for df in [train_transaction, test_transaction]:
+            df['v_mean'] = train_transaction[v_cols].mean(axis=1)
+            df['v_std'] = train_transaction[v_cols].std(axis=1)
+            df['v_max'] = train_transaction[v_cols].max(axis=1)
+            df['v_min'] = train_transaction[v_cols].min(axis=1)
+        ret_cols = [JOIN_KEY_COLUMN, 'v_mean', 'v_std', 'v_max', 'v_min']
+        return train_transaction[ret_cols], test_transaction[ret_cols]
