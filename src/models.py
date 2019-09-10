@@ -7,6 +7,7 @@ import pandas as pd
 import lightgbm as lgb
 
 from tqdm import tqdm
+from numba import jit
 from catboost import CatBoostClassifier
 from lightgbm.callback import _format_eval_result
 from scipy.stats import norm
@@ -38,6 +39,26 @@ def log_evaluation(logger, period=1, show_stdv=True, level=logging.DEBUG):
     return _callback
 
 
+@jit
+def fast_auc(y_true, y_prob):
+    y_true = np.asarray(y_true)
+    y_true = y_true[np.argsort(y_prob)]
+    nfalse = 0
+    auc = 0
+    n = len(y_true)
+    for i in range(n):
+        y_i = y_true[i]
+        nfalse += (1 - y_i)
+        auc += y_i * nfalse
+    auc /= (nfalse * (n - nfalse))
+    return auc
+
+
+def eval_auc(preds, dtrain):
+    labels = dtrain.get_label()
+    return 'auc', fast_auc(labels, preds), True
+
+
 class LightGBM(BaseModel):
 
     def __init__(self, model_params, fit_params):
@@ -65,6 +86,7 @@ class LightGBM(BaseModel):
             self.model_params,
             train_dataset,
             num_round,
+            feval=eval_auc,
             valid_sets=[train_dataset, val_dataset],
             callbacks=[log_evaluation(logger, period=period)],
             **self.fit_params
