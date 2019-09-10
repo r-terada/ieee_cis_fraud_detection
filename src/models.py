@@ -19,7 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, GroupKFold
 
-from utils import logger
+from .utils import logger
 
 
 class BaseModel:
@@ -338,10 +338,11 @@ class Resampler:
         return X, y
 
     @staticmethod
-    def under_sample(X: pd.DataFrame, y: pd.Series, ratio=1.0):
+    def under_sample(X: pd.DataFrame, y: pd.Series, ratio=1.0, seed=42):
         '''
         ratio = y_1 / y_0_new
         '''
+        np.random.seed(seed)
         logger.info(f'resample with under_sample: ratio={ratio}')
         n_labels = y.value_counts()
         logger.debug(f'label before sampling: ')

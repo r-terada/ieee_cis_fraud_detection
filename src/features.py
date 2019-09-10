@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.mixture import GaussianMixture
 from sklearn.model_selection import StratifiedKFold
 
-from utils import logger, reduce_mem_usage
+from .utils import logger, reduce_mem_usage
 
 
 CACHE_DIR = os.path.join(
@@ -999,3 +999,117 @@ class OSBrowserReleaseDayDiff(BaseFeature):
             df['os_browser_release_day_diff'] = (df.os_release_date - df.browser_release_date).dt.days
 
         return train_identity[[JOIN_KEY_COLUMN, 'os_browser_release_day_diff']], test_identity[[JOIN_KEY_COLUMN, 'os_browser_release_day_diff']]
+
+
+class IDSplit(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        train_df, test_df = self.id_split(train_identity), self.id_split(test_identity)
+        for col in list(train_df):
+            if train_df[col].dtype=='O':
+                print(col)
+                train_df[col] = train_df[col].fillna('unseen_before_label')
+                test_df[col]  = test_df[col].fillna('unseen_before_label')
+
+                train_df[col] = train_df[col].astype(str)
+                test_df[col] = test_df[col].astype(str)
+
+                le = LabelEncoder()
+                le.fit(list(train_df[col])+list(test_df[col]))
+                train_df[col] = le.transform(train_df[col])
+                test_df[col]  = le.transform(test_df[col])
+
+                train_df[col] = train_df[col].astype('category')
+                test_df[col] = test_df[col].astype('category')
+
+        return train_df, test_df
+
+    def id_split(self, df):
+        feat = pd.DataFrame({JOIN_KEY_COLUMN: df[JOIN_KEY_COLUMN]})
+        feat['device_name'] = df['DeviceInfo'].str.split('/', expand=True)[0]
+        feat['device_version'] = df['DeviceInfo'].str.split('/', expand=True)[1]
+        feat['OS_id_30'] = df['id_30'].str.split(' ', expand=True)[0]
+        feat['version_id_30'] = df['id_30'].str.split(' ', expand=True)[1]
+        feat['browser_id_31'] = df['id_31'].str.split(' ', expand=True)[0]
+        feat['version_id_31'] = df['id_31'].str.split(' ', expand=True)[1]
+        feat['screen_width'] = df['id_33'].str.split('x', expand=True)[0]
+        feat['screen_height'] = df['id_33'].str.split('x', expand=True)[1]
+        feat['id_34'] = df['id_34'].str.split(':', expand=True)[1]
+        feat['id_23'] = df['id_23'].str.split(':', expand=True)[1]
+
+        feat.loc[feat['device_name'].str.contains('SM', na=False), 'device_name'] = 'Samsung'
+        feat.loc[feat['device_name'].str.contains('SAMSUNG', na=False), 'device_name'] = 'Samsung'
+        feat.loc[feat['device_name'].str.contains('GT-', na=False), 'device_name'] = 'Samsung'
+        feat.loc[feat['device_name'].str.contains('Moto G', na=False), 'device_name'] = 'Motorola'
+        feat.loc[feat['device_name'].str.contains('Moto', na=False), 'device_name'] = 'Motorola'
+        feat.loc[feat['device_name'].str.contains('moto', na=False), 'device_name'] = 'Motorola'
+        feat.loc[feat['device_name'].str.contains('LG-', na=False), 'device_name'] = 'LG'
+        feat.loc[feat['device_name'].str.contains('rv:', na=False), 'device_name'] = 'RV'
+        feat.loc[feat['device_name'].str.contains('HUAWEI', na=False), 'device_name'] = 'Huawei'
+        feat.loc[feat['device_name'].str.contains('ALE-', na=False), 'device_name'] = 'Huawei'
+        feat.loc[feat['device_name'].str.contains('-L', na=False), 'device_name'] = 'Huawei'
+        feat.loc[feat['device_name'].str.contains('Blade', na=False), 'device_name'] = 'ZTE'
+        feat.loc[feat['device_name'].str.contains('BLADE', na=False), 'device_name'] = 'ZTE'
+        feat.loc[feat['device_name'].str.contains('Linux', na=False), 'device_name'] = 'Linux'
+        feat.loc[feat['device_name'].str.contains('XT', na=False), 'device_name'] = 'Sony'
+        feat.loc[feat['device_name'].str.contains('ASUS', na=False), 'device_name'] = 'Asus'
+        feat.loc[feat['device_name'].str.contains('HTC', na=False), 'device_name'] = 'HTC'
+
+        feat.loc[
+            feat.device_name.isin(
+                feat.device_name.value_counts()[feat.device_name.value_counts() < 200].index
+            ),
+            'device_name'
+        ] = "Others"
+
+        return feat
+
+
+class NormalizedEmailDomain(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        train_df, test_df = self.normalize_domain(train_transaction, test_transaction)
+        for col in list(train_df):
+            if train_df[col].dtype=='O':
+                print(col)
+                train_df[col] = train_df[col].fillna('unseen_before_label')
+                test_df[col]  = test_df[col].fillna('unseen_before_label')
+
+                train_df[col] = train_df[col].astype(str)
+                test_df[col] = test_df[col].astype(str)
+
+                le = LabelEncoder()
+                le.fit(list(train_df[col])+list(test_df[col]))
+                train_df[col] = le.transform(train_df[col])
+                test_df[col]  = le.transform(test_df[col])
+
+                train_df[col] = train_df[col].astype('category')
+                test_df[col] = test_df[col].astype('category')
+
+        return train_df, test_df
+
+    def normalize_domain(self, train_transaction, test_transaction):
+        domains = {}
+        domains['yahoo'] = ["yahoo.fr", "yahoo.de", "yahoo.es", "yahoo.co.uk", "yahoo.com", "yahoo.com.mx", "ymail.com", "rocketmail.com", "frontiernet.net"]
+        domains['ms'] = ["hotmail.com", "live.com.mx", "live.com", "msn.com", "hotmail.es", "outlook.es", "hotmail.fr", "hotmail.de", "hotmail.co.uk"]
+        domains['apple'] = ["icloud.com", "mac.com", "me.com"]
+        domains['att'] = ["prodigy.net.mx", "att.net", "sbxglobal.net"]
+        domains['centulylink'] = ["centurylink.net", "embarqmail.com", "q.com"]
+        domains['aol'] = ["aim.com", "aol.com"]
+        domains['spectrum'] = ["twc.com", "charter.com"]
+        domains['proton'] = ["protonmail.com"]
+        domains['comcast'] = ["comcast.net"]
+        domains['google'] = ["gmail.com"]
+        domains['anonymous'] = ["anonymous.com"]
+        domains['N/A'] = [np.nan]
+
+        domain_company_map = {v: k for k, vs in domains.items() for v in vs}
+
+        for df in [train_transaction, test_transaction]:
+            df['P_emaildomain_normalized'] = df['P_emaildomain'].astype(str).map(domain_company_map).fillna('other')
+            df['R_emaildomain_normalized'] = df['R_emaildomain'].astype(str).map(domain_company_map).fillna('other')
+
+        retcols = [JOIN_KEY_COLUMN, 'P_emaildomain_normalized', 'R_emaildomain_normalized']
+
+        return train_transaction[retcols], test_transaction[retcols]
+
