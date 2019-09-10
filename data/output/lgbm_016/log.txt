@@ -1,0 +1,76 @@
+2019-09-10 16:30:05,038 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'Add IDSplit',
+ 'features': [['KonstantinFeature2', {}], ['IDSplit', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 0.1}}}
+2019-09-10 16:30:05,039 [    INFO] [ID] read features from pickled file.
+2019-09-10 16:30:05,089 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-10 16:32:05,021 [    INFO] [IDSplit] read features from pickled file.
+2019-09-10 16:32:10,920 [    INFO] start training
+2019-09-10 16:33:38,785 [    INFO] fold 1
+2019-09-10 16:33:43,755 [    INFO] resample with under_sample: ratio=0.1
+2019-09-10 16:33:43,795 [   DEBUG] label before sampling: 
+2019-09-10 16:33:43,796 [   DEBUG] 0    436106
+1     17113
+Name: isFraud, dtype: int64
+2019-09-10 16:33:46,257 [   DEBUG] label after sampling: 
+2019-09-10 16:33:46,262 [   DEBUG] 0    171130
+1     17113
+Name: isFraud, dtype: int64
+2019-09-10 16:35:21,914 [   DEBUG] [100]	training's auc: 0.946941	valid_1's auc: 0.8751
+2019-09-10 16:36:37,855 [   DEBUG] [200]	training's auc: 0.965764	valid_1's auc: 0.884557
+2019-09-10 16:38:09,275 [   DEBUG] [300]	training's auc: 0.978385	valid_1's auc: 0.892765
+2019-09-10 16:39:45,558 [   DEBUG] [400]	training's auc: 0.986568	valid_1's auc: 0.898017
+2019-09-10 16:40:59,670 [   DEBUG] [500]	training's auc: 0.99169	valid_1's auc: 0.901483
+2019-09-10 16:42:34,884 [   DEBUG] [600]	training's auc: 0.994967	valid_1's auc: 0.904144
+2019-09-10 16:44:03,274 [   DEBUG] [700]	training's auc: 0.996982	valid_1's auc: 0.906507
+2019-09-10 16:45:22,775 [   DEBUG] [800]	training's auc: 0.998226	valid_1's auc: 0.908041
+2019-09-10 16:46:43,364 [   DEBUG] [900]	training's auc: 0.998971	valid_1's auc: 0.909699
+2019-09-10 16:48:11,866 [   DEBUG] [1000]	training's auc: 0.999414	valid_1's auc: 0.910611
+2019-09-10 16:51:03,033 [   DEBUG] [1100]	training's auc: 0.99968	valid_1's auc: 0.911215
+2019-09-10 16:54:09,796 [   DEBUG] [1200]	training's auc: 0.999827	valid_1's auc: 0.912214
+2019-09-10 16:56:54,203 [   DEBUG] [1300]	training's auc: 0.999911	valid_1's auc: 0.913117
+2019-09-10 17:00:15,161 [   DEBUG] [1400]	training's auc: 0.999956	valid_1's auc: 0.913693
+2019-09-10 17:02:44,133 [   DEBUG] [1500]	training's auc: 0.999979	valid_1's auc: 0.914092
+2019-09-10 17:05:23,416 [   DEBUG] [1600]	training's auc: 0.999991	valid_1's auc: 0.914428
+2019-09-10 17:07:45,353 [   DEBUG] [1700]	training's auc: 0.999996	valid_1's auc: 0.914922
