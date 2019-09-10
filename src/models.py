@@ -86,7 +86,6 @@ class LightGBM(BaseModel):
             self.model_params,
             train_dataset,
             num_round,
-            feval=eval_auc,
             valid_sets=[train_dataset, val_dataset],
             callbacks=[log_evaluation(logger, period=period)],
             **self.fit_params
