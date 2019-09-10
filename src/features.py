@@ -75,6 +75,30 @@ def create_feature(
     return (feature_tr, feature_te)
 
 
+def agg_group(gr_, feature_name, agg):
+    if agg == 'sum':
+        feat = gr_[feature_name].sum()
+    elif agg == 'mean':
+        feat = gr_[feature_name].mean()
+    elif agg == 'max':
+        feat = gr_[feature_name].max()
+    elif agg == 'min':
+        feat = gr_[feature_name].min()
+    elif agg == 'std':
+        feat = gr_[feature_name].std()
+    elif agg == 'count':
+        feat = gr_[feature_name].count()
+    elif agg == 'skew':
+        feat = gr_[feature_name].skew()
+    elif agg == 'kurt':
+        feat = gr_[feature_name].apply(pd.DataFrame.kurt)
+    elif agg == 'median':
+        feat = gr_[feature_name].median()
+    else:
+        raise ValueError
+
+    return feat
+
 class Raw:
     train_transaction = None
     train_identity = None
@@ -1124,4 +1148,39 @@ class RowVColumnsAggregation(BaseFeature):
             df['v_max'] = train_transaction[v_cols].max(axis=1)
             df['v_min'] = train_transaction[v_cols].min(axis=1)
         ret_cols = [JOIN_KEY_COLUMN, 'v_mean', 'v_std', 'v_max', 'v_min']
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class TransactionAmtAggregation1(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        ########################### Client Virtual ID
+        # Let's add some kind of client uID based on cardID and addr columns
+        # The value will be very specific for each client so we need to remove it
+        # from final features. But we can use it for aggregations.
+        for df in [train_transaction, test_transaction]:
+            df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
+            df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
+            df['uid3'] = df['uid2'].astype(str) + '_' + df['addr1'].astype(str) + '_' + df['addr2'].astype(str)
+            df['uid4'] = df['uid3'].astype(str) + '_' + df['P_emaildomain'].astype(str)
+            df['uid5'] = df['uid3'].astype(str) + '_' + df['R_emaildomain'].astype(str)
+            df['bank_type'] = df['card3'].astype(str)  + '_' +  df['card5'].astype(str)
+
+        ret_cols = [JOIN_KEY_COLUMN]  # feature names
+        agg_column = 'TransactionAmt'
+        uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
+        aggregations = ['max', 'min', 'kurt', 'skew', 'sum', 'count', 'median']  # mean, std isin KonstatinFeature2
+        for col in uids:
+            gr_ = pd.concat(
+                [train_transaction[[col, agg_column]], test_transaction[[col, agg_column]]]
+            ).groupby([col])
+            for agg_type in aggregations:
+                logger.debug(f'calc {agg_type}: {agg_column} group by {col}')
+                new_col_name = f'{col}_{agg_column}_{agg_type}'
+                ret_cols.append(new_col_name)
+                agg_res = agg_group(gr_, agg_column, agg_type).to_dict()
+
+                train_transaction[new_col_name] = train_transaction[col].map(agg_res)
+                test_transaction[new_col_name]  = test_transaction[col].map(agg_res)
+
         return train_transaction[ret_cols], test_transaction[ret_cols]
