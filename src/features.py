@@ -1213,8 +1213,42 @@ class TimeToFutureTransaction(BaseFeature):
         for df in [train_transaction, test_transaction]:
             for col in uids:
                 gr_ = df.groupby([col])
-                df[f'{col}_time_to_next_transaction'] = (gr_['DT'].shift(self.step) - gr_['DT'].shift(0)).dt.total_seconds()
+                df[f'{col}_time_to_next_transaction_{self.step}'] = (gr_['DT'].shift(self.step) - gr_['DT'].shift(0)).dt.total_seconds()
 
-        ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_to_next_transaction' for col in uids]
+        ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_to_next_transaction_{self.step}' for col in uids]
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class TimeFromPastTransaction(BaseFeature):
+
+    def __init__(self, step=1):
+        super().__init__()
+        self.step = step
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_step_{self.step}'
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        for df in [train_transaction, test_transaction]:
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+
+        for df in [train_transaction, test_transaction]:
+            df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
+            df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
+            df['uid3'] = df['uid2'].astype(str) + '_' + df['addr1'].astype(str) + '_' + df['addr2'].astype(str)
+            df['uid4'] = df['uid3'].astype(str) + '_' + df['P_emaildomain'].astype(str)
+            df['uid5'] = df['uid3'].astype(str) + '_' + df['R_emaildomain'].astype(str)
+            df['bank_type'] = df['card3'].astype(str)  + '_' +  df['card5'].astype(str)
+
+        uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
+
+        for df in [train_transaction, test_transaction]:
+            for col in uids:
+                gr_ = df.groupby([col])
+                df[f'{col}_time_from_past_transaction_{self.step}'] = (gr_['DT'].shift(0) - gr_['DT'].shift(self.step)).dt.total_seconds()
+
+        ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_from_past_transaction_{self.step}' for col in uids]
 
         return train_transaction[ret_cols], test_transaction[ret_cols]
