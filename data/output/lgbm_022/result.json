@@ -1,0 +1,229 @@
+{
+  "folds": "GroupKFold(n_splits=6)",
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9999999873657512,
+      "val_score": 0.9181488545539408,
+      "best_iteration": 1977,
+      "elapsed_time": "66.69 min.",
+      "feature_importance_top10": {
+        "V258": 373646.59118950367,
+        "V257": 150942.5677114725,
+        "R_emaildomain": 148146.56872665882,
+        "C1_fq_enc": 116453.8702095747,
+        "C14": 102342.94081270695,
+        "C1": 97447.47635221481,
+        "C13": 87081.75748574734,
+        "V317": 66566.60510444641,
+        "V294": 66235.85926389694,
+        "V74": 63979.47877371311
+      }
+    },
+    "Fold2": {
+      "trn_score": 1.0,
+      "val_score": 0.9484776203651731,
+      "best_iteration": 2075,
+      "elapsed_time": "62.43 min.",
+      "feature_importance_top10": {
+        "V258": 282351.1166347265,
+        "V201": 142847.1401144266,
+        "C14": 121515.5306545496,
+        "C1_fq_enc": 105613.00075602531,
+        "V294": 94075.75929617882,
+        "C13": 87890.19507575035,
+        "R_emaildomain": 84641.69809424877,
+        "C1": 71489.67738360167,
+        "V246": 68280.88133215904,
+        "D2_scaled": 68278.09777289629
+      }
+    },
+    "Fold3": {
+      "trn_score": 0.9999999944362101,
+      "val_score": 0.9459640225156118,
+      "best_iteration": 1981,
+      "elapsed_time": "58.01 min.",
+      "feature_importance_top10": {
+        "V258": 294019.06560111046,
+        "V257": 129609.05860829353,
+        "C14": 114177.11090707779,
+        "C1_fq_enc": 106838.41343927383,
+        "V201": 103226.00620889664,
+        "V294": 90352.67537772655,
+        "C13": 86749.6909352541,
+        "D2_scaled": 73075.89959543943,
+        "V317": 67897.30273544788,
+        "R_emaildomain": 66365.48648929596
+      }
+    },
+    "Fold4": {
+      "trn_score": 0.9999985209473519,
+      "val_score": 0.9412800258692251,
+      "best_iteration": 1703,
+      "elapsed_time": "53.49 min.",
+      "feature_importance_top10": {
+        "V258": 295384.662327528,
+        "V257": 129410.62892138958,
+        "C14": 128965.64404785633,
+        "C1_fq_enc": 116544.14472174644,
+        "V294": 94358.7587196827,
+        "C13": 92557.15067577362,
+        "R_emaildomain": 82659.81020450592,
+        "V317": 72072.30445754528,
+        "C1": 70014.54936885834,
+        "D2_scaled": 69775.79857957363
+      }
+    },
+    "Fold5": {
+      "trn_score": 0.9999664021122178,
+      "val_score": 0.9513921558199147,
+      "best_iteration": 1425,
+      "elapsed_time": "40.04 min.",
+      "feature_importance_top10": {
+        "V258": 296886.6682507992,
+        "V201": 123890.01448106766,
+        "C14": 119366.77989172935,
+        "C1_fq_enc": 104207.38744783401,
+        "R_emaildomain": 100361.1880478859,
+        "V294": 87346.56725692749,
+        "C13": 86069.34713578224,
+        "V257": 82011.14499807358,
+        "V317": 73660.12597513199,
+        "D2_scaled": 71272.64241361618
+      }
+    },
+    "Fold6": {
+      "trn_score": 0.9999776136875663,
+      "val_score": 0.9571738066506933,
+      "best_iteration": 1961,
+      "elapsed_time": "58.00 min.",
+      "feature_importance_top10": {
+        "V258": 316907.66900777817,
+        "C14": 129664.71034789085,
+        "V257": 127140.11334717274,
+        "C1_fq_enc": 122693.24594843388,
+        "V201": 101866.02527654171,
+        "C13": 93338.01014947891,
+        "V294": 87493.6548718214,
+        "R_emaildomain": 77433.85076534748,
+        "C1": 71044.7812024355,
+        "D2_scaled": 69575.71315801144
+      }
+    },
+    "Full": {
+      "val_score": 0.9426056962198406,
+      "val_score_mean": 0.9437394142957597,
+      "val_score_std": 0.01243229778039213
+    }
+  },
+  "features": [
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -6
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -7
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -8
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -9
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -10
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}
