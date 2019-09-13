@@ -16,6 +16,8 @@ def main(conf_name) -> None:
 
     message = f'{conf_name}:cv_{cv_score}' if cv_score else conf_name
 
+    print(message)
+
     submit_cmd_list = f'''
         kaggle
         competitions
@@ -24,7 +26,7 @@ def main(conf_name) -> None:
         -m {message}
     '''.split()
 
-    print('submit.')
+    print(f'submit: {submit_cmd_list}')
     subprocess.run(submit_cmd_list)
 
 

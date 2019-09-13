@@ -1,0 +1,110 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 0.9999926308670426,
+    "val_score": 0.943121496944054,
+    "best_iteration": 1715,
+    "elapsed_time": "44.61 min.",
+    "feature_importance_top10": {
+      "V258": 398590.6848397255,
+      "V257": 166817.7285168171,
+      "C1_fq_enc": 158936.8509042263,
+      "C14": 153333.9448902607,
+      "C13": 136567.77547252178,
+      "V294": 116760.93693375587,
+      "R_emaildomain": 115431.04266405106,
+      "C1": 98723.7739431858,
+      "V246": 70871.0388405323,
+      "D2_scaled": 70741.8096563816
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.943121496944054
+    }
+  },
+  "features": [
+    [
+      "DaysFromOSRelease",
+      {}
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

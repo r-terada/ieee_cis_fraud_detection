@@ -1,0 +1,136 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 0.9999831729805168,
+    "val_score": 0.9419176938354022,
+    "best_iteration": 1571,
+    "elapsed_time": "60.85 min.",
+    "feature_importance_top10": {
+      "V258": 418735.15122938156,
+      "V257": 158406.57806396484,
+      "C14": 152889.9840772152,
+      "C1_fq_enc": 134516.0239162445,
+      "R_emaildomain": 117451.57610726357,
+      "V294": 116427.36101341248,
+      "C13": 114147.45122599602,
+      "C1": 103142.42738509178,
+      "V246": 78690.14821505547,
+      "D2_scaled": 73856.18442463875
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.9419176938354022
+    }
+  },
+  "features": [
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -6
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -7
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -8
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -9
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -10
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

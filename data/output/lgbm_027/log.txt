@@ -1,0 +1,145 @@
+2019-09-12 14:38:24,430 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'lgbm_022 with LastMonthOutValidation',
+ 'features': [['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['TimeToFutureTransaction', {'step': -6}],
+              ['TimeToFutureTransaction', {'step': -7}],
+              ['TimeToFutureTransaction', {'step': -8}],
+              ['TimeToFutureTransaction', {'step': -9}],
+              ['TimeToFutureTransaction', {'step': -10}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM'},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-12 14:38:24,433 [    INFO] [ID] read features from pickled file.
+2019-09-12 14:38:24,464 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-12 14:38:25,334 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-12 14:38:26,215 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-12 14:38:26,947 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-12 14:38:27,767 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-12 14:38:28,666 [    INFO] [TimeToFutureTransaction_step_-6] no pickled file. create feature.
+2019-09-12 14:38:28,666 [    INFO] [Raw] read train.
+2019-09-12 14:38:50,495 [    INFO] [Raw] read test.
+2019-09-12 14:40:38,555 [    INFO] [TimeToFutureTransaction_step_-6] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-6_train.pkl
+2019-09-12 14:40:38,631 [    INFO] [TimeToFutureTransaction_step_-6] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-6_test.pkl
+2019-09-12 14:40:38,688 [   DEBUG] [TimeToFutureTransaction_step_-6] head of feature
+2019-09-12 14:40:38,750 [   DEBUG] [TimeToFutureTransaction_step_-6]    TransactionID  card1_time_to_next_transaction_-6  card2_time_to_next_transaction_-6  ...  uid4_time_to_next_transaction_-6  uid5_time_to_next_transaction_-6  bank_type_time_to_next_transaction_-6
+0        2987000                          1991670.0                                NaN  ...                               NaN                               NaN                               268335.0
+1        2987001                            78294.0                            57558.0  ...                         6208875.0                          657615.0                                 2882.0
+2        2987002                            68569.0                              976.0  ...                               NaN                         1978695.0                                  779.0
+3        2987003                            37776.0                             8498.0  ...                           55075.0                           54350.0                                 2018.0
+4        2987004                          8915326.0                             5762.0  ...                               NaN                               NaN                                 3442.0
+
+[5 rows x 11 columns]
+2019-09-12 14:40:40,366 [    INFO] [TimeToFutureTransaction_step_-7] no pickled file. create feature.
+2019-09-12 14:42:12,126 [    INFO] [TimeToFutureTransaction_step_-7] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-7_train.pkl
+2019-09-12 14:42:12,233 [    INFO] [TimeToFutureTransaction_step_-7] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-7_test.pkl
+2019-09-12 14:42:12,291 [   DEBUG] [TimeToFutureTransaction_step_-7] head of feature
+2019-09-12 14:42:12,310 [   DEBUG] [TimeToFutureTransaction_step_-7]    TransactionID  card1_time_to_next_transaction_-7  card2_time_to_next_transaction_-7  ...  uid4_time_to_next_transaction_-7  uid5_time_to_next_transaction_-7  bank_type_time_to_next_transaction_-7
+0        2987000                          2666672.0                                NaN  ...                               NaN                               NaN                               567821.0
+1        2987001                           153417.0                            58722.0  ...                         7692378.0                         1182404.0                                 3547.0
+2        2987002                            78067.0                             1310.0  ...                               NaN                         2328191.0                                 1481.0
+3        2987003                            39850.0                            12939.0  ...                           55359.0                           55075.0                                 2057.0
+4        2987004                          9513491.0                             6065.0  ...                               NaN                               NaN                                 3460.0
+
+[5 rows x 11 columns]
+2019-09-12 14:42:13,337 [    INFO] [TimeToFutureTransaction_step_-8] no pickled file. create feature.
+2019-09-12 14:43:30,723 [    INFO] [TimeToFutureTransaction_step_-8] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-8_train.pkl
+2019-09-12 14:43:30,818 [    INFO] [TimeToFutureTransaction_step_-8] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-8_test.pkl
+2019-09-12 14:43:30,864 [   DEBUG] [TimeToFutureTransaction_step_-8] head of feature
+2019-09-12 14:43:30,901 [   DEBUG] [TimeToFutureTransaction_step_-8]    TransactionID  card1_time_to_next_transaction_-8  card2_time_to_next_transaction_-8  ...  uid4_time_to_next_transaction_-8  uid5_time_to_next_transaction_-8  bank_type_time_to_next_transaction_-8
+0        2987000                          2669757.0                                NaN  ...                               NaN                               NaN                               603339.0
+1        2987001                           154397.0                            62805.0  ...                         8437453.0                         1360747.0                                 3565.0
+2        2987002                            79236.0                             1925.0  ...                               NaN                         2766706.0                                 1651.0
+3        2987003                            41503.0                            37776.0  ...                           60046.0                           55359.0                                 2087.0
+4        2987004                         10186197.0                             7297.0  ...                               NaN                               NaN                                 4009.0
+
+[5 rows x 11 columns]
+2019-09-12 14:43:31,700 [    INFO] [TimeToFutureTransaction_step_-9] no pickled file. create feature.
+2019-09-12 14:44:52,266 [    INFO] [TimeToFutureTransaction_step_-9] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-9_train.pkl
+2019-09-12 14:44:52,361 [    INFO] [TimeToFutureTransaction_step_-9] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-9_test.pkl
+2019-09-12 14:44:52,402 [   DEBUG] [TimeToFutureTransaction_step_-9] head of feature
+2019-09-12 14:44:52,431 [   DEBUG] [TimeToFutureTransaction_step_-9]    TransactionID  card1_time_to_next_transaction_-9  card2_time_to_next_transaction_-9  ...  uid4_time_to_next_transaction_-9  uid5_time_to_next_transaction_-9  bank_type_time_to_next_transaction_-9
+0        2987000                          3275577.0                                NaN  ...                               NaN                               NaN                               604190.0
+1        2987001                           158190.0                            69438.0  ...                         8949006.0                         1400556.0                                 4114.0
+2        2987002                            82407.0                             2138.0  ...                               NaN                         3781545.0                                 1941.0
+3        2987003                            41665.0                            39850.0  ...                           60237.0                           60046.0                                 4026.0
+4        2987004                         10967831.0                             7305.0  ...                               NaN                               NaN                                 5715.0
+
+[5 rows x 11 columns]
+2019-09-12 14:44:53,612 [    INFO] [TimeToFutureTransaction_step_-10] no pickled file. create feature.
+2019-09-12 14:46:22,534 [    INFO] [TimeToFutureTransaction_step_-10] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-10_train.pkl
+2019-09-12 14:46:22,640 [    INFO] [TimeToFutureTransaction_step_-10] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToFutureTransaction_step_-10_test.pkl
+2019-09-12 14:46:22,713 [   DEBUG] [TimeToFutureTransaction_step_-10] head of feature
+2019-09-12 14:46:22,755 [   DEBUG] [TimeToFutureTransaction_step_-10]    TransactionID  card1_time_to_next_transaction_-10  card2_time_to_next_transaction_-10  ...  uid4_time_to_next_transaction_-10  uid5_time_to_next_transaction_-10  bank_type_time_to_next_transaction_-10
+0        2987000                           3276189.0                                 NaN  ...                                NaN                                NaN                                665417.0
+1        2987001                            177549.0                             71508.0  ...                          9153316.0                          1616123.0                                  5820.0
+2        2987002                             90935.0                              2411.0  ...                                NaN                          4143325.0                                  2219.0
+3        2987003                             45359.0                             41503.0  ...                            66978.0                            60237.0                                  5429.0
+4        2987004                          11066034.0                              7551.0  ...                                NaN                                NaN                                  6941.0
+
+[5 rows x 11 columns]
+2019-09-12 14:46:24,402 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-12 14:48:44,306 [    INFO] start training
+2019-09-12 14:51:54,331 [   DEBUG] [100]	training's auc: 0.939006	valid_1's auc: 0.898088
+2019-09-12 14:54:10,573 [   DEBUG] [200]	training's auc: 0.963381	valid_1's auc: 0.910855
+2019-09-12 14:56:15,985 [   DEBUG] [300]	training's auc: 0.978802	valid_1's auc: 0.92057
+2019-09-12 14:58:22,074 [   DEBUG] [400]	training's auc: 0.987514	valid_1's auc: 0.927758
+2019-09-12 15:00:46,825 [   DEBUG] [500]	training's auc: 0.992855	valid_1's auc: 0.933011
+2019-09-12 15:03:27,847 [   DEBUG] [600]	training's auc: 0.995927	valid_1's auc: 0.935877
+2019-09-12 15:07:09,473 [   DEBUG] [700]	training's auc: 0.997748	valid_1's auc: 0.937607
+2019-09-12 15:10:37,256 [   DEBUG] [800]	training's auc: 0.998725	valid_1's auc: 0.9389
+2019-09-12 15:13:50,588 [   DEBUG] [900]	training's auc: 0.999293	valid_1's auc: 0.939799
+2019-09-12 15:18:02,947 [   DEBUG] [1000]	training's auc: 0.999577	valid_1's auc: 0.940658
+2019-09-12 15:21:01,356 [   DEBUG] [1100]	training's auc: 0.999749	valid_1's auc: 0.94093
+2019-09-12 15:24:50,117 [   DEBUG] [1200]	training's auc: 0.999852	valid_1's auc: 0.94109
+2019-09-12 15:27:57,477 [   DEBUG] [1300]	training's auc: 0.999914	valid_1's auc: 0.941394
+2019-09-12 15:30:33,391 [   DEBUG] [1400]	training's auc: 0.999951	valid_1's auc: 0.941669
+2019-09-12 15:41:04,957 [   DEBUG] [1500]	training's auc: 0.999973	valid_1's auc: 0.941842
+2019-09-12 15:47:22,881 [   DEBUG] [1600]	training's auc: 0.999986	valid_1's auc: 0.941871
+2019-09-12 15:49:42,348 [    INFO] best_iteration: 1571, train_score: 0.999983, valid_score: 0.941918
+2019-09-12 15:49:42,561 [    INFO] start prediction
+2019-09-12 15:53:05,121 [    INFO] [ID] read features from pickled file.
+2019-09-12 15:53:05,246 [    INFO] save results
+2019-09-12 15:53:05,259 [    INFO] save val_pred
+2019-09-12 15:53:05,260 [    INFO] [DT_M] read features from pickled file.
+2019-09-12 15:53:05,906 [    INFO] save submission

@@ -66,6 +66,19 @@ class LightGBM(BaseModel):
         self.fit_params = fit_params
         self.model_params = model_params
 
+    def fit(
+        self,
+        X_tr: pd.DataFrame,
+        y_tr: pd.Series
+    ):
+        st_time = time.time()
+        train_dataset = lgb.Dataset(X_tr, label=y_tr)
+        self.clf = lgb.train(
+            self.model_params,
+            train_dataset,
+            **self.fit_params
+        )
+
     def train_and_validate(
         self,
         X_tr: pd.DataFrame,
@@ -81,11 +94,12 @@ class LightGBM(BaseModel):
             period = self.fit_params["verbose_eval"]
         else:
             period = 100
-        num_round = 100000
+        if "num_boost_round" not in self.fit_params:
+            num_boost_round = 100000
         self.clf = lgb.train(
             self.model_params,
             train_dataset,
-            num_round,
+            num_boost_round,
             valid_sets=[train_dataset, val_dataset],
             callbacks=[log_evaluation(logger, period=period)],
             **self.fit_params
@@ -271,9 +285,85 @@ class KNN(SKLearnClassifier):
         return KNeighborsClassifier
 
 
+class NoSplit(BaseEstimator, TransformerMixin):
+
+    def __init__(self, model_class, model_params, fit_params, resample_conf={}):
+        self.model = model_class(model_params, fit_params)
+        self.resample_method = resample_conf.get("method", "no_resample")
+        self.resample_params = resample_conf.get("params", {})
+        self.results = {
+            'resample_config': resample_conf,
+            'model_params': copy.deepcopy(model_params),
+            'fit_params': copy.deepcopy(fit_params)
+        }
+
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
+        self.model.fit(X[feats_list], y)
+
+    def predict(self, X: pd.DataFrame, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
+        return self.model.predict(X[feats_list])
+
+
+class LastMonthOut(BaseEstimator, TransformerMixin):
+
+    def __init__(self, model_class, model_params, fit_params, resample_conf={}, retrain_on_full=True):
+        self.val_pred = None
+        self.model_class = model_class
+        self.model_params = model_params
+        self.fit_params = fit_params
+        self.resample_method = resample_conf.get("method", "no_resample")
+        self.resample_params = resample_conf.get("params", {})
+        self.retrain_on_full = retrain_on_full
+        self.results = {
+            'model_params': copy.deepcopy(model_params),
+            'fit_params': copy.deepcopy(fit_params)
+        }
+
+    def _train_val_split(self, X: pd.DataFrame, y: pd.DataFrame):
+        X['TARGET'] = y
+        trn_X = X[X['DT_M'] < X['DT_M'].max()]
+        trn_y = trn_X['TARGET']
+        val_X = X[X['DT_M'] == X['DT_M'].max()]
+        val_y = val_X['TARGET']
+        del trn_X['TARGET'], val_X['TARGET']
+        return trn_X, trn_y, val_X, val_y
+
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None):
+        from sklearn.metrics import roc_auc_score
+
+        if feats_list is None:
+            feats_list = list(X.columns)
+
+        X_tr, y_tr, X_val, y_val = self._train_val_split(X, y)
+        X_tr, y_tr = getattr(
+            Resampler, self.resample_method
+        )(X_tr, y_tr, **self.resample_params)
+        self.model = self.model_class(self.model_params, self.fit_params)
+        self.val_pred, results = self.model.train_and_validate(X_tr[feats_list], y_tr, X_val[feats_list], y_val)
+        self.results['result'] = results
+        self.results['trials'] = {'Full': {'val_score': results['val_score']}}
+
+        if self.retrain_on_full:
+            logger.info('retrain model with full training data')
+            if self.model_class == LightGBM:
+                self.fit_params['num_boost_round'] = results['best_iteration']
+                self.fit_params['early_stopping_rounds'] = None
+            self.model = self.model_class(self.model_params, self.fit_params)
+            self.model.fit(X[feats_list], y)
+
+    def predict(self, X: pd.DataFrame, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
+        return self.model.predict(X[feats_list])
+
+
 class KFoldModel(BaseEstimator, TransformerMixin):
 
-    def __init__(self, folds, model_class, model_params, fit_params, resample_conf={}):
+    def __init__(self, folds, model_class, model_params, fit_params, resample_conf={}, split_params={}):
         self.oof = None
         self.models = []
         self.model_class = model_class
@@ -282,13 +372,14 @@ class KFoldModel(BaseEstimator, TransformerMixin):
         self.model_params = model_params
         self.resample_method = resample_conf.get("method", "no_resample")
         self.resample_params = resample_conf.get("params", {})
+        self.split_params = split_params
         self.results = {
             'folds': str(folds),
             'model_params': copy.deepcopy(model_params),
             'fit_params': copy.deepcopy(fit_params)
         }
 
-    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None, split_params={}):
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None):
         from sklearn.metrics import roc_auc_score
 
         if feats_list is None:
@@ -297,8 +388,8 @@ class KFoldModel(BaseEstimator, TransformerMixin):
         trials = {}
         self.oof = np.zeros(len(y))
 
-        if isinstance(self.folds, GroupKFold) and 'group_key' in split_params:
-            iterator = self.folds.split(X.values, y.values, groups=X[split_params['group_key']])
+        if isinstance(self.folds, GroupKFold) and 'group_key' in self.split_params:
+            iterator = self.folds.split(X.values, y.values, groups=X[self.split_params['group_key']])
         else:
             iterator = self.folds.split(X.values, y.values)
 

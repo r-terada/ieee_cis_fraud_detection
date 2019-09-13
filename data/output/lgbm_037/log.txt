@@ -1,0 +1,91 @@
+2019-09-13 10:15:33,806 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type',
+                  'card4',
+                  'card6',
+                  'ProductCD',
+                  'M4',
+                  'id_34',
+                  'id_33'],
+ 'descriptions': 'add KonstantinFeature3 and some cols_to_drop',
+ 'features': [['KonstantinFeature3', {}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': True},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-13 10:15:33,819 [    INFO] [ID] read features from pickled file.
+2019-09-13 10:15:33,863 [    INFO] [KonstantinFeature3] no pickled file. create feature.
+2019-09-13 10:15:33,863 [    INFO] [Raw] read train.
+2019-09-13 10:15:56,438 [    INFO] [Raw] read test.
+2019-09-13 10:17:03,065 [    INFO] [KonstantinFeature3] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/KonstantinFeature3_train.pkl
+2019-09-13 10:17:03,124 [    INFO] [KonstantinFeature3] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/KonstantinFeature3_test.pkl
+2019-09-13 10:17:03,157 [   DEBUG] [KonstantinFeature3] head of feature
+2019-09-13 10:17:03,177 [   DEBUG] [KonstantinFeature3]    TransactionID  card4_freq  card6_freq  ProductCD_freq   M4_freq  id_34_processed id_33_processed  id_33_0  id_33_1
+0        2987000      9524.0    267648.0          800657  122947.0              NaN             460      NaN      NaN
+1        2987001    347386.0    267648.0          800657  357789.0              NaN             460      NaN      NaN
+2        2987002    719649.0    824959.0          800657  357789.0              NaN             460      NaN      NaN
+3        2987003    347386.0    824959.0          800657  357789.0              NaN             460      NaN      NaN
+4        2987004    347386.0    267648.0           62397       NaN              2.0             267   2220.0   1080.0
+2019-09-13 10:17:03,622 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-13 10:17:04,197 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-13 10:17:04,793 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-13 10:17:05,392 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-13 10:17:06,029 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-13 10:17:06,701 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-13 10:18:59,170 [    INFO] start training
+2019-09-13 10:21:38,018 [   DEBUG] [100]	training's auc: 0.938377	valid_1's auc: 0.898649
+2019-09-13 10:23:26,786 [   DEBUG] [200]	training's auc: 0.963	valid_1's auc: 0.912324
+2019-09-13 10:25:18,792 [   DEBUG] [300]	training's auc: 0.978182	valid_1's auc: 0.922442
+2019-09-13 10:27:18,724 [   DEBUG] [400]	training's auc: 0.987308	valid_1's auc: 0.929565
+2019-09-13 10:45:52,637 [   DEBUG] [500]	training's auc: 0.992628	valid_1's auc: 0.934064
+2019-09-13 10:48:33,042 [   DEBUG] [600]	training's auc: 0.995756	valid_1's auc: 0.936809
+2019-09-13 10:50:54,741 [   DEBUG] [700]	training's auc: 0.997604	valid_1's auc: 0.938738
+2019-09-13 10:53:13,983 [   DEBUG] [800]	training's auc: 0.998641	valid_1's auc: 0.939893
+2019-09-13 10:56:04,827 [   DEBUG] [900]	training's auc: 0.999221	valid_1's auc: 0.940676
+2019-09-13 10:58:25,012 [   DEBUG] [1000]	training's auc: 0.99954	valid_1's auc: 0.941112
+2019-09-13 11:00:48,626 [   DEBUG] [1100]	training's auc: 0.999726	valid_1's auc: 0.941506
+2019-09-13 11:03:36,112 [   DEBUG] [1200]	training's auc: 0.999836	valid_1's auc: 0.941763
+2019-09-13 11:06:10,426 [   DEBUG] [1300]	training's auc: 0.999902	valid_1's auc: 0.942077
+2019-09-13 11:08:38,747 [   DEBUG] [1400]	training's auc: 0.999943	valid_1's auc: 0.942129
+2019-09-13 11:10:53,794 [    INFO] best_iteration: 1366, train_score: 0.999932, valid_score: 0.942186
+2019-09-13 11:10:53,941 [    INFO] retrain model with full training data

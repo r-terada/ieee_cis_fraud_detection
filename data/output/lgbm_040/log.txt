@@ -1,0 +1,73 @@
+2019-09-13 14:52:33,166 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'add TransactionAmtDiffFromMean',
+ 'features': [['TransactionAmtDiffFromMean', {'concat': True}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': False},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-13 14:52:33,169 [    INFO] [ID] read features from pickled file.
+2019-09-13 14:52:33,185 [    INFO] [TransactionAmtDiffFromMean_concat_True] read features from pickled file.
+2019-09-13 14:52:33,674 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-13 14:52:34,268 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-13 14:52:35,020 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-13 14:52:35,826 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-13 14:52:36,705 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-13 14:52:37,382 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-13 14:54:19,167 [    INFO] start training
+2019-09-13 14:56:49,012 [   DEBUG] [100]	training's auc: 0.940108	valid_1's auc: 0.897872
+2019-09-13 14:58:31,117 [   DEBUG] [200]	training's auc: 0.962884	valid_1's auc: 0.909992
+2019-09-13 15:00:16,545 [   DEBUG] [300]	training's auc: 0.978165	valid_1's auc: 0.920816
+2019-09-13 15:02:07,083 [   DEBUG] [400]	training's auc: 0.987184	valid_1's auc: 0.927424
+2019-09-13 15:03:58,420 [   DEBUG] [500]	training's auc: 0.992717	valid_1's auc: 0.932235
+2019-09-13 15:05:53,008 [   DEBUG] [600]	training's auc: 0.995879	valid_1's auc: 0.935412
+2019-09-13 15:07:49,528 [   DEBUG] [700]	training's auc: 0.997665	valid_1's auc: 0.937597
+2019-09-13 15:09:47,652 [   DEBUG] [800]	training's auc: 0.998651	valid_1's auc: 0.939019
+2019-09-13 15:11:53,262 [   DEBUG] [900]	training's auc: 0.99923	valid_1's auc: 0.939927
+2019-09-13 15:14:40,131 [   DEBUG] [1000]	training's auc: 0.999548	valid_1's auc: 0.94071
+2019-09-13 15:17:17,850 [   DEBUG] [1100]	training's auc: 0.999731	valid_1's auc: 0.941224
+2019-09-13 15:19:55,767 [   DEBUG] [1200]	training's auc: 0.99984	valid_1's auc: 0.941574
+2019-09-13 15:22:37,514 [   DEBUG] [1300]	training's auc: 0.999905	valid_1's auc: 0.941919
+2019-09-13 15:25:49,318 [   DEBUG] [1400]	training's auc: 0.999946	valid_1's auc: 0.942124
+2019-09-13 15:29:22,026 [   DEBUG] [1500]	training's auc: 0.99997	valid_1's auc: 0.942299

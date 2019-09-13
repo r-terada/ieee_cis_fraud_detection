@@ -954,6 +954,54 @@ class KonstantinFeature2(BaseFeature):
         return train_df, test_df
 
 
+class KonstantinFeature3(BaseFeature):
+    '''
+    https://www.kaggle.com/kyakovlev/ieee-data-minification
+    
+    should drop original ['card4', 'card6', 'ProductCD', 'M4', 'id_34', 'id_33']
+    '''
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        ret_cols = [JOIN_KEY_COLUMN]
+        for col in ['card4', 'card6', 'ProductCD', 'M4']:
+            ret_cols.append(f'{col}_freq')
+            temp_df = pd.concat([train_transaction[[col]], test_transaction[[col]]])
+            col_encoded = temp_df[col].value_counts().to_dict()
+            train_transaction[f'{col}_freq'] = train_transaction[col].map(col_encoded)
+            test_transaction[f'{col}_freq'] = test_transaction[col].map(col_encoded)
+
+        ret_cols = ret_cols + ['id_34_processed', 'id_33_processed', 'id_33_0', 'id_33_1']
+        for df in [train_identity, test_identity]:
+            df['id_34_processed'] = df['id_34'].fillna(':0')
+            df['id_34_processed'] = df['id_34_processed'].apply(lambda x: x.split(':')[1]).astype(np.int8)
+            df['id_34_processed'] = np.where(df['id_34_processed']==0, np.nan, df['id_34_processed'])
+            df['id_33_processed'] = df['id_33'].fillna('0x0')
+            df['id_33_0'] = df['id_33_processed'].apply(lambda x: x.split('x')[0]).astype(int)
+            df['id_33_1'] = df['id_33_processed'].apply(lambda x: x.split('x')[1]).astype(int)
+            df['id_33_processed'] = np.where(df['id_33_processed']=='0x0', np.nan, df['id_33_processed'])
+
+        train_df = merge_on_id(train_transaction, train_identity)[ret_cols]
+        test_df = merge_on_id(test_transaction, test_identity)[ret_cols]
+
+        for col in list(train_df):
+            if train_df[col].dtype=='O':
+                print(col)
+                train_df[col] = train_df[col].fillna('unseen_before_label')
+                test_df[col]  = test_df[col].fillna('unseen_before_label')
+
+                train_df[col] = train_df[col].astype(str)
+                test_df[col] = test_df[col].astype(str)
+
+                le = LabelEncoder()
+                le.fit(list(train_df[col])+list(test_df[col]))
+                train_df[col] = le.transform(train_df[col])
+                test_df[col]  = le.transform(test_df[col])
+
+                train_df[col] = train_df[col].astype('category')
+                test_df[col] = test_df[col].astype('category')
+
+        return train_df, test_df
+
+
 class DaysFromBrowserRelease(BaseFeature):
 
     def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
@@ -1250,5 +1298,68 @@ class TimeFromPastTransaction(BaseFeature):
                 df[f'{col}_time_from_past_transaction_{self.step}'] = (gr_['DT'].shift(0) - gr_['DT'].shift(self.step)).dt.total_seconds()
 
         ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_from_past_transaction_{self.step}' for col in uids]
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class Cents(BaseFeature):
+
+    def __init__(self, round_num=2):
+        super().__init__()
+        self.round_num = round_num
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_round_by_{self.round_num}'
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        for df in [train_transaction, test_transaction]:
+            df[f'cents_{self.round_num}'] = np.round(
+                df['TransactionAmt'] - np.floor(df['TransactionAmt']),
+                self.round_num
+            )
+
+        ret_cols = [JOIN_KEY_COLUMN, f'cents_{self.round_num}']
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class TransactionAmtDiffFromMean(BaseFeature):
+
+    def __init__(self, concat=False):
+        super().__init__()
+        self.concat = concat
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_concat_{self.concat}'
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        for df in [train_transaction, test_transaction]:
+            df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
+            df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
+            df['uid3'] = df['uid2'].astype(str) + '_' + df['addr1'].astype(str) + '_' + df['addr2'].astype(str)
+            df['uid4'] = df['uid3'].astype(str) + '_' + df['P_emaildomain'].astype(str)
+            df['uid5'] = df['uid3'].astype(str) + '_' + df['R_emaildomain'].astype(str)
+            df['bank_type'] = df['card3'].astype(str)  + '_' +  df['card5'].astype(str)
+
+        uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
+
+        t_amt_means = {}
+        if not self.concat:
+            for df in [train_transaction, test_transaction]:
+                for col in uids:
+                    t_amt_means[col] = df.groupby([col]).agg({'TransactionAmt': 'mean'}).to_dict()['TransactionAmt']
+        else:
+            temp_df = pd.concat([train_transaction, test_transaction])
+            for col in uids:
+                t_amt_means[col] = temp_df.groupby([col]).agg({'TransactionAmt': 'mean'}).to_dict()['TransactionAmt']
+
+        for df in [train_transaction, test_transaction]:
+            for col in uids:
+                df[f'TransactionAmt_mean_{col}'] = df[col].map(t_amt_means[col])
+                df[f'TransactionAmt_diff_from_mean_{col}'] = df['TransactionAmt'] - df[f'TransactionAmt_mean_{col}']
+
+        ret_cols = [JOIN_KEY_COLUMN] + [f'TransactionAmt_diff_from_mean_{col}' for col in uids]
 
         return train_transaction[ret_cols], test_transaction[ret_cols]

@@ -1,0 +1,112 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 0.9999798754384316,
+    "val_score": 0.942939431678644,
+    "best_iteration": 1569,
+    "elapsed_time": "48.02 min.",
+    "feature_importance_top10": {
+      "V258": 409395.1994125843,
+      "C1_fq_enc": 173259.38155698776,
+      "C13": 145563.2222647667,
+      "V257": 125515.18638110161,
+      "C14": 120333.86164665222,
+      "R_emaildomain": 112727.75987792015,
+      "V294": 109273.26576471329,
+      "C1": 94453.59083676338,
+      "D2_scaled": 79094.62056040764,
+      "V243": 76231.54580450058
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.942939431678644
+    }
+  },
+  "features": [
+    [
+      "TransactionAmtDiffFromMean",
+      {
+        "concat": false
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

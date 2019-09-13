@@ -16,7 +16,7 @@ from pandas.core.common import SettingWithCopyWarning
 
 import models
 import features
-from features import create_feature, ID, read_target, JOIN_KEY_COLUMN, TARGET_COLUMN
+from features import create_feature, ID, DT_M, read_target, JOIN_KEY_COLUMN, TARGET_COLUMN
 from utils import init_logger, logger
 from utils import read_config, create_oof, create_sub
 
@@ -43,23 +43,39 @@ def main(conf_name) -> None:
 
     target = read_target()
 
-    # classifier pipeline
     model_class = getattr(models, conf.model.name)
-    kfold_class = getattr(sklearn.model_selection, conf.model.get('kfold_class', 'StratifiedKFold'))
-    folds = kfold_class(**conf.model.kfold_params)
-    model = models.KFoldModel(
-        folds,
-        model_class,
-        conf.model.model_params,
-        conf.model.fit_params,
-        conf.get("resample", None)
-    )
+    if 'kfold_params' in conf.model:
+        kfold_class = getattr(sklearn.model_selection, conf.model.get('kfold_class', 'StratifiedKFold'))
+        folds = kfold_class(**conf.model.kfold_params)
+        model = models.KFoldModel(
+            folds,
+            model_class,
+            conf.model.model_params,
+            conf.model.fit_params,
+            conf.get("resample", None),
+            conf.model.get("split_params", {})
+        )
+    elif 'split_class' in conf.model:
+        model = getattr(models, conf.model.split_class)(
+            model_class,
+            conf.model.model_params,
+            conf.model.fit_params,
+            conf.get("resample", None),
+        )
+    else:
+        model = models.LastMonthOut(
+            model_class,
+            conf.model.model_params,
+            conf.model.fit_params,
+            conf.get("resample", None),
+            conf.model.get('retrain_on_full', True)
+        )
 
     # main
     feats = [c for c in feature_tr.columns if c not in conf.cols_to_drop]
 
     logger.info('start training')
-    model.fit(feature_tr, target, feats, conf.model.get("split_params", {}))
+    model.fit(feature_tr, target, feats)
 
     logger.info('start prediction')
     predictions = model.predict(feature_te, feats)
@@ -74,14 +90,24 @@ def main(conf_name) -> None:
         result_path = os.path.join(out_dir, 'result.json')
         with open(result_path, "w") as fp:
             json.dump(model.results, fp, indent=2)
-        val_score = model.results['trials']['Full']['val_score']
-        open(os.path.join(out_dir, f'score_{val_score:.6f}'), 'w').close()
+
+        if 'trials' in model.results:
+            val_score = model.results['trials']['Full']['val_score']
+            open(os.path.join(out_dir, f'score_{val_score:.6f}'), 'w').close()
 
     if hasattr(model, 'oof'):
         logger.info('save oof')
         oof_df = create_oof(id_tr, model.oof)
         oof_path = os.path.join(out_dir, 'oof.csv')
         oof_df.to_csv(oof_path, index=False)
+
+    if hasattr(model, 'val_pred'):
+        logger.info('save val_pred')
+        dt_tr, dt_te = DT_M().create_feature()
+        oof_df = create_oof(dt_tr[dt_tr['DT_M'] == dt_tr['DT_M'].max()], model.val_pred)
+        oof_path = os.path.join(out_dir, 'val_prediction.csv')
+        oof_df.to_csv(oof_path, index=False)
+
 
     logger.info('save submission')
     sub_df = create_sub(id_te, predictions)

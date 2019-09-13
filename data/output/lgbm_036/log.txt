@@ -1,0 +1,81 @@
+2019-09-13 13:13:00,094 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'add TimeFromPastTransaction_step_1',
+ 'features': [['TimeFromPastTransaction', {'step': 1}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': False},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-13 13:13:00,110 [    INFO] [ID] read features from pickled file.
+2019-09-13 13:13:00,124 [    INFO] [TimeFromPastTransaction_step_1] read features from pickled file.
+2019-09-13 13:13:00,604 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-13 13:13:01,095 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-13 13:13:01,592 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-13 13:13:02,128 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-13 13:13:02,698 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-13 13:13:03,305 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-13 13:14:41,536 [    INFO] start training
+2019-09-13 13:17:11,249 [   DEBUG] [100]	training's auc: 0.939557	valid_1's auc: 0.896609
+2019-09-13 13:18:53,437 [   DEBUG] [200]	training's auc: 0.9631	valid_1's auc: 0.909571
+2019-09-13 13:20:38,899 [   DEBUG] [300]	training's auc: 0.978563	valid_1's auc: 0.920061
+2019-09-13 13:22:26,947 [   DEBUG] [400]	training's auc: 0.987531	valid_1's auc: 0.927125
+2019-09-13 13:24:17,566 [   DEBUG] [500]	training's auc: 0.992777	valid_1's auc: 0.93214
+2019-09-13 13:26:11,268 [   DEBUG] [600]	training's auc: 0.995885	valid_1's auc: 0.93514
+2019-09-13 13:28:07,478 [   DEBUG] [700]	training's auc: 0.997707	valid_1's auc: 0.937326
+2019-09-13 13:30:05,027 [   DEBUG] [800]	training's auc: 0.998685	valid_1's auc: 0.938579
+2019-09-13 13:32:06,820 [   DEBUG] [900]	training's auc: 0.999246	valid_1's auc: 0.939675
+2019-09-13 13:34:07,453 [   DEBUG] [1000]	training's auc: 0.999554	valid_1's auc: 0.940186
+2019-09-13 13:36:08,968 [   DEBUG] [1100]	training's auc: 0.999734	valid_1's auc: 0.940658
+2019-09-13 13:38:09,776 [   DEBUG] [1200]	training's auc: 0.999843	valid_1's auc: 0.940892
+2019-09-13 13:40:12,160 [   DEBUG] [1300]	training's auc: 0.999907	valid_1's auc: 0.94116
+2019-09-13 13:42:16,015 [   DEBUG] [1400]	training's auc: 0.999947	valid_1's auc: 0.941483
+2019-09-13 13:44:20,889 [   DEBUG] [1500]	training's auc: 0.999971	valid_1's auc: 0.941758
+2019-09-13 13:46:24,723 [   DEBUG] [1600]	training's auc: 0.999985	valid_1's auc: 0.941903
+2019-09-13 13:48:42,104 [    INFO] best_iteration: 1587, train_score: 0.999984, valid_score: 0.941938
+2019-09-13 13:48:42,312 [    INFO] start prediction
+2019-09-13 13:51:01,448 [    INFO] [ID] read features from pickled file.
+2019-09-13 13:51:01,496 [    INFO] save results
+2019-09-13 13:51:01,497 [    INFO] save val_pred
+2019-09-13 13:51:01,498 [    INFO] [DT_M] read features from pickled file.
+2019-09-13 13:51:01,919 [    INFO] save submission
