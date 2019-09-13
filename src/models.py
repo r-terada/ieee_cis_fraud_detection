@@ -18,6 +18,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split, GroupKFold
+from litemort import LiteMORT
 
 from utils import logger
 
@@ -130,6 +131,61 @@ class LightGBM(BaseModel):
     def predict(self, X):
         return self.clf.predict(X, num_iteration=self.clf.best_iteration)
 
+
+class LiteMort(BaseModel):
+    def __init__(self, model_params, fit_params):
+        self.clf = None
+        self.model_params = model_params
+        self.model_params.update(fit_params)
+
+    def fit(
+        self,
+        X_tr: pd.DataFrame,
+        y_tr: pd.Series
+    ):
+        self.clf = LiteMORT(self.model_params).fit(X_tr, y_tr)
+
+    def train_and_validate(
+        self,
+        X_tr: pd.DataFrame,
+        y_tr: pd.Series,
+        X_val: pd.DataFrame,
+        y_val: pd.DataFrame
+    ):
+        st_time = time.time()
+
+        if "num_boost_round" not in self.model_params:
+            self.model_params['num_boost_round'] = 100000
+        self.clf = LiteMORT(self.model_params).fit(
+            X_tr,
+            y_tr,
+            eval_set=[(X_val, y_val)]
+        )
+
+        # make outputs
+        oof_preds = self.clf.predict_raw(X_val)
+        feature_importance = pd.DataFrame.from_dict({
+            "feature": list(X_tr.columns),
+            "importance": self.clf.feature_importance(importance_type='gain'),
+        })
+        result = {
+            # "trn_score": self.clf.best_score['training']['auc'],
+            "val_score": roc_auc_score(y_val, oof_preds),
+            "best_iteration": self.clf.best_iteration,
+            "elapsed_time": f'{(time.time() - st_time) / 60:.2f} min.',
+            "feature_importance_top10": {
+                row["feature"]: row["importance"] for i, row in feature_importance.sort_values("importance", ascending=False).head(10).iterrows()
+            }
+        }
+        logger.info(
+            f"best_iteration: {result['best_iteration']}, "
+            # f"train_score: {result['trn_score']:.6f}, "
+            f"valid_score: {result['val_score']:.6f}"
+        )
+        return oof_preds, result
+
+    def predict(self, X):
+        return self.clf.predict_raw(X)
 
 class CatBoost(BaseModel):
 

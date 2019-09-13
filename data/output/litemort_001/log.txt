@@ -1,0 +1,75 @@
+2019-09-13 19:25:26,669 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': '',
+ 'features': [['Cents', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['DT_M', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LiteMort',
+           'retrain_on_full': False},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-13 19:25:26,671 [    INFO] [ID] read features from pickled file.
+2019-09-13 19:25:26,689 [    INFO] [Cents_round_by_2] read features from pickled file.
+2019-09-13 19:25:27,002 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-13 19:25:27,481 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-13 19:25:27,982 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-13 19:25:28,512 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-13 19:25:29,100 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-13 19:25:29,716 [    INFO] [DT_M] read features from pickled file.
+2019-09-13 19:25:30,348 [    INFO] head of features
+   TransactionID  cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  ...  uid4_time_to_next_transaction_-5  uid5_time_to_next_transaction_-5  bank_type_time_to_next_transaction_-5  DT_M
+0        2987000      0.5                           823005.0                                NaN  ...                               NaN                               NaN                               258808.0    12
+1        2987001      0.0                            14970.0                            14970.0  ...                         3872625.0                          575299.0                                 2824.0    12
+2        2987002      0.0                              256.0                               60.0  ...                               NaN                         1890677.0                                  733.0    12
+3        2987003      0.0                             1102.0                             1102.0  ...                           54350.0                           48417.0                                 1847.0    12
+4        2987004      0.0                          1346598.0                             2219.0  ...                               NaN                               NaN                                 2777.0    12
+
+[5 rows x 53 columns]
+   TransactionID   cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  ...  uid4_time_to_next_transaction_-5  uid5_time_to_next_transaction_-5  bank_type_time_to_next_transaction_-5  DT_M
+0        3663549  0.950195                            81334.0                               39.0  ...                         3540425.0                         1215092.0                                  192.0    19
+1        3663550  0.000000                            57668.0                              245.0  ...                          960085.0                          141694.0                                  241.0    19
+2        3663551  0.000000                           830075.0                           830075.0  ...                               NaN                         1824945.0                                  198.0    19
+3        3663552  0.950195                            70773.0                              954.0  ...                         2390841.0                         2390841.0                                 1270.0    19
+4        3663553  0.950195                              914.0                              914.0  ...                          161424.0                           76517.0                                 1131.0    19
+
+[5 rows x 53 columns]
+2019-09-13 19:25:30,368 [    INFO] start training

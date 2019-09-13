@@ -41,6 +41,8 @@ def main(conf_name) -> None:
     # create feature
     feature_tr, feature_te = create_feature(conf.features)
 
+    logger.info(f"head of features\n{feature_tr.head()}\n{feature_te.head()}")
+
     target = read_target()
 
     model_class = getattr(models, conf.model.name)
