@@ -221,7 +221,10 @@ class Prediction:
     def __init__(self, conf_name):
         out_dir = os.path.join('../data/output/', conf_name)
         logger.info(f"[{self.__class__.__name__}] read predictions from {out_dir}")
-        oof_path = os.path.join(out_dir, 'oof.csv')
+        if os.path.exists(os.path.join(out_dir, 'oof.csv')):
+            oof_path = os.path.join(out_dir, 'oof.csv')
+        else:
+            oof_path = os.path.join(out_dir, 'val_prediction.csv')
         sub_path = os.path.join(out_dir, 'submission.csv')
         self.oof = pd.read_csv(oof_path).rename(columns={TARGET_COLUMN: conf_name})
         self.sub = pd.read_csv(sub_path).rename(columns={TARGET_COLUMN: conf_name})

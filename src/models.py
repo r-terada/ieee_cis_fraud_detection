@@ -11,6 +11,7 @@ from numba import jit
 from catboost import CatBoostClassifier
 from lightgbm.callback import _format_eval_result
 from scipy.stats import norm
+from scipy.stats import rankdata
 from sklearn.metrics import roc_auc_score
 from sklearn.mixture import GaussianMixture
 from sklearn.base import TransformerMixin, BaseEstimator
@@ -244,7 +245,20 @@ class CatBoost(BaseModel):
 class Blender(BaseModel):
 
     def __init__(self, model_params, fit_params):
-        pass
+        if 'method' in model_params:
+            self.method = model_params['method']
+        else:
+            self.method = 'mean'
+
+    def mean(self, X):
+        return X.mean(axis=1)
+
+    def rank_average(self, X):11
+        predictions = []
+        for c in X.columns:
+            predictions.append(rankdata(X[c].values) / X[c].values.shape[0])
+        print(predictions)
+        return sum(predictions) / len(predictions)
 
     def train_and_validate(
         self,
@@ -254,9 +268,9 @@ class Blender(BaseModel):
         y_val: pd.DataFrame
     ):
         st_time = time.time()
-        trn_preds = X_tr.mean(axis=1)
+        trn_preds = getattr(self, self.method)(X_tr)
         trn_score = roc_auc_score(y_tr, trn_preds)
-        oof_preds = X_val.mean(axis=1)
+        oof_preds = getattr(self, self.method)(X_val)
         val_score = roc_auc_score(y_val, oof_preds)
         result = {
             "trn_score": trn_score,
@@ -270,7 +284,7 @@ class Blender(BaseModel):
         return oof_preds, result
 
     def predict(self, X):
-        return X.mean(axis=1)
+        return getattr(self, self.method)(X)
 
 
 class SKLearnClassifier(BaseModel):

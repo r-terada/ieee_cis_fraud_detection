@@ -1,0 +1,24 @@
+{
+    "descriptions" : "",
+    "resample": {
+        "method": "no_resample",
+        "params": {}
+    },
+    "features": [
+        ["Prediction", {"conf_name": "lgbm_038"}],
+        ["Prediction", {"conf_name": "lgbm_041"}]
+    ],
+    "cols_to_drop": [
+        "TransactionID",
+        "isFraud",
+        "DT_M"
+    ],
+    "model": {
+        "name": "Blender",
+        "model_params": {
+            "method": "rank_average"
+        },
+        "fit_params": {
+        }
+    }
+}
