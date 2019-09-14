@@ -253,7 +253,7 @@ class Blender(BaseModel):
     def mean(self, X):
         return X.mean(axis=1)
 
-    def rank_average(self, X):11
+    def rank_average(self, X):
         predictions = []
         for c in X.columns:
             predictions.append(rankdata(X[c].values) / X[c].values.shape[0])
