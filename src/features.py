@@ -1366,3 +1366,31 @@ class TransactionAmtDiffFromMean(BaseFeature):
         ret_cols = [JOIN_KEY_COLUMN] + [f'TransactionAmt_diff_from_mean_{col}' for col in uids]
 
         return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class TimeToLastTransaction(BaseFeature):
+
+    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+        for df in [train_transaction, test_transaction]:
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+
+        for df in [train_transaction, test_transaction]:
+            df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
+            df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
+            df['uid3'] = df['uid2'].astype(str) + '_' + df['addr1'].astype(str) + '_' + df['addr2'].astype(str)
+            df['uid4'] = df['uid3'].astype(str) + '_' + df['P_emaildomain'].astype(str)
+            df['uid5'] = df['uid3'].astype(str) + '_' + df['R_emaildomain'].astype(str)
+            df['bank_type'] = df['card3'].astype(str)  + '_' +  df['card5'].astype(str)
+
+        uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
+
+        temp_df = pd.concat([train_transaction, test_transaction])
+        for col in uids:
+            last_transaction = temp_df.groupby([col])['DT'].last().to_dict()
+            for df in [train_transaction, test_transaction]:
+                df[f'{col}_last_transaction_time'] = df[col].map(last_transaction)
+                df[f'{col}_time_to_last_transaction'] = (df[f'{col}_last_transaction_time'] - df['DT']).dt.total_seconds()
+
+        ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_to_last_transaction' for col in uids]
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]

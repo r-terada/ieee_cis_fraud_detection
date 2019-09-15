@@ -1,0 +1,113 @@
+2019-09-16 01:05:34,202 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'add Cents',
+ 'features': [['TimeToLastTransaction', {}],
+              ['Cents', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': True},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-16 01:05:34,204 [    INFO] [ID] read features from pickled file.
+2019-09-16 01:05:34,223 [    INFO] [TimeToLastTransaction] no pickled file. create feature.
+2019-09-16 01:05:34,223 [    INFO] [Raw] read train.
+2019-09-16 01:05:54,565 [    INFO] [Raw] read test.
+2019-09-16 01:12:02,000 [    INFO] [TimeToLastTransaction] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToLastTransaction_train.pkl
+2019-09-16 01:12:02,075 [    INFO] [TimeToLastTransaction] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TimeToLastTransaction_test.pkl
+2019-09-16 01:12:02,105 [   DEBUG] [TimeToLastTransaction] head of feature
+2019-09-16 01:12:02,134 [   DEBUG] [TimeToLastTransaction]    TransactionID  card1_time_to_last_transaction  card2_time_to_last_transaction  card3_time_to_last_transaction  ...  uid3_time_to_last_transaction  uid4_time_to_last_transaction  uid5_time_to_last_transaction  bank_type_time_to_last_transaction
+0        2987000                      32882952.0                             NaN                      34127936.0  ...                      6286225.0                            0.0                      6286225.0                          29030022.0
+1        2987001                      34127264.0                      34127264.0                      34127936.0  ...                     34026648.0                     34026648.0                     33942724.0                          34127264.0
+2        2987002                      34115568.0                      34127856.0                      34127868.0  ...                     33607480.0                     14595108.0                     33607480.0                          34127792.0
+3        2987003                      34122700.0                      34126280.0                      34127840.0  ...                     33825016.0                     31857430.0                     33825016.0                          34127128.0
+4        2987004                      34101256.0                      34126700.0                      34127832.0  ...                            0.0                            0.0                            0.0                          34127160.0
+
+[5 rows x 11 columns]
+2019-09-16 01:12:02,584 [    INFO] [Cents_round_by_2] read features from pickled file.
+2019-09-16 01:12:02,964 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-16 01:12:03,482 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-16 01:12:04,024 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-16 01:12:04,693 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-16 01:12:05,337 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-16 01:12:06,045 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-16 01:13:50,386 [    INFO] head of features
+   TransactionID  card1_time_to_last_transaction  card2_time_to_last_transaction  card3_time_to_last_transaction  card5_time_to_last_transaction  uid_time_to_last_transaction  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000                      32882952.0                             NaN                      34127936.0                      29030022.0                     6286225.0  ...      811091             811091              811091        811091         811091        811091
+1        2987001                      34127264.0                      34127264.0                      34127936.0                      34127264.0                    34127264.0  ...      811091             811091              811091        811091         811091        811091
+2        2987002                      34115568.0                      34127856.0                      34127868.0                      34127792.0                    34115568.0  ...      811091             811091              811091        811091         811091        811091
+3        2987003                      34122700.0                      34126280.0                      34127840.0                      34127128.0                    34122700.0  ...      811091             811091              811091        811091         811091        811091
+4        2987004                      34101256.0                      34126700.0                      34127832.0                      34127160.0                    34101256.0  ...           9                358                   9         11783           3573          4294
+
+[5 rows x 850 columns]
+   TransactionID  card1_time_to_last_transaction  card2_time_to_last_transaction  card3_time_to_last_transaction  card5_time_to_last_transaction  uid_time_to_last_transaction  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549                      15619139.0                      15810929.0                      15811113.0                      15811102.0                    15619139.0  ...      811091             811091              811091        811091         811091        811091
+1        3663550                      15807487.0                      15810890.0                      15811074.0                      15811063.0                    15807487.0  ...      811091             811091              811091        811091         811091        811091
+2        3663551                      15394162.0                      15710606.0                      15811027.0                      15811016.0                    15394162.0  ...      811091             811091              811091        811091         811091        811091
+3        3663552                      15800523.0                      15808081.0                      15811027.0                      15810951.0                    15800523.0  ...      811091             811091              811091        811091         811091        811091
+4        3663553                      15807660.0                      15807660.0                      15811020.0                      15810308.0                    15807660.0  ...      811091             811091              811091        811091         811091        811091
+
+[5 rows x 849 columns]
+2019-09-16 01:13:50,509 [    INFO] start training
+2019-09-16 01:16:20,828 [   DEBUG] [100]	training's auc: 0.939685	valid_1's auc: 0.896777
+2019-09-16 01:18:00,947 [   DEBUG] [200]	training's auc: 0.963122	valid_1's auc: 0.910021
+2019-09-16 01:19:47,317 [   DEBUG] [300]	training's auc: 0.978352	valid_1's auc: 0.920935
+2019-09-16 01:21:36,043 [   DEBUG] [400]	training's auc: 0.987471	valid_1's auc: 0.928654
+2019-09-16 01:23:27,554 [   DEBUG] [500]	training's auc: 0.992816	valid_1's auc: 0.93352
+2019-09-16 01:25:20,302 [   DEBUG] [600]	training's auc: 0.995932	valid_1's auc: 0.93647
+2019-09-16 01:27:15,676 [   DEBUG] [700]	training's auc: 0.997704	valid_1's auc: 0.938486
+2019-09-16 01:29:13,942 [   DEBUG] [800]	training's auc: 0.998688	valid_1's auc: 0.939862
+2019-09-16 01:31:11,937 [   DEBUG] [900]	training's auc: 0.999253	valid_1's auc: 0.940844
+2019-09-16 01:33:10,509 [   DEBUG] [1000]	training's auc: 0.999562	valid_1's auc: 0.941436
+2019-09-16 01:35:10,948 [   DEBUG] [1100]	training's auc: 0.999739	valid_1's auc: 0.941965
+2019-09-16 01:37:13,055 [   DEBUG] [1200]	training's auc: 0.999845	valid_1's auc: 0.942282
+2019-09-16 01:39:16,580 [   DEBUG] [1300]	training's auc: 0.999909	valid_1's auc: 0.942443
+2019-09-16 01:41:19,187 [   DEBUG] [1400]	training's auc: 0.999949	valid_1's auc: 0.942697
+2019-09-16 01:43:21,329 [   DEBUG] [1500]	training's auc: 0.999972	valid_1's auc: 0.942726
+2019-09-16 01:45:29,066 [    INFO] best_iteration: 1484, train_score: 0.999969, valid_score: 0.942829
+2019-09-16 01:45:29,193 [    INFO] retrain model with full training data
+2019-09-16 02:16:12,482 [    INFO] start prediction
+2019-09-16 02:18:21,592 [    INFO] [ID] read features from pickled file.
+2019-09-16 02:18:21,641 [    INFO] save results
+2019-09-16 02:18:21,648 [    INFO] save val_pred
+2019-09-16 02:18:21,648 [    INFO] [DT_M] read features from pickled file.
+2019-09-16 02:18:22,213 [    INFO] save submission
