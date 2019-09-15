@@ -1,0 +1,303 @@
+2019-09-15 20:44:49,921 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'feature selection by null importnace',
+ 'features': [['Cents', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 1000},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': False},
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 0.1}}}
+2019-09-15 20:44:49,923 [    INFO] [ID] read features from pickled file.
+2019-09-15 20:44:49,956 [    INFO] [Cents_round_by_2] read features from pickled file.
+2019-09-15 20:44:50,324 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-15 20:44:50,938 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-15 20:44:51,541 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-15 20:44:52,185 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-15 20:44:52,825 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-15 20:44:53,525 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-15 20:46:51,356 [    INFO] head of features
+   TransactionID  cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  card5_time_to_next_transaction_-1  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000      0.5                           823005.0                                NaN                                1.0                            72203.0  ...      811091             811091              811091        811091         811091        811091
+1        2987001      0.0                            14970.0                            14970.0                               68.0                              105.0  ...      811091             811091              811091        811091         811091        811091
+2        2987002      0.0                              256.0                               60.0                               30.0                               53.0  ...      811091             811091              811091        811091         811091        811091
+3        2987003      0.0                             1102.0                             1102.0                                7.0                              270.0  ...      811091             811091              811091        811091         811091        811091
+4        2987004      0.0                          1346598.0                             2219.0                                4.0                             1393.0  ...           9                358                   9         11783           3573          4294
+
+[5 rows x 840 columns]
+   TransactionID   cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  card5_time_to_next_transaction_-1  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549  0.950195                            81334.0                               39.0                               39.0                               39.0  ...      811091             811091              811091        811091         811091        811091
+1        3663550  0.000000                            57668.0                              245.0                               47.0                               47.0  ...      811091             811091              811091        811091         811091        811091
+2        3663551  0.000000                           830075.0                           830075.0                                0.0                               13.0  ...      811091             811091              811091        811091         811091        811091
+3        3663552  0.950195                            70773.0                              954.0                                7.0                              376.0  ...      811091             811091              811091        811091         811091        811091
+4        3663553  0.950195                              914.0                              914.0                                6.0                              226.0  ...      811091             811091              811091        811091         811091        811091
+
+[5 rows x 839 columns]
+2019-09-15 20:47:07,769 [    INFO] Results for threshold  99
+2019-09-15 20:47:07,770 [    INFO] split: use 221 features
+2019-09-15 20:47:12,042 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 20:47:12,050 [   DEBUG] label before sampling: 
+2019-09-15 20:47:12,050 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 20:47:14,669 [   DEBUG] label after sampling: 
+2019-09-15 20:47:14,674 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 20:50:30,991 [   DEBUG] [1000]	training's auc: 0.997382	valid_1's auc: 0.933875
+2019-09-15 20:53:32,418 [   DEBUG] [2000]	training's auc: 0.999971	valid_1's auc: 0.936851
+2019-09-15 20:55:01,433 [    INFO] best_iteration: 2208, train_score: 0.999991, valid_score: 0.937085
+2019-09-15 20:55:01,553 [    INFO] 	 SPLIT : 0.9370846540682479
+2019-09-15 20:55:01,553 [    INFO] gain: use 617 features
+2019-09-15 20:55:03,532 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 20:55:03,537 [   DEBUG] label before sampling: 
+2019-09-15 20:55:03,537 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 20:55:06,302 [   DEBUG] label after sampling: 
+2019-09-15 20:55:06,306 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:06:27,452 [   DEBUG] [1000]	training's auc: 0.99928	valid_1's auc: 0.939994
+2019-09-15 21:15:57,107 [    INFO] best_iteration: 1630, train_score: 0.999990, valid_score: 0.941372
+2019-09-15 21:15:57,310 [    INFO] 	 GAIN  : 0.9413721834192785
+2019-09-15 21:15:57,311 [    INFO] Results for threshold  95
+2019-09-15 21:15:57,312 [    INFO] split: use 312 features
+2019-09-15 21:15:59,590 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 21:15:59,595 [   DEBUG] label before sampling: 
+2019-09-15 21:15:59,595 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:16:02,333 [   DEBUG] label after sampling: 
+2019-09-15 21:16:02,337 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:20:39,140 [   DEBUG] [1000]	training's auc: 0.99802	valid_1's auc: 0.937281
+2019-09-15 21:23:56,615 [    INFO] best_iteration: 1695, train_score: 0.999933, valid_score: 0.939120
+2019-09-15 21:23:56,762 [    INFO] 	 SPLIT : 0.939120404328968
+2019-09-15 21:23:56,762 [    INFO] gain: use 661 features
+2019-09-15 21:23:58,669 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 21:23:58,674 [   DEBUG] label before sampling: 
+2019-09-15 21:23:58,674 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:24:01,092 [   DEBUG] label after sampling: 
+2019-09-15 21:24:01,099 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:35:47,682 [   DEBUG] [1000]	training's auc: 0.999307	valid_1's auc: 0.939933
+2019-09-15 21:44:36,623 [    INFO] best_iteration: 1532, train_score: 0.999980, valid_score: 0.941398
+2019-09-15 21:44:36,795 [    INFO] 	 GAIN  : 0.9413975387583196
+2019-09-15 21:44:36,796 [    INFO] Results for threshold  90
+2019-09-15 21:44:36,796 [    INFO] split: use 360 features
+2019-09-15 21:44:38,730 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 21:44:38,734 [   DEBUG] label before sampling: 
+2019-09-15 21:44:38,735 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:44:40,942 [   DEBUG] label after sampling: 
+2019-09-15 21:44:40,945 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:49:55,545 [   DEBUG] [1000]	training's auc: 0.998328	valid_1's auc: 0.936135
+2019-09-15 21:54:38,156 [    INFO] best_iteration: 1583, train_score: 0.999908, valid_score: 0.937978
+2019-09-15 21:54:38,345 [    INFO] 	 SPLIT : 0.9379775628008576
+2019-09-15 21:54:38,345 [    INFO] gain: use 680 features
+2019-09-15 21:54:40,265 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 21:54:40,269 [   DEBUG] label before sampling: 
+2019-09-15 21:54:40,269 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 21:54:42,697 [   DEBUG] label after sampling: 
+2019-09-15 21:54:42,701 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:06:13,326 [   DEBUG] [1000]	training's auc: 0.999305	valid_1's auc: 0.940272
+2019-09-15 22:12:57,332 [    INFO] best_iteration: 1469, train_score: 0.999967, valid_score: 0.941784
+2019-09-15 22:12:57,514 [    INFO] 	 GAIN  : 0.9417841713609989
+2019-09-15 22:12:57,516 [    INFO] Results for threshold  80
+2019-09-15 22:12:57,516 [    INFO] split: use 401 features
+2019-09-15 22:12:59,771 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 22:12:59,775 [   DEBUG] label before sampling: 
+2019-09-15 22:12:59,775 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:13:01,972 [   DEBUG] label after sampling: 
+2019-09-15 22:13:01,978 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:17:33,262 [   DEBUG] [1000]	training's auc: 0.998509	valid_1's auc: 0.93677
+2019-09-15 22:22:05,250 [   DEBUG] [2000]	training's auc: 0.999996	valid_1's auc: 0.939092
+2019-09-15 22:22:45,545 [    INFO] best_iteration: 1947, train_score: 0.999994, valid_score: 0.939147
+2019-09-15 22:22:45,680 [    INFO] 	 SPLIT : 0.9391469814325464
+2019-09-15 22:22:45,681 [    INFO] gain: use 691 features
+2019-09-15 22:22:47,437 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 22:22:47,441 [   DEBUG] label before sampling: 
+2019-09-15 22:22:47,441 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:22:49,669 [   DEBUG] label after sampling: 
+2019-09-15 22:22:49,673 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:32:02,014 [   DEBUG] [1000]	training's auc: 0.999315	valid_1's auc: 0.940495
+2019-09-15 22:35:29,633 [    INFO] best_iteration: 1228, train_score: 0.999822, valid_score: 0.941422
+2019-09-15 22:35:29,782 [    INFO] 	 GAIN  : 0.94142196287439
+2019-09-15 22:35:29,783 [    INFO] Results for threshold  70
+2019-09-15 22:35:29,783 [    INFO] split: use 432 features
+2019-09-15 22:35:32,054 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 22:35:32,058 [   DEBUG] label before sampling: 
+2019-09-15 22:35:32,058 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:35:34,181 [   DEBUG] label after sampling: 
+2019-09-15 22:35:34,185 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:40:48,294 [   DEBUG] [1000]	training's auc: 0.998633	valid_1's auc: 0.937774
+2019-09-15 22:45:19,089 [    INFO] best_iteration: 1734, train_score: 0.999977, valid_score: 0.939721
+2019-09-15 22:45:19,210 [    INFO] 	 SPLIT : 0.9397212331144319
+2019-09-15 22:45:19,210 [    INFO] gain: use 700 features
+2019-09-15 22:45:20,971 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 22:45:20,974 [   DEBUG] label before sampling: 
+2019-09-15 22:45:20,975 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:45:23,200 [   DEBUG] label after sampling: 
+2019-09-15 22:45:23,204 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 22:54:52,579 [   DEBUG] [1000]	training's auc: 0.999308	valid_1's auc: 0.939939
+2019-09-15 23:04:55,760 [    INFO] best_iteration: 1860, train_score: 0.999999, valid_score: 0.941242
+2019-09-15 23:04:55,915 [    INFO] 	 GAIN  : 0.9412415365614081
+2019-09-15 23:04:55,915 [    INFO] Results for threshold  60
+2019-09-15 23:04:55,915 [    INFO] split: use 463 features
+2019-09-15 23:04:57,763 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 23:04:57,767 [   DEBUG] label before sampling: 
+2019-09-15 23:04:57,767 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:05:00,002 [   DEBUG] label after sampling: 
+2019-09-15 23:05:00,006 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:10:23,363 [   DEBUG] [1000]	training's auc: 0.998759	valid_1's auc: 0.937425
+2019-09-15 23:15:54,199 [   DEBUG] [2000]	training's auc: 0.999998	valid_1's auc: 0.939876
+2019-09-15 23:16:59,094 [    INFO] best_iteration: 2009, train_score: 0.999998, valid_score: 0.939904
+2019-09-15 23:16:59,231 [    INFO] 	 SPLIT : 0.9399038049651378
+2019-09-15 23:16:59,231 [    INFO] gain: use 709 features
+2019-09-15 23:17:01,083 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 23:17:01,089 [   DEBUG] label before sampling: 
+2019-09-15 23:17:01,090 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:17:03,296 [   DEBUG] label after sampling: 
+2019-09-15 23:17:03,300 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:26:42,973 [   DEBUG] [1000]	training's auc: 0.999321	valid_1's auc: 0.940358
+2019-09-15 23:36:59,002 [    INFO] best_iteration: 1871, train_score: 0.999999, valid_score: 0.941855
+2019-09-15 23:36:59,173 [    INFO] 	 GAIN  : 0.9418554434422697
+2019-09-15 23:36:59,174 [    INFO] Results for threshold  50
+2019-09-15 23:36:59,175 [    INFO] split: use 489 features
+2019-09-15 23:37:01,017 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 23:37:01,023 [   DEBUG] label before sampling: 
+2019-09-15 23:37:01,024 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:37:03,190 [   DEBUG] label after sampling: 
+2019-09-15 23:37:03,194 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:42:44,394 [   DEBUG] [1000]	training's auc: 0.998827	valid_1's auc: 0.936996
+2019-09-15 23:47:11,434 [    INFO] best_iteration: 1630, train_score: 0.999965, valid_score: 0.939330
+2019-09-15 23:47:11,563 [    INFO] 	 SPLIT : 0.9393304919560066
+2019-09-15 23:47:11,564 [    INFO] gain: use 712 features
+2019-09-15 23:47:13,328 [    INFO] resample with under_sample: ratio=0.1
+2019-09-15 23:47:13,332 [   DEBUG] label before sampling: 
+2019-09-15 23:47:13,332 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:47:15,521 [   DEBUG] label after sampling: 
+2019-09-15 23:47:15,525 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-15 23:58:24,943 [   DEBUG] [1000]	training's auc: 0.999326	valid_1's auc: 0.940379
+2019-09-16 00:05:30,719 [    INFO] best_iteration: 1437, train_score: 0.999960, valid_score: 0.941605
+2019-09-16 00:05:30,877 [    INFO] 	 GAIN  : 0.9416046576465281
+2019-09-16 00:05:30,878 [    INFO] Results for threshold  40
+2019-09-16 00:05:30,878 [    INFO] split: use 516 features
+2019-09-16 00:05:32,673 [    INFO] resample with under_sample: ratio=0.1
+2019-09-16 00:05:32,677 [   DEBUG] label before sampling: 
+2019-09-16 00:05:32,677 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:05:34,914 [   DEBUG] label after sampling: 
+2019-09-16 00:05:34,918 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:12:29,765 [   DEBUG] [1000]	training's auc: 0.998856	valid_1's auc: 0.937734
+2019-09-16 00:19:34,832 [    INFO] best_iteration: 1775, train_score: 0.999990, valid_score: 0.939598
+2019-09-16 00:19:35,037 [    INFO] 	 SPLIT : 0.9395983526561354
+2019-09-16 00:19:35,037 [    INFO] gain: use 719 features
+2019-09-16 00:19:37,327 [    INFO] resample with under_sample: ratio=0.1
+2019-09-16 00:19:37,331 [   DEBUG] label before sampling: 
+2019-09-16 00:19:37,331 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:19:40,119 [   DEBUG] label after sampling: 
+2019-09-16 00:19:40,124 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:30:59,650 [   DEBUG] [1000]	training's auc: 0.999333	valid_1's auc: 0.94013
+2019-09-16 00:42:31,651 [    INFO] best_iteration: 1839, train_score: 0.999999, valid_score: 0.941844
+2019-09-16 00:42:31,869 [    INFO] 	 GAIN  : 0.9418444959850284
+2019-09-16 00:42:31,871 [    INFO] Results for threshold  30
+2019-09-16 00:42:31,871 [    INFO] split: use 536 features
+2019-09-16 00:42:34,580 [    INFO] resample with under_sample: ratio=0.1
+2019-09-16 00:42:34,585 [   DEBUG] label before sampling: 
+2019-09-16 00:42:34,585 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:42:36,974 [   DEBUG] label after sampling: 
+2019-09-16 00:42:36,978 [   DEBUG] 0    175490
+1     17549
+Name: TARGET, dtype: int64
+2019-09-16 00:49:28,675 [   DEBUG] [1000]	training's auc: 0.998881	valid_1's auc: 0.937836
