@@ -21,13 +21,13 @@ def main():
     all_files.remove('../data/external/gmean_of_low_correlation/submission-.9485.csv')
     my_subs = [
         # my subs
-        "../data/output/lgbm_042/submission.csv",
+        "../data/output/lgbm_045/submission.csv",
     ]
     scores = []
     for i in range(len(all_files)):
         scores.append(float('.' + all_files[i].split(".")[3]))
     # my subs
-    for s, path in zip([0.9492], my_subs):
+    for s, path in zip([0.9499], my_subs):
         scores.append(s)
         all_files.append(path)
     
@@ -91,9 +91,9 @@ def main():
     print(describe(m_gmean))
 
     concat_sub['isFraud'] = m_gmean
-    if not os.path.exists('../data/output/stack_gmean_003'):
-        os.makedirs('../data/output/stack_gmean_003')
-    concat_sub[['isFraud']].to_csv('../data/output/stack_gmean_003/submission.csv')
+    if not os.path.exists('../data/output/stack_gmean_005'):
+        os.makedirs('../data/output/stack_gmean_005')
+    concat_sub[['isFraud']].to_csv('../data/output/stack_gmean_005/submission.csv')
 
 
 if __name__ == "__main__":
