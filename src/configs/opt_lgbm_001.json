@@ -1,0 +1,123 @@
+{
+    "descriptions" : "test resample ratio=1.0",
+    "resample": {
+        "method": "under_sample",
+        "params": {"ratio": 1.0}
+    },
+    "features": [
+        ["Cents", {"round_num": 2}],
+        ["TimeToFutureTransaction", {"step": -1}],
+        ["TimeToFutureTransaction", {"step": -2}],
+        ["TimeToFutureTransaction", {"step": -3}],
+        ["TimeToFutureTransaction", {"step": -4}],
+        ["TimeToFutureTransaction", {"step": -5}],
+        ["KonstantinFeature2", {}]
+    ],
+    "cols_to_drop": [
+        "TransactionID",
+        "TransactionDT",
+        "isFraud",
+        "DT",
+        "DT_M",
+        "DT_W",
+        "DT_D",
+        "DT_hour",
+        "DT_day_week",
+        "DT_day_month",
+        "DT_M_total",
+        "DT_W_total",
+        "DT_D_total",
+        "uid",
+        "uid2",
+        "uid3",
+        "uid4",
+        "uid5",
+        "bank_type"
+    ],
+    "model": {
+        "name": "LightGBM",
+        "search_space": {
+            "max_bin": {
+                "min": 5,
+                "max": 500,
+                "step": 5,
+                "type": "int"
+            },
+            "num_leaves": {
+                "min": 16,
+                "max": 1024,
+                "step": 16,
+                "type": "int"
+            },
+            "min_data_in_leaf": {
+                "min": 1,
+                "max": 300,
+                "step": 1,
+                "type": "int"
+            },
+            "colsample_bytree": {
+                "min": 0.01,
+                "max": 1.0,
+                "step": 0.01,
+                "type": "float"
+            },
+            "bagging_fraction": {
+                "min": 0.01,
+                "max": 1.0,
+                "step": 0.01,
+                "type": "float"
+            },
+            "bagging_freq": {
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "type": "int"
+            },
+            "min_gain_to_split": {
+                "min": 0,
+                "max": 5.0,
+                "step": 0.01,
+                "type": "float"
+            },
+            "min_sum_hessian_in_leaf": {
+                "min": 0,
+                "max": 20.0,
+                "step": 0.1,
+                "type": "float"
+            },
+            "lambda_l1": {
+                "min": 0,
+                "max": 100,
+                "step": 0.1,
+                "type": "float"
+            },
+            "lambda_l2": {
+                "min": 0,
+                "max": 100,
+                "step": 0.1,
+                "type": "float"
+            }
+        },
+        "model_params": {
+            "objective": "binary",
+            "metric": "auc",
+            "boosting_type": "gbdt",
+            "learning_rate": 0.007,
+            "max_depth": -1,
+            "is_unbalance": true,
+            "boost_from_average": false,
+            "verbose": -1,
+            "save_binary": true,
+            "seed": 1337,
+            "feature_fraction_seed": 1337,
+            "bagging_seed": 1337,
+            "drop_seed": 1337,
+            "data_random_seed": 1337
+        },
+        "fit_params": {
+            "verbose_eval": false,
+            "early_stopping_rounds": 100,
+            "num_boost_round": 10000
+        }
+    }
+}
