@@ -1,0 +1,106 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "metric": "auc",
+    "n_jobs": -1,
+    "learning_rate": 0.007,
+    "num_leaves": 256,
+    "max_depth": -1,
+    "tree_learner": "serial",
+    "colsample_bytree": 0.5,
+    "subsample_freq": 1,
+    "subsample": 0.7,
+    "max_bin": 255,
+    "verbose": -1,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 1.0,
+    "val_score": 0.9355705562911472,
+    "best_iteration": 1284,
+    "elapsed_time": "9.18 min.",
+    "feature_importance_top10": {
+      "V258": 125668.12417030334,
+      "R_emaildomain": 85185.54277265072,
+      "V70": 60280.18241107464,
+      "C14": 47713.77584660053,
+      "V294": 42528.44463324547,
+      "C1_fq_enc": 37060.21566295624,
+      "C13": 33252.44290471077,
+      "V317": 31442.77827489376,
+      "D2_scaled": 25503.422855198383,
+      "C1": 23130.58593761921
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.9355705562911472
+    }
+  },
+  "features": [
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

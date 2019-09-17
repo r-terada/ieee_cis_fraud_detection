@@ -1,0 +1,104 @@
+2019-09-17 15:09:58,937 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'test resample ratio=1.0',
+ 'features': [['Cents', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': False},
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 1.0}}}
+2019-09-17 15:09:58,940 [    INFO] [ID] read features from pickled file.
+2019-09-17 15:09:59,028 [    INFO] [Cents_round_by_2] read features from pickled file.
+2019-09-17 15:09:59,560 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-17 15:10:00,446 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-17 15:10:01,382 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-17 15:10:02,127 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-17 15:10:02,935 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-17 15:10:04,121 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-17 15:12:02,227 [    INFO] head of features
+   TransactionID  cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000      0.5                           823005.0                                NaN                                1.0  ...             811091              811091        811091         811091        811091
+1        2987001      0.0                            14970.0                            14970.0                               68.0  ...             811091              811091        811091         811091        811091
+2        2987002      0.0                              256.0                               60.0                               30.0  ...             811091              811091        811091         811091        811091
+3        2987003      0.0                             1102.0                             1102.0                                7.0  ...             811091              811091        811091         811091        811091
+4        2987004      0.0                          1346598.0                             2219.0                                4.0  ...                358                   9         11783           3573          4294
+
+[5 rows x 840 columns]
+   TransactionID   cents_2  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549  0.950195                            81334.0                               39.0                               39.0  ...             811091              811091        811091         811091        811091
+1        3663550  0.000000                            57668.0                              245.0                               47.0  ...             811091              811091        811091         811091        811091
+2        3663551  0.000000                           830075.0                           830075.0                                0.0  ...             811091              811091        811091         811091        811091
+3        3663552  0.950195                            70773.0                              954.0                                7.0  ...             811091              811091        811091         811091        811091
+4        3663553  0.950195                              914.0                              914.0                                6.0  ...             811091              811091        811091         811091        811091
+
+[5 rows x 839 columns]
+2019-09-17 15:12:02,322 [    INFO] start training
+2019-09-17 15:12:06,572 [    INFO] resample with under_sample: ratio=1.0
+2019-09-17 15:12:06,577 [   DEBUG] label before sampling: 
+2019-09-17 15:12:06,577 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-17 15:12:07,131 [   DEBUG] label after sampling: 
+2019-09-17 15:12:07,132 [   DEBUG] 1    17549
+0    17549
+Name: TARGET, dtype: int64
+2019-09-17 15:14:39,276 [   DEBUG] [100]	training's auc: 0.966627	valid_1's auc: 0.903843
+2019-09-17 15:15:23,306 [   DEBUG] [200]	training's auc: 0.977045	valid_1's auc: 0.910105
+2019-09-17 15:15:59,449 [   DEBUG] [300]	training's auc: 0.985468	valid_1's auc: 0.91657
+2019-09-17 15:16:40,214 [   DEBUG] [400]	training's auc: 0.991708	valid_1's auc: 0.922212
+2019-09-17 15:17:20,269 [   DEBUG] [500]	training's auc: 0.995659	valid_1's auc: 0.926282
+2019-09-17 15:17:59,489 [   DEBUG] [600]	training's auc: 0.997937	valid_1's auc: 0.928996
+2019-09-17 15:18:37,367 [   DEBUG] [700]	training's auc: 0.999144	valid_1's auc: 0.930691
+2019-09-17 15:19:19,758 [   DEBUG] [800]	training's auc: 0.999708	valid_1's auc: 0.932285
+2019-09-17 15:19:59,345 [   DEBUG] [900]	training's auc: 0.999922	valid_1's auc: 0.933487
+2019-09-17 15:20:40,099 [   DEBUG] [1000]	training's auc: 0.999985	valid_1's auc: 0.934319
+2019-09-17 15:21:16,073 [   DEBUG] [1100]	training's auc: 0.999998	valid_1's auc: 0.934888
+2019-09-17 15:21:59,312 [   DEBUG] [1200]	training's auc: 1	valid_1's auc: 0.935551
+2019-09-17 15:22:38,954 [   DEBUG] [1300]	training's auc: 1	valid_1's auc: 0.936128
+2019-09-17 15:23:40,570 [    INFO] best_iteration: 1296, train_score: 1.000000, valid_score: 0.936098
+2019-09-17 15:23:40,688 [    INFO] start prediction
+2019-09-17 15:26:34,655 [    INFO] [ID] read features from pickled file.
+2019-09-17 15:26:34,727 [    INFO] save results
+2019-09-17 15:26:34,731 [    INFO] save val_pred
+2019-09-17 15:26:34,732 [    INFO] [DT_M] read features from pickled file.
+2019-09-17 15:26:35,281 [    INFO] save submission
