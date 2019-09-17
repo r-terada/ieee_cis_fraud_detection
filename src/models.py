@@ -97,11 +97,10 @@ class LightGBM(BaseModel):
         else:
             period = 100
         if "num_boost_round" not in self.fit_params:
-            num_boost_round = 100000
+            self.fit_params['num_boost_round'] = 100000
         self.clf = lgb.train(
             self.model_params,
             train_dataset,
-            num_boost_round,
             valid_sets=[train_dataset, val_dataset],
             callbacks=[log_evaluation(logger, period=period)],
             **self.fit_params
