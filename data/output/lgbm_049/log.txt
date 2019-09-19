@@ -1,0 +1,401 @@
+2019-09-20 02:00:30,257 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'Aggregation and FrequencyEncoding. just check it works '
+                 'properly.',
+ 'features': [['FrequencyEncoding',
+               {'column_specs': [{'columns': ['card1', 'DT_hour'],
+                                  'propotion_denominator_columns': ['card1'],
+                                  'propotion_only': True},
+                                 {'columns': ['card2', 'DT_hour'],
+                                  'propotion_denominator_columns': ['card2'],
+                                  'propotion_only': True},
+                                 {'columns': ['card3', 'DT_hour'],
+                                  'propotion_denominator_columns': ['card3'],
+                                  'propotion_only': True},
+                                 {'columns': ['card5', 'DT_hour'],
+                                  'propotion_denominator_columns': ['card5'],
+                                  'propotion_only': True},
+                                 {'columns': ['uid', 'DT_hour'],
+                                  'propotion_denominator_columns': ['uid'],
+                                  'propotion_only': True},
+                                 {'columns': ['uid2', 'DT_hour'],
+                                  'propotion_denominator_columns': ['uid2'],
+                                  'propotion_only': True},
+                                 {'columns': ['uid3', 'DT_hour'],
+                                  'propotion_denominator_columns': ['uid3'],
+                                  'propotion_only': True},
+                                 {'columns': ['uid4', 'DT_hour'],
+                                  'propotion_denominator_columns': ['uid4'],
+                                  'propotion_only': True},
+                                 {'columns': ['uid5', 'DT_hour'],
+                                  'propotion_denominator_columns': ['uid5'],
+                                  'propotion_only': True},
+                                 {'columns': ['bank_type', 'DT_hour'],
+                                  'propotion_denominator_columns': ['bank_type'],
+                                  'propotion_only': True}]}],
+              ['Aggregation',
+               {'agg_recipes': [[['card1', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['card2', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['card3', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['card5', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['uid', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['uid2', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['uid3', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['uid4', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['uid5', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]],
+                                [['bank_type', 'DT_M'],
+                                 [['TransactionAmt', 'mean'],
+                                  ['TransactionAmt', 'std']]]]}],
+              ['Cents', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.5,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'learning_rate': 0.007,
+                            'max_bin': 255,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'n_jobs': -1,
+                            'num_leaves': 256,
+                            'objective': 'binary',
+                            'seed': 1337,
+                            'subsample': 0.7,
+                            'subsample_freq': 1,
+                            'tree_learner': 'serial',
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': False},
+ 'resample': {'method': 'under_sample', 'params': {'ratio': 1.0}}}
+2019-09-20 02:00:30,262 [    INFO] [ID] read features from pickled file.
+2019-09-20 02:00:30,309 [    INFO] [FrequencyEncoding] no pickled file. create feature.
+2019-09-20 02:00:30,309 [    INFO] [ID] read features from pickled file.
+2019-09-20 02:00:30,321 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_card1_DT_hour_by_card1] read features from pickled file.
+2019-09-20 02:00:30,723 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_card2_DT_hour_by_card2] read features from pickled file.
+2019-09-20 02:00:31,184 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_card3_DT_hour_by_card3] read features from pickled file.
+2019-09-20 02:00:31,699 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_card5_DT_hour_by_card5] read features from pickled file.
+2019-09-20 02:00:32,154 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_uid_DT_hour_by_uid] read features from pickled file.
+2019-09-20 02:00:32,646 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_uid2_DT_hour_by_uid2] read features from pickled file.
+2019-09-20 02:00:33,128 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_uid3_DT_hour_by_uid3] read features from pickled file.
+2019-09-20 02:00:33,641 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_uid4_DT_hour_by_uid4] read features from pickled file.
+2019-09-20 02:00:34,143 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_uid5_DT_hour_by_uid5] read features from pickled file.
+2019-09-20 02:00:34,662 [    INFO] [ColumnFrequencyEncoder_concat_True_propotion_of_bank_type_DT_hour_by_bank_type] read features from pickled file.
+2019-09-20 02:00:35,338 [    INFO] [FrequencyEncoding] head of feature
+2019-09-20 02:00:35,362 [    INFO] [FrequencyEncoding]    TransactionID  card1_DT_hour_propotion_by_card1  card2_DT_hour_propotion_by_card2  card3_DT_hour_propotion_by_card3  ...  uid3_DT_hour_propotion_by_uid3  uid4_DT_hour_propotion_by_uid4  uid5_DT_hour_propotion_by_uid5  bank_type_DT_hour_propotion_by_bank_type
+0        2987000                          0.089294                               NaN                          0.061768  ...                        0.500000                        1.000000                        0.500000                                  0.084167
+1        2987001                          0.050079                          0.056335                          0.061768  ...                        0.057129                        0.190430                        0.061218                                  0.060059
+2        2987002                          0.072449                          0.062744                          0.061768  ...                        0.130493                        0.500000                        0.133301                                  0.064270
+3        2987003                          0.066406                          0.064941                          0.061768  ...                        0.038666                        0.035217                        0.039551                                  0.063599
+4        2987004                          0.033325                          0.055237                          0.061768  ...                        1.000000                        1.000000                        1.000000                                  0.060059
+
+[5 rows x 11 columns]
+2019-09-20 02:00:35,750 [    INFO] [Aggregation] no pickled file. create feature.
+2019-09-20 02:00:35,750 [    INFO] [ID] read features from pickled file.
+2019-09-20 02:00:35,757 [    INFO] [TransactionAmt_mean_by_card1_DT_M] no pickled file. create feature.
+2019-09-20 02:00:35,757 [    INFO] [Raw] read train.
+2019-09-20 02:00:55,715 [    INFO] [Raw] read test.
+2019-09-20 02:02:08,451 [    INFO] [TransactionAmt_mean_by_card1_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card1_DT_M_train.pkl
+2019-09-20 02:02:08,522 [    INFO] [TransactionAmt_mean_by_card1_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card1_DT_M_test.pkl
+2019-09-20 02:02:08,550 [    INFO] [TransactionAmt_mean_by_card1_DT_M] head of feature
+2019-09-20 02:02:08,562 [    INFO] [TransactionAmt_mean_by_card1_DT_M]    TransactionID  TransactionAmt_mean_by_card1_DT_M
+0        2987000                           125.0625
+1        2987001                           216.2500
+2        2987002                            89.3750
+3        2987003                           111.3125
+4        2987004                            40.0000
+2019-09-20 02:02:08,883 [    INFO] [TransactionAmt_std_by_card1_DT_M] no pickled file. create feature.
+2019-09-20 02:03:08,247 [    INFO] [TransactionAmt_std_by_card1_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card1_DT_M_train.pkl
+2019-09-20 02:03:08,308 [    INFO] [TransactionAmt_std_by_card1_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card1_DT_M_test.pkl
+2019-09-20 02:03:08,317 [    INFO] [TransactionAmt_std_by_card1_DT_M] head of feature
+2019-09-20 02:03:08,325 [    INFO] [TransactionAmt_std_by_card1_DT_M]    TransactionID  TransactionAmt_std_by_card1_DT_M
+0        2987000                         78.437500
+1        2987001                        402.500000
+2        2987002                         86.375000
+3        2987003                        166.500000
+4        2987004                         14.140625
+2019-09-20 02:03:08,690 [    INFO] [TransactionAmt_mean_by_card2_DT_M] no pickled file. create feature.
+2019-09-20 02:04:08,633 [    INFO] [TransactionAmt_mean_by_card2_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card2_DT_M_train.pkl
+2019-09-20 02:04:08,650 [    INFO] [TransactionAmt_mean_by_card2_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card2_DT_M_test.pkl
+2019-09-20 02:04:08,661 [    INFO] [TransactionAmt_mean_by_card2_DT_M] head of feature
+2019-09-20 02:04:08,670 [    INFO] [TransactionAmt_mean_by_card2_DT_M]    TransactionID  TransactionAmt_mean_by_card2_DT_M
+0        2987000                                NaN
+1        2987001                           180.3750
+2        2987002                           126.8125
+3        2987003                           125.7500
+4        2987004                           176.7500
+2019-09-20 02:04:09,072 [    INFO] [TransactionAmt_std_by_card2_DT_M] no pickled file. create feature.
+2019-09-20 02:05:07,455 [    INFO] [TransactionAmt_std_by_card2_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card2_DT_M_train.pkl
+2019-09-20 02:05:07,473 [    INFO] [TransactionAmt_std_by_card2_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card2_DT_M_test.pkl
+2019-09-20 02:05:07,482 [    INFO] [TransactionAmt_std_by_card2_DT_M] head of feature
+2019-09-20 02:05:07,491 [    INFO] [TransactionAmt_std_by_card2_DT_M]    TransactionID  TransactionAmt_std_by_card2_DT_M
+0        2987000                               NaN
+1        2987001                           269.000
+2        2987002                           187.375
+3        2987003                           169.500
+4        2987004                           294.250
+2019-09-20 02:05:07,909 [    INFO] [TransactionAmt_mean_by_card3_DT_M] no pickled file. create feature.
+2019-09-20 02:06:06,020 [    INFO] [TransactionAmt_mean_by_card3_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card3_DT_M_train.pkl
+2019-09-20 02:06:06,037 [    INFO] [TransactionAmt_mean_by_card3_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card3_DT_M_test.pkl
+2019-09-20 02:06:06,047 [    INFO] [TransactionAmt_mean_by_card3_DT_M] head of feature
+2019-09-20 02:06:06,055 [    INFO] [TransactionAmt_mean_by_card3_DT_M]    TransactionID  TransactionAmt_mean_by_card3_DT_M
+0        2987000                              138.5
+1        2987001                              138.5
+2        2987002                              138.5
+3        2987003                              138.5
+4        2987004                              138.5
+2019-09-20 02:06:06,460 [    INFO] [TransactionAmt_std_by_card3_DT_M] no pickled file. create feature.
+2019-09-20 02:07:05,123 [    INFO] [TransactionAmt_std_by_card3_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card3_DT_M_train.pkl
+2019-09-20 02:07:05,200 [    INFO] [TransactionAmt_std_by_card3_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card3_DT_M_test.pkl
+2019-09-20 02:07:05,209 [    INFO] [TransactionAmt_std_by_card3_DT_M] head of feature
+2019-09-20 02:07:05,216 [    INFO] [TransactionAmt_std_by_card3_DT_M]    TransactionID  TransactionAmt_std_by_card3_DT_M
+0        2987000                           210.875
+1        2987001                           210.875
+2        2987002                           210.875
+3        2987003                           210.875
+4        2987004                           210.875
+2019-09-20 02:07:05,624 [    INFO] [TransactionAmt_mean_by_card5_DT_M] no pickled file. create feature.
+2019-09-20 02:08:07,098 [    INFO] [TransactionAmt_mean_by_card5_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card5_DT_M_train.pkl
+2019-09-20 02:08:07,115 [    INFO] [TransactionAmt_mean_by_card5_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_card5_DT_M_test.pkl
+2019-09-20 02:08:07,126 [    INFO] [TransactionAmt_mean_by_card5_DT_M] head of feature
+2019-09-20 02:08:07,137 [    INFO] [TransactionAmt_mean_by_card5_DT_M]    TransactionID  TransactionAmt_mean_by_card5_DT_M
+0        2987000                           101.5625
+1        2987001                           180.5000
+2        2987002                            94.0625
+3        2987003                           119.0625
+4        2987004                           180.5000
+2019-09-20 02:08:07,649 [    INFO] [TransactionAmt_std_by_card5_DT_M] no pickled file. create feature.
+2019-09-20 02:09:09,343 [    INFO] [TransactionAmt_std_by_card5_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card5_DT_M_train.pkl
+2019-09-20 02:09:09,359 [    INFO] [TransactionAmt_std_by_card5_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_card5_DT_M_test.pkl
+2019-09-20 02:09:09,370 [    INFO] [TransactionAmt_std_by_card5_DT_M] head of feature
+2019-09-20 02:09:09,378 [    INFO] [TransactionAmt_std_by_card5_DT_M]    TransactionID  TransactionAmt_std_by_card5_DT_M
+0        2987000                           78.6875
+1        2987001                          277.5000
+2        2987002                          133.0000
+3        2987003                          171.2500
+4        2987004                          277.5000
+2019-09-20 02:09:09,821 [    INFO] [TransactionAmt_mean_by_uid_DT_M] no pickled file. create feature.
+2019-09-20 02:10:09,049 [    INFO] [TransactionAmt_mean_by_uid_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid_DT_M_train.pkl
+2019-09-20 02:10:09,067 [    INFO] [TransactionAmt_mean_by_uid_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid_DT_M_test.pkl
+2019-09-20 02:10:09,077 [    INFO] [TransactionAmt_mean_by_uid_DT_M] head of feature
+2019-09-20 02:10:09,088 [    INFO] [TransactionAmt_mean_by_uid_DT_M]    TransactionID  TransactionAmt_mean_by_uid_DT_M
+0        2987000                          92.7500
+1        2987001                         216.2500
+2        2987002                          89.3750
+3        2987003                         111.3125
+4        2987004                          40.0000
+2019-09-20 02:10:09,545 [    INFO] [TransactionAmt_std_by_uid_DT_M] no pickled file. create feature.
+2019-09-20 02:11:08,951 [    INFO] [TransactionAmt_std_by_uid_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid_DT_M_train.pkl
+2019-09-20 02:11:08,969 [    INFO] [TransactionAmt_std_by_uid_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid_DT_M_test.pkl
+2019-09-20 02:11:08,979 [    INFO] [TransactionAmt_std_by_uid_DT_M] head of feature
+2019-09-20 02:11:08,988 [    INFO] [TransactionAmt_std_by_uid_DT_M]    TransactionID  TransactionAmt_std_by_uid_DT_M
+0        2987000                       34.281250
+1        2987001                      402.500000
+2        2987002                       86.375000
+3        2987003                      166.500000
+4        2987004                       14.140625
+2019-09-20 02:11:09,470 [    INFO] [TransactionAmt_mean_by_uid2_DT_M] no pickled file. create feature.
+2019-09-20 02:12:08,309 [    INFO] [TransactionAmt_mean_by_uid2_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid2_DT_M_train.pkl
+2019-09-20 02:12:08,326 [    INFO] [TransactionAmt_mean_by_uid2_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid2_DT_M_test.pkl
+2019-09-20 02:12:08,334 [    INFO] [TransactionAmt_mean_by_uid2_DT_M] head of feature
+2019-09-20 02:12:08,344 [    INFO] [TransactionAmt_mean_by_uid2_DT_M]    TransactionID  TransactionAmt_mean_by_uid2_DT_M
+0        2987000                           92.7500
+1        2987001                          216.2500
+2        2987002                           89.3750
+3        2987003                          111.3125
+4        2987004                           40.0000
+2019-09-20 02:12:08,832 [    INFO] [TransactionAmt_std_by_uid2_DT_M] no pickled file. create feature.
+2019-09-20 02:13:08,302 [    INFO] [TransactionAmt_std_by_uid2_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid2_DT_M_train.pkl
+2019-09-20 02:13:08,378 [    INFO] [TransactionAmt_std_by_uid2_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid2_DT_M_test.pkl
+2019-09-20 02:13:08,392 [    INFO] [TransactionAmt_std_by_uid2_DT_M] head of feature
+2019-09-20 02:13:08,400 [    INFO] [TransactionAmt_std_by_uid2_DT_M]    TransactionID  TransactionAmt_std_by_uid2_DT_M
+0        2987000                        34.281250
+1        2987001                       402.500000
+2        2987002                        86.375000
+3        2987003                       166.500000
+4        2987004                        14.140625
+2019-09-20 02:13:08,850 [    INFO] [TransactionAmt_mean_by_uid3_DT_M] no pickled file. create feature.
+2019-09-20 02:14:06,648 [    INFO] [TransactionAmt_mean_by_uid3_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid3_DT_M_train.pkl
+2019-09-20 02:14:06,712 [    INFO] [TransactionAmt_mean_by_uid3_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid3_DT_M_test.pkl
+2019-09-20 02:14:06,726 [    INFO] [TransactionAmt_mean_by_uid3_DT_M] head of feature
+2019-09-20 02:14:06,734 [    INFO] [TransactionAmt_mean_by_uid3_DT_M]    TransactionID  TransactionAmt_mean_by_uid3_DT_M
+0        2987000                            68.500
+1        2987001                           229.625
+2        2987002                            51.000
+3        2987003                           125.000
+4        2987004                            50.000
+2019-09-20 02:14:07,256 [    INFO] [TransactionAmt_std_by_uid3_DT_M] no pickled file. create feature.
+2019-09-20 02:15:07,657 [    INFO] [TransactionAmt_std_by_uid3_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid3_DT_M_train.pkl
+2019-09-20 02:15:07,681 [    INFO] [TransactionAmt_std_by_uid3_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid3_DT_M_test.pkl
+2019-09-20 02:15:07,697 [    INFO] [TransactionAmt_std_by_uid3_DT_M] head of feature
+2019-09-20 02:15:07,703 [    INFO] [TransactionAmt_std_by_uid3_DT_M]    TransactionID  TransactionAmt_std_by_uid3_DT_M
+0        2987000                              NaN
+1        2987001                       278.750000
+2        2987002                        13.382812
+3        2987003                       360.250000
+4        2987004                              NaN
+2019-09-20 02:15:08,228 [    INFO] [TransactionAmt_mean_by_uid4_DT_M] no pickled file. create feature.
+2019-09-20 02:16:07,777 [    INFO] [TransactionAmt_mean_by_uid4_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid4_DT_M_train.pkl
+2019-09-20 02:16:07,846 [    INFO] [TransactionAmt_mean_by_uid4_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid4_DT_M_test.pkl
+2019-09-20 02:16:07,854 [    INFO] [TransactionAmt_mean_by_uid4_DT_M] head of feature
+2019-09-20 02:16:07,862 [    INFO] [TransactionAmt_mean_by_uid4_DT_M]    TransactionID  TransactionAmt_mean_by_uid4_DT_M
+0        2987000                              68.5
+1        2987001                             410.5
+2        2987002                              59.0
+3        2987003                              65.0
+4        2987004                              50.0
+2019-09-20 02:16:08,421 [    INFO] [TransactionAmt_std_by_uid4_DT_M] no pickled file. create feature.
+2019-09-20 02:17:08,370 [    INFO] [TransactionAmt_std_by_uid4_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid4_DT_M_train.pkl
+2019-09-20 02:17:08,388 [    INFO] [TransactionAmt_std_by_uid4_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid4_DT_M_test.pkl
+2019-09-20 02:17:08,400 [    INFO] [TransactionAmt_std_by_uid4_DT_M] head of feature
+2019-09-20 02:17:08,409 [    INFO] [TransactionAmt_std_by_uid4_DT_M]    TransactionID  TransactionAmt_std_by_uid4_DT_M
+0        2987000                              NaN
+1        2987001                          476.250
+2        2987002                              NaN
+3        2987003                           41.875
+4        2987004                              NaN
+2019-09-20 02:17:08,970 [    INFO] [TransactionAmt_mean_by_uid5_DT_M] no pickled file. create feature.
+2019-09-20 02:18:07,106 [    INFO] [TransactionAmt_mean_by_uid5_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid5_DT_M_train.pkl
+2019-09-20 02:18:07,163 [    INFO] [TransactionAmt_mean_by_uid5_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_uid5_DT_M_test.pkl
+2019-09-20 02:18:07,173 [    INFO] [TransactionAmt_mean_by_uid5_DT_M] head of feature
+2019-09-20 02:18:07,180 [    INFO] [TransactionAmt_mean_by_uid5_DT_M]    TransactionID  TransactionAmt_mean_by_uid5_DT_M
+0        2987000                            68.500
+1        2987001                           237.125
+2        2987002                            48.000
+3        2987003                           125.125
+4        2987004                            50.000
+2019-09-20 02:18:07,746 [    INFO] [TransactionAmt_std_by_uid5_DT_M] no pickled file. create feature.
+2019-09-20 02:19:05,730 [    INFO] [TransactionAmt_std_by_uid5_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid5_DT_M_train.pkl
+2019-09-20 02:19:05,753 [    INFO] [TransactionAmt_std_by_uid5_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_uid5_DT_M_test.pkl
+2019-09-20 02:19:05,771 [    INFO] [TransactionAmt_std_by_uid5_DT_M] head of feature
+2019-09-20 02:19:05,778 [    INFO] [TransactionAmt_std_by_uid5_DT_M]    TransactionID  TransactionAmt_std_by_uid5_DT_M
+0        2987000                              NaN
+1        2987001                       323.500000
+2        2987002                        10.578125
+3        2987003                       369.500000
+4        2987004                              NaN
+2019-09-20 02:19:06,365 [    INFO] [TransactionAmt_mean_by_bank_type_DT_M] no pickled file. create feature.
+2019-09-20 02:20:01,592 [    INFO] [TransactionAmt_mean_by_bank_type_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_bank_type_DT_M_train.pkl
+2019-09-20 02:20:01,620 [    INFO] [TransactionAmt_mean_by_bank_type_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_mean_by_bank_type_DT_M_test.pkl
+2019-09-20 02:20:01,639 [    INFO] [TransactionAmt_mean_by_bank_type_DT_M] head of feature
+2019-09-20 02:20:01,648 [    INFO] [TransactionAmt_mean_by_bank_type_DT_M]    TransactionID  TransactionAmt_mean_by_bank_type_DT_M
+0        2987000                               101.5625
+1        2987001                               193.1250
+2        2987002                                94.5625
+3        2987003                               119.0625
+4        2987004                               193.1250
+2019-09-20 02:20:02,245 [    INFO] [TransactionAmt_std_by_bank_type_DT_M] no pickled file. create feature.
+2019-09-20 02:20:57,997 [    INFO] [TransactionAmt_std_by_bank_type_DT_M] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_bank_type_DT_M_train.pkl
+2019-09-20 02:20:58,017 [    INFO] [TransactionAmt_std_by_bank_type_DT_M] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/TransactionAmt_std_by_bank_type_DT_M_test.pkl
+2019-09-20 02:20:58,026 [    INFO] [TransactionAmt_std_by_bank_type_DT_M] head of feature
+2019-09-20 02:20:58,036 [    INFO] [TransactionAmt_std_by_bank_type_DT_M]    TransactionID  TransactionAmt_std_by_bank_type_DT_M
+0        2987000                               78.6875
+1        2987001                              288.5000
+2        2987002                              133.5000
+3        2987003                              171.2500
+4        2987004                              288.5000
+2019-09-20 02:20:59,096 [    INFO] [Aggregation] head of feature
+2019-09-20 02:20:59,148 [    INFO] [Aggregation]    TransactionID  TransactionAmt_mean_by_card1_DT_M  TransactionAmt_std_by_card1_DT_M  TransactionAmt_mean_by_card2_DT_M  ...  TransactionAmt_mean_by_uid5_DT_M  TransactionAmt_std_by_uid5_DT_M  TransactionAmt_mean_by_bank_type_DT_M  TransactionAmt_std_by_bank_type_DT_M
+0        2987000                           125.0625                         78.437500                                NaN  ...                            68.500                              NaN                               101.5625                               78.6875
+1        2987001                           216.2500                        402.500000                           180.3750  ...                           237.125                       323.500000                               193.1250                              288.5000
+2        2987002                            89.3750                         86.375000                           126.8125  ...                            48.000                        10.578125                                94.5625                              133.5000
+3        2987003                           111.3125                        166.500000                           125.7500  ...                           125.125                       369.500000                               119.0625                              171.2500
+4        2987004                            40.0000                         14.140625                           176.7500  ...                            50.000                              NaN                               193.1250                              288.5000
+
+[5 rows x 21 columns]
+2019-09-20 02:20:59,905 [    INFO] [Cents_round_by_2] read features from pickled file.
+2019-09-20 02:21:00,490 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-20 02:21:01,175 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-20 02:21:01,855 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-20 02:21:02,568 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-20 02:21:03,347 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-20 02:21:04,135 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-20 02:22:51,124 [    INFO] head of features
+   TransactionID  card1_DT_hour_propotion_by_card1  card2_DT_hour_propotion_by_card2  card3_DT_hour_propotion_by_card3  card5_DT_hour_propotion_by_card5  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000                          0.089294                               NaN                          0.061768                          0.084167  ...             811091              811091        811091         811091        811091
+1        2987001                          0.050079                          0.056335                          0.061768                          0.059937  ...             811091              811091        811091         811091        811091
+2        2987002                          0.072449                          0.062744                          0.061768                          0.064270  ...             811091              811091        811091         811091        811091
+3        2987003                          0.066406                          0.064941                          0.061768                          0.063599  ...             811091              811091        811091         811091        811091
+4        2987004                          0.033325                          0.055237                          0.061768                          0.059937  ...                358                   9         11783           3573          4294
+
+[5 rows x 870 columns]
+   TransactionID  card1_DT_hour_propotion_by_card1  card2_DT_hour_propotion_by_card2  card3_DT_hour_propotion_by_card3  card5_DT_hour_propotion_by_card5  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549                          0.040009                          0.061340                          0.061768                          0.062195  ...             811091              811091        811091         811091        811091
+1        3663550                          0.054901                          0.061340                          0.061768                          0.062195  ...             811091              811091        811091         811091        811091
+2        3663551                          0.060242                          0.068726                          0.061768                          0.062195  ...             811091              811091        811091         811091        811091
+3        3663552                          0.061859                          0.069824                          0.061768                          0.064270  ...             811091              811091        811091         811091        811091
+4        3663553                          0.075012                          0.078613                          0.061768                          0.063599  ...             811091              811091        811091         811091        811091
+
+[5 rows x 869 columns]
+2019-09-20 02:22:51,281 [    INFO] start training
+2019-09-20 02:22:54,996 [    INFO] resample with under_sample: ratio=1.0
+2019-09-20 02:22:55,026 [   DEBUG] label before sampling: 
+2019-09-20 02:22:55,027 [   DEBUG] 0    483665
+1     17549
+Name: TARGET, dtype: int64
+2019-09-20 02:22:55,711 [   DEBUG] label after sampling: 
+2019-09-20 02:22:55,713 [   DEBUG] 1    17549
+0    17549
+Name: TARGET, dtype: int64
+2019-09-20 02:23:32,667 [   DEBUG] [100]	training's auc: 0.967358	valid_1's auc: 0.904697
+2019-09-20 02:23:59,414 [   DEBUG] [200]	training's auc: 0.977384	valid_1's auc: 0.910002
+2019-09-20 02:24:42,480 [   DEBUG] [300]	training's auc: 0.985676	valid_1's auc: 0.916322
+2019-09-20 02:25:23,808 [   DEBUG] [400]	training's auc: 0.991912	valid_1's auc: 0.921626
+2019-09-20 02:25:54,016 [   DEBUG] [500]	training's auc: 0.995827	valid_1's auc: 0.925384
+2019-09-20 02:26:24,846 [   DEBUG] [600]	training's auc: 0.998054	valid_1's auc: 0.92838
+2019-09-20 02:26:55,049 [   DEBUG] [700]	training's auc: 0.999203	valid_1's auc: 0.930424
+2019-09-20 02:27:24,321 [   DEBUG] [800]	training's auc: 0.999727	valid_1's auc: 0.932071
+2019-09-20 02:27:53,704 [   DEBUG] [900]	training's auc: 0.999928	valid_1's auc: 0.933203
+2019-09-20 02:28:24,673 [   DEBUG] [1000]	training's auc: 0.999986	valid_1's auc: 0.934019
+2019-09-20 02:28:54,449 [   DEBUG] [1100]	training's auc: 0.999998	valid_1's auc: 0.934792
+2019-09-20 02:29:24,653 [   DEBUG] [1200]	training's auc: 1	valid_1's auc: 0.935196
+2019-09-20 02:29:54,345 [   DEBUG] [1300]	training's auc: 1	valid_1's auc: 0.935647
+2019-09-20 02:30:45,896 [    INFO] best_iteration: 1298, train_score: 1.000000, valid_score: 0.935655
+2019-09-20 02:30:46,012 [    INFO] start prediction
+2019-09-20 02:32:59,131 [    INFO] [ID] read features from pickled file.
+2019-09-20 02:32:59,221 [    INFO] save results
+2019-09-20 02:32:59,232 [    INFO] save val_pred
+2019-09-20 02:32:59,234 [    INFO] [DT_M] read features from pickled file.
+2019-09-20 02:32:59,742 [    INFO] save submission

@@ -22,8 +22,8 @@ JOIN_KEY_COLUMN = "TransactionID"
 START_DATE = datetime.datetime.strptime('2017-11-30', '%Y-%m-%d')
 
 
-def merge_on_id(df_transaction, df_identity):
-    return pd.merge(df_transaction, df_identity, on=JOIN_KEY_COLUMN, how='left')
+def merge_on_id(df_base, df_additional):
+    return pd.merge(df_base, df_additional, on=JOIN_KEY_COLUMN, how='left')
     
 
 def read_train() -> pd.DataFrame:
@@ -99,6 +99,28 @@ def agg_group(gr_, feature_name, agg):
 
     return feat
 
+
+def add_uids(df):
+    df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
+    df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
+    df['uid3'] = df['uid2'].astype(str) + '_' + df['addr1'].astype(str) + '_' + df['addr2'].astype(str)
+    df['uid4'] = df['uid3'].astype(str) + '_' + df['P_emaildomain'].astype(str)
+    df['uid5'] = df['uid3'].astype(str) + '_' + df['R_emaildomain'].astype(str)
+    df['bank_type'] = df['card3'].astype(str)  + '_' +  df['card5'].astype(str)
+    return df
+
+
+def add_dts(df):
+    df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+    df['DT_M'] = ((df['DT'].dt.year-2017)*12 + df['DT'].dt.month).astype(np.int8)
+    df['DT_W'] = ((df['DT'].dt.year-2017)*52 + df['DT'].dt.weekofyear).astype(np.int8)
+    df['DT_D'] = ((df['DT'].dt.year-2017)*365 + df['DT'].dt.dayofyear).astype(np.int16)
+    df['DT_hour'] = (df['DT'].dt.hour).astype(np.int8)
+    df['DT_day_week'] = (df['DT'].dt.dayofweek).astype(np.int8)
+    df['DT_day_month'] = (df['DT'].dt.day).astype(np.int8)
+    return df
+
+
 class Raw:
     train_transaction = None
     train_identity = None
@@ -113,10 +135,11 @@ class Raw:
         if cls.test_transaction is None or cls.test_identity is None:
             logger.info(f'[{cls.__name__}] read test.')
             cls.test_transaction, cls.test_identity = read_test()
-        return cls.train_transaction, cls.train_identity, cls.test_transaction, cls.test_identity
+        return cls.train_transaction.copy(), cls.train_identity.copy(), cls.test_transaction.copy(), cls.test_identity.copy()
 
 
 class BaseFeature:
+    cache = True
 
     def __init__(self) -> None:
         pass
@@ -124,21 +147,21 @@ class BaseFeature:
     def create_feature(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         fpath_tr = self._train_cache_fpath()
         fpath_te = self._test_cache_fpath()
-        if os.path.exists(fpath_tr) and os.path.exists(fpath_te):
+        if self.cache and os.path.exists(fpath_tr) and os.path.exists(fpath_te):
             self._log("read features from pickled file.")
             return self._read_pickle(fpath_tr), self._read_pickle(fpath_te)
         else:
             self._log(f"no pickled file. create feature.")
-            train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
-            feature_tr, feature_te = self._create_feature(train_transaction, train_identity, test_transaction, test_identity)
+            feature_tr, feature_te = self._create_feature()
             feature_tr = reduce_mem_usage(feature_tr)
             feature_te = reduce_mem_usage(feature_te)
-            self._log(f"save train features to {fpath_tr}")
-            self._save_as_pickled_object(feature_tr, fpath_tr)
-            self._log(f"save test features to {fpath_te}")
-            self._save_as_pickled_object(feature_te, fpath_te)
-            self._log("head of feature", 'debug')
-            self._log(feature_tr.head(), 'debug')
+            if self.cache:
+                self._log(f"save train features to {fpath_tr}")
+                self._save_as_pickled_object(feature_tr, fpath_tr)
+                self._log(f"save test features to {fpath_te}")
+                self._save_as_pickled_object(feature_te, fpath_te)
+            self._log("head of feature")
+            self._log(feature_tr.head())
             return feature_tr, feature_te
 
     def _log(self, message, log_level='info') -> None:
@@ -166,19 +189,21 @@ class BaseFeature:
     def _save_as_pickled_object(self, df, pkl_fpath) -> None:
         df.to_pickle(pkl_fpath, compression=None)
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    def _create_feature(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         raise NotImplementedError
 
 
 class ID(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         return train_transaction[[JOIN_KEY_COLUMN]], test_transaction[[JOIN_KEY_COLUMN]]
 
 
 class Numerical(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         train_df = merge_on_id(train_transaction, train_identity)
         test_df = merge_on_id(test_transaction, test_identity)
         numerical_columns = [
@@ -191,7 +216,8 @@ class Numerical(BaseFeature):
 
 class CategoricalLabelEncode(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         train_df = merge_on_id(train_transaction, train_identity)
         test_df = merge_on_id(test_transaction, test_identity)
         categorical_columns = [
@@ -235,7 +261,8 @@ class Prediction:
 
 class DT_M(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             # Temporary
             df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
@@ -244,12 +271,147 @@ class DT_M(BaseFeature):
         return train_transaction[[JOIN_KEY_COLUMN, 'DT_M']], test_transaction[[JOIN_KEY_COLUMN, 'DT_M']]
 
 
+class FrequencyEncoding(BaseFeature):
+    cache = False
+
+    def __init__(self, column_specs: List[dict]):
+        super().__init__()
+        self.column_specs = column_specs
+
+    def _create_feature(self):
+        feature_tr, feature_te = ID().create_feature()
+        for spec in self.column_specs:
+            tr, te = ColumnFrequencyEncoder(**spec).create_feature()
+            feature_tr = merge_on_id(feature_tr, tr)
+            feature_te = merge_on_id(feature_te, te)
+        return feature_tr, feature_te
+
+
+class ColumnFrequencyEncoder(BaseFeature):
+
+    def __init__(self, columns, concat=True, propotion_denominator_columns=None, propotion_only=False):
+        super().__init__()
+        self.columns = columns
+        self.concat = concat
+        self.propotion_only = propotion_only
+        if self.propotion_only is True:
+            assert propotion_denominator_columns is not None
+        if propotion_denominator_columns:
+            self.propotion_denominator_columns = propotion_denominator_columns
+        else:
+            self.propotion_denominator_columns = []
+
+    @property
+    def _name(self) -> str:
+        if self.propotion_denominator_columns:
+            if self.propotion_only:
+                return f'{self.__class__.__name__}_concat_{self.concat}_propotion_of_{"_".join(self.columns)}_by_{"_".join(self.propotion_denominator_columns)}'
+            else:
+                return f'{self.__class__.__name__}_concat_{self.concat}_columns_{"_".join(self.columns)}_propotion_of_{"_".join(self.propotion_denominator_columns)}'
+        else:
+            return f'{self.__class__.__name__}_concat_{self.concat}_columns_{"_".join(self.columns)}'
+
+    def _encode(self, train_df, test_df, columns, new_col_name):
+        if self.concat:
+            temp_df = pd.concat([train_df, test_df])[columns]
+            freq = temp_df.groupby(columns).size().reset_index()
+            freq.columns = columns + [new_col_name]
+            train_df = pd.merge(train_df, freq, left_on=columns, right_on=columns)
+            test_df = pd.merge(test_df, freq, left_on=columns, right_on=columns)
+        else:
+            for df in [train_df, test_df]:
+                freq = df.groupby(columns).size().reset_index()
+                freq.columns = columns + [new_col_name]
+                df = pd.merge(df, freq, left_on=columns, right_on=columns)
+
+        return train_df, test_df
+
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
+        train_transaction = add_uids(add_dts(train_transaction))
+        test_transaction = add_uids(add_dts(test_transaction))
+        cols_to_use = list({JOIN_KEY_COLUMN} | set(self.columns) | set(self.propotion_denominator_columns))
+        train_df = merge_on_id(train_transaction, train_identity)[cols_to_use]
+        test_df = merge_on_id(test_transaction, test_identity)[cols_to_use]
+
+        freq_col = '_'.join(self.columns) + '_fq_enc'
+        train_df, test_df = self._encode(train_df, test_df, self.columns, freq_col)
+
+        ret_cols = [JOIN_KEY_COLUMN]
+
+        if not self.propotion_only:
+            ret_cols.append(freq_col)
+
+        if self.propotion_denominator_columns:
+            total_col = '_'.join(self.columns) + '_total'
+            train_df, test_df = self._encode(train_df, test_df, self.propotion_denominator_columns, total_col)
+            propotion_col = '_'.join(self.columns) + '_propotion_by_' + '_'.join(self.propotion_denominator_columns)
+            for df in [train_df, test_df]:
+                df[propotion_col] = df[freq_col] / df[total_col]
+            ret_cols.append(propotion_col)
+
+        return train_df[ret_cols], test_df[ret_cols]
+
+
+class Aggregation(BaseFeature):
+    cache = False
+    
+    def __init__(self, agg_recipes):
+        super().__init__()
+        self.agg_recipes = agg_recipes
+
+    def _create_feature(self):
+        feature_tr, feature_te = ID().create_feature()
+
+        for groupby_cols, specs in self.agg_recipes:
+            for select, agg in specs:
+                tr, te = ColumnAggregation(select, agg, groupby_cols).create_feature()
+                feature_tr = merge_on_id(feature_tr, tr)
+                feature_te = merge_on_id(feature_te, te)
+        return feature_tr, feature_te
+
+
+class ColumnAggregation(BaseFeature):
+
+    def __init__(self, select, agg, groupby_cols):
+        super().__init__()
+        self.select = select
+        self.agg = agg
+        self.groupby_cols = groupby_cols
+
+    @property
+    def _name(self) -> str:
+        return f'{self.select}_{self.agg}_by_{"_".join(self.groupby_cols)}'
+
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
+        train_transaction = add_uids(add_dts(train_transaction))
+        test_transaction = add_uids(add_dts(test_transaction))
+        cols_to_use = list({JOIN_KEY_COLUMN} | set(self.groupby_cols) | {self.select})
+        train_df = merge_on_id(train_transaction, train_identity)[cols_to_use]
+        test_df = merge_on_id(test_transaction, test_identity)[cols_to_use]
+
+        temp_df = pd.concat([train_df, test_df])
+        aggregated = temp_df.groupby(self.groupby_cols)[self.select].agg(self.agg).reset_index()
+        aggregated.columns = self.groupby_cols + [self._name]
+
+        train_df = pd.merge(train_df, aggregated, left_on=self.groupby_cols, right_on=self.groupby_cols, how='left')
+        test_df = pd.merge(test_df, aggregated, left_on=self.groupby_cols, right_on=self.groupby_cols, how='left')
+
+        ret_cols = [JOIN_KEY_COLUMN, self._name]
+
+        return train_df[ret_cols], test_df[ret_cols]
+
+
+
+
 class KonstantinFeature(BaseFeature):
     """
     https://www.kaggle.com/kyakovlev/ieee-gb-2-make-amount-useful-again
     """
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         train_df = merge_on_id(train_transaction, train_identity)
         test_df = merge_on_id(test_transaction, test_identity)
 
@@ -455,9 +617,8 @@ class KonstantinFeature2(BaseFeature):
     https://www.kaggle.com/kyakovlev/ieee-fe-with-some-eda/notebook
     '''
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
-        train_df = train_transaction
-        test_df = test_transaction
+    def _create_feature(self):
+        train_df, train_identity, test_df, test_identity = Raw.read_csvs()
 
         logger.debug('checkpoint 1')
         from pandas.tseries.holiday import USFederalHolidayCalendar as calendar
@@ -963,7 +1124,8 @@ class KonstantinFeature3(BaseFeature):
     
     should drop original ['card4', 'card6', 'ProductCD', 'M4', 'id_34', 'id_33']
     '''
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         ret_cols = [JOIN_KEY_COLUMN]
         for col in ['card4', 'card6', 'ProductCD', 'M4']:
             ret_cols.append(f'{col}_freq')
@@ -1007,7 +1169,8 @@ class KonstantinFeature3(BaseFeature):
 
 class DaysFromBrowserRelease(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         browser_release_dates = {}
         with open('./misc/browser_release_date.tsv', 'r') as fp:
             for line in fp:
@@ -1031,7 +1194,8 @@ class DaysFromBrowserRelease(BaseFeature):
 
 class DaysFromOSRelease(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         os_release_dates = {}
         with open('./misc/os_release_date.tsv', 'r') as fp:
             for line in fp:
@@ -1055,7 +1219,8 @@ class DaysFromOSRelease(BaseFeature):
 
 class OSBrowserReleaseDayDiff(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         browser_release_dates = {}
         with open('./misc/browser_release_date.tsv', 'r') as fp:
             for line in fp:
@@ -1078,7 +1243,8 @@ class OSBrowserReleaseDayDiff(BaseFeature):
 
 class IDSplit(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         train_df, test_df = self.id_split(train_identity), self.id_split(test_identity)
         for col in list(train_df):
             if train_df[col].dtype=='O':
@@ -1142,7 +1308,8 @@ class IDSplit(BaseFeature):
 
 class NormalizedEmailDomain(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         train_df, test_df = self.normalize_domain(train_transaction, test_transaction)
         for col in list(train_df):
             if train_df[col].dtype=='O':
@@ -1191,7 +1358,8 @@ class NormalizedEmailDomain(BaseFeature):
 
 class RowVColumnsAggregation(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         v_cols = [c for c in train_transaction if c[0] == 'V']
         for df in [train_transaction, test_transaction]:
             df['v_mean'] = train_transaction[v_cols].mean(axis=1)
@@ -1204,7 +1372,8 @@ class RowVColumnsAggregation(BaseFeature):
 
 class TransactionAmtAggregation1(BaseFeature):
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         ########################### Client Virtual ID
         # Let's add some kind of client uID based on cardID and addr columns
         # The value will be very specific for each client so we need to remove it
@@ -1247,7 +1416,8 @@ class TimeToFutureTransaction(BaseFeature):
     def _name(self) -> str:
         return f'{self.__class__.__name__}_step_{self.step}'
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
 
@@ -1281,7 +1451,8 @@ class TimeFromPastTransaction(BaseFeature):
     def _name(self) -> str:
         return f'{self.__class__.__name__}_step_{self.step}'
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
 
@@ -1315,7 +1486,8 @@ class Cents(BaseFeature):
     def _name(self) -> str:
         return f'{self.__class__.__name__}_round_by_{self.round_num}'
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             df[f'cents_{self.round_num}'] = np.round(
                 df['TransactionAmt'] - np.floor(df['TransactionAmt']),
@@ -1337,7 +1509,8 @@ class TransactionAmtDiffFromMean(BaseFeature):
     def _name(self) -> str:
         return f'{self.__class__.__name__}_concat_{self.concat}'
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             df['uid'] = df['card1'].astype(str) + '_' + df['card2'].astype(str)
             df['uid2'] = df['uid'].astype(str) + '_' + df['card3'].astype(str) + '_' + df['card5'].astype(str)
@@ -1378,7 +1551,8 @@ class TimeToLastTransaction(BaseFeature):
     def _name(self) -> str:
         return f'{self.__class__.__name__}_concat_{self.concat}'
 
-    def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
         for df in [train_transaction, test_transaction]:
             df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
 
