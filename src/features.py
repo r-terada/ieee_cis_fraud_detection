@@ -1370,6 +1370,14 @@ class TransactionAmtDiffFromMean(BaseFeature):
 
 class TimeToLastTransaction(BaseFeature):
 
+    def __init__(self, concat=True):
+        super().__init__()
+        self.concat = concat
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_concat_{self.concat}'
+
     def _create_feature(self, train_transaction, train_identity, test_transaction, test_identity):
         for df in [train_transaction, test_transaction]:
             df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
@@ -1384,12 +1392,21 @@ class TimeToLastTransaction(BaseFeature):
 
         uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
 
-        temp_df = pd.concat([train_transaction, test_transaction])
-        for col in uids:
-            last_transaction = temp_df.groupby([col])['DT'].last().to_dict()
+        if self.concat:
+            temp_df = pd.concat([train_transaction, test_transaction])
+            for col in uids:
+                last_transaction = temp_df.groupby([col])['DT'].last().to_dict()
+                for df in [train_transaction, test_transaction]:
+                    df[f'{col}_last_transaction_time'] = df[col].map(last_transaction)
+                    df[f'{col}_time_to_last_transaction'] = (df[f'{col}_last_transaction_time'] - df['DT']).dt.total_seconds()
+
+        else:
             for df in [train_transaction, test_transaction]:
-                df[f'{col}_last_transaction_time'] = df[col].map(last_transaction)
-                df[f'{col}_time_to_last_transaction'] = (df[f'{col}_last_transaction_time'] - df['DT']).dt.total_seconds()
+                for col in uids:
+                    last_transaction = df.groupby([col])['DT'].last().to_dict()
+                    df[f'{col}_last_transaction_time'] = df[col].map(last_transaction)
+                    df[f'{col}_time_to_last_transaction'] = (df[f'{col}_last_transaction_time'] - df['DT']).dt.total_seconds()
+
 
         ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_to_last_transaction' for col in uids]
 
