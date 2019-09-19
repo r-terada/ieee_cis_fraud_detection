@@ -1,0 +1,29 @@
+2019-09-19 15:48:43,545 [    INFO] {'cols_to_drop': ['TransactionID', 'isFraud', 'DT_M'],
+ 'descriptions': '',
+ 'features': [['Prediction', {'conf_name': 'lgbm_050'}],
+              ['Prediction', {'conf_name': 'lgbm_051'}]],
+ 'model': {'fit_params': {},
+           'model_params': {'method': 'weighted_mean',
+                            'weights': [0.9494, 0.9501]},
+           'name': 'Blender'},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-19 15:48:43,546 [    INFO] [Prediction] read predictions from ../data/output/lgbm_050
+2019-09-19 15:48:43,862 [    INFO] [Prediction] read predictions from ../data/output/lgbm_051
+2019-09-19 15:48:44,411 [    INFO] [ID] read features from pickled file.
+2019-09-19 15:48:45,012 [    INFO] head of features
+   TransactionID  lgbm_050  lgbm_051
+0        3663549  0.002879  0.001127
+1        3663550  0.009881  0.003430
+2        3663551  0.006982  0.002723
+3        3663552  0.004252  0.001628
+4        3663553  0.008774  0.004214
+2019-09-19 15:48:45,013 [    INFO] start prediction
+2019-09-19 15:48:45,118 [    INFO] [ID] read features from pickled file.
+2019-09-19 15:48:45,129 [    INFO] save submission
+2019-09-19 15:48:49,940 [    INFO] head of submission
+   TransactionID   isFraud
+0        3663549  0.002003
+1        3663550  0.006654
+2        3663551  0.004852
+3        3663552  0.002940
+4        3663553  0.006493

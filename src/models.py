@@ -244,6 +244,7 @@ class CatBoost(BaseModel):
 class Blender(BaseModel):
 
     def __init__(self, model_params, fit_params):
+        self.model_params = model_params
         if 'method' in model_params:
             self.method = model_params['method']
         else:
@@ -251,6 +252,12 @@ class Blender(BaseModel):
 
     def mean(self, X):
         return X.mean(axis=1)
+
+    def weighted_mean(self, X):
+        assert 'weights' in self.model_params
+        assert len(self.model_params.weights) == X.shape[1]
+        weights = self.model_params.weights
+        return (X * weights).sum(axis=1) / sum(weights)
 
     def rank_average(self, X):
         predictions = []
