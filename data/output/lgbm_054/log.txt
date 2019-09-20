@@ -1,0 +1,104 @@
+2019-09-20 03:34:51,465 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'treat cents as category',
+ 'features': [['CentsAsCategory', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boost_from_average': False,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.38,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'is_unbalance': True,
+                            'lambda_l1': 0.2,
+                            'lambda_l2': 9.2,
+                            'learning_rate': 0.007,
+                            'max_bin': 325,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'min_data_in_leaf': 46,
+                            'min_gain_to_split': 0.0,
+                            'min_sum_hessian_in_leaf': 9.0,
+                            'num_leaves': 560,
+                            'objective': 'binary',
+                            'save_binary': True,
+                            'seed': 1337,
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': True},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-20 03:34:51,469 [    INFO] [ID] read features from pickled file.
+2019-09-20 03:34:51,540 [    INFO] [CentsAsCategory_round_by_2] read features from pickled file.
+2019-09-20 03:34:51,894 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-20 03:34:52,537 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-20 03:34:53,225 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-20 03:34:53,928 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-20 03:34:54,649 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-20 03:34:55,475 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-20 03:36:51,645 [    INFO] head of features
+   TransactionID cents_2_cat  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  card5_time_to_next_transaction_-1  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000          50                           823005.0                                NaN                                1.0                            72203.0  ...      811091             811091              811091        811091         811091        811091
+1        2987001           0                            14970.0                            14970.0                               68.0                              105.0  ...      811091             811091              811091        811091         811091        811091
+2        2987002           0                              256.0                               60.0                               30.0                               53.0  ...      811091             811091              811091        811091         811091        811091
+3        2987003           0                             1102.0                             1102.0                                7.0                              270.0  ...      811091             811091              811091        811091         811091        811091
+4        2987004           0                          1346598.0                             2219.0                                4.0                             1393.0  ...           9                358                   9         11783           3573          4294
+
+[5 rows x 840 columns]
+None
+   TransactionID cents_2_cat  card1_time_to_next_transaction_-1  card2_time_to_next_transaction_-1  card3_time_to_next_transaction_-1  card5_time_to_next_transaction_-1  ...  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549          95                            81334.0                               39.0                               39.0                               39.0  ...      811091             811091              811091        811091         811091        811091
+1        3663550           0                            57668.0                              245.0                               47.0                               47.0  ...      811091             811091              811091        811091         811091        811091
+2        3663551           0                           830075.0                           830075.0                                0.0                               13.0  ...      811091             811091              811091        811091         811091        811091
+3        3663552          95                            70773.0                              954.0                                7.0                              376.0  ...      811091             811091              811091        811091         811091        811091
+4        3663553          95                              914.0                              914.0                                6.0                              226.0  ...      811091             811091              811091        811091         811091        811091
+
+[5 rows x 839 columns]
+None
+2019-09-20 03:36:51,733 [    INFO] start training
+2019-09-20 03:41:38,281 [   DEBUG] [100]	training's auc: 0.980805	valid_1's auc: 0.919109
+2019-09-20 03:45:20,686 [   DEBUG] [200]	training's auc: 0.988166	valid_1's auc: 0.924474
+2019-09-20 03:48:56,487 [   DEBUG] [300]	training's auc: 0.992709	valid_1's auc: 0.92892
+2019-09-20 03:53:03,432 [   DEBUG] [400]	training's auc: 0.995515	valid_1's auc: 0.93297
+2019-09-20 03:56:26,904 [   DEBUG] [500]	training's auc: 0.997247	valid_1's auc: 0.936276
+2019-09-20 03:59:51,737 [   DEBUG] [600]	training's auc: 0.998296	valid_1's auc: 0.938717
+2019-09-20 04:03:18,527 [   DEBUG] [700]	training's auc: 0.998904	valid_1's auc: 0.940156
+2019-09-20 04:06:40,939 [   DEBUG] [800]	training's auc: 0.999279	valid_1's auc: 0.941165
+2019-09-20 04:09:59,416 [   DEBUG] [900]	training's auc: 0.999518	valid_1's auc: 0.94188
+2019-09-20 04:13:15,574 [   DEBUG] [1000]	training's auc: 0.999677	valid_1's auc: 0.942407
+2019-09-20 04:16:24,044 [   DEBUG] [1100]	training's auc: 0.999785	valid_1's auc: 0.942504
+2019-09-20 04:19:31,168 [   DEBUG] [1200]	training's auc: 0.999858	valid_1's auc: 0.942695
+2019-09-20 04:22:33,892 [   DEBUG] [1300]	training's auc: 0.999907	valid_1's auc: 0.942839
+2019-09-20 04:25:30,570 [   DEBUG] [1400]	training's auc: 0.999938	valid_1's auc: 0.942871
+2019-09-20 04:28:26,903 [   DEBUG] [1500]	training's auc: 0.999958	valid_1's auc: 0.942909
+2019-09-20 04:31:22,309 [    INFO] best_iteration: 1483, train_score: 0.999955, valid_score: 0.942983
+2019-09-20 04:31:22,465 [    INFO] retrain model with full training data
+2019-09-20 05:30:07,146 [    INFO] start prediction
+2019-09-20 05:33:34,116 [    INFO] [ID] read features from pickled file.
+2019-09-20 05:33:34,209 [    INFO] save results
+2019-09-20 05:33:34,211 [    INFO] save val_pred
+2019-09-20 05:33:34,213 [    INFO] [DT_M] read features from pickled file.
+2019-09-20 05:33:34,775 [    INFO] save submission

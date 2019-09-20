@@ -161,7 +161,7 @@ class BaseFeature:
                 self._log(f"save test features to {fpath_te}")
                 self._save_as_pickled_object(feature_te, fpath_te)
             self._log("head of feature")
-            self._log(feature_tr.head())
+            self._log(f'{feature_tr.head()}\n{feature_te.head()}')
             return feature_tr, feature_te
 
     def _log(self, message, log_level='info') -> None:
@@ -1495,6 +1495,29 @@ class Cents(BaseFeature):
             )
 
         ret_cols = [JOIN_KEY_COLUMN, f'cents_{self.round_num}']
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class CentsAsCategory(BaseFeature):
+
+    def __init__(self, round_num=2):
+        super().__init__()
+        self.round_num = round_num
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_round_by_{self.round_num}'
+
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
+        for df in [train_transaction, test_transaction]:
+            df[f'cents_{self.round_num}_cat'] = np.round(
+                df['TransactionAmt'] - np.floor(df['TransactionAmt']),
+                self.round_num
+            ).mul(10 ** self.round_num).apply(int).astype('category')
+
+        ret_cols = [JOIN_KEY_COLUMN, f'cents_{self.round_num}_cat']
 
         return train_transaction[ret_cols], test_transaction[ret_cols]
 

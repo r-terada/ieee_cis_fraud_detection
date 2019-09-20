@@ -41,7 +41,7 @@ def main(conf_name) -> None:
     # create feature
     feature_tr, feature_te = create_feature(conf.features)
 
-    logger.info(f"head of features\n{feature_tr.head()}\n{feature_te.head()}")
+    logger.info(f"head of features\n{feature_tr.head()}\n{feature_tr.info()}\n{feature_te.head()}\n{feature_te.info()}")
 
     target = read_target()
 
