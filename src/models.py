@@ -437,6 +437,69 @@ class LastMonthOut(BaseEstimator, TransformerMixin):
         return self.model.predict(X[feats_list])
 
 
+class GibaSplit(BaseEstimator, TransformerMixin):
+
+    def __init__(self, model_class, model_params, fit_params, resample_conf={}):
+        self.val_pred = None
+        self.models = []
+        self.weights = [0.2, 0.2, 0.6]
+        self.model_class = model_class
+        self.model_params = model_params
+        self.fit_params = fit_params
+        self.resample_method = resample_conf.get("method", "no_resample")
+        self.resample_params = resample_conf.get("params", {})
+        self.results = {
+            'model_params': copy.deepcopy(model_params),
+            'fit_params': copy.deepcopy(fit_params)
+        }
+
+    def _train_val_split(self, X: pd.DataFrame, y: pd.DataFrame):
+        size = len(X)
+        return X.iloc[:size//2], y.iloc[:size//2], X.iloc[size//2:], y.iloc[size//2:]
+
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None):
+        from sklearn.metrics import roc_auc_score
+
+        if feats_list is None:
+            feats_list = list(X.columns)
+
+        X_tr, y_tr, X_val, y_val = self._train_val_split(X, y)
+        X_tr, y_tr = getattr(
+            Resampler, self.resample_method
+        )(X_tr, y_tr, **self.resample_params)
+
+        logger.info('train model with first half of training data')
+        model = self.model_class(self.model_params, self.fit_params)
+        self.val_pred, results = model.train_and_validate(X_tr[feats_list], y_tr, X_val[feats_list], y_val)
+        self.results['result'] = results
+        self.results['trials'] = {'Full': {'val_score': results['val_score']}}
+        self.models.append(model)
+
+        logger.info('train model with last half of training data')
+        if self.model_class == LightGBM:
+            self.fit_params['num_boost_round'] = int(results['best_iteration'])
+            self.fit_params['early_stopping_rounds'] = None
+        model = self.model_class(self.model_params, self.fit_params)
+        model.fit(X[feats_list], y)
+        self.models.append(model)
+
+        logger.info('train model with full training data')
+        if self.model_class == LightGBM:
+            self.fit_params['num_boost_round'] = int(results['best_iteration']) * 2
+            self.fit_params['early_stopping_rounds'] = None
+        model = self.model_class(self.model_params, self.fit_params)
+        model.fit(X[feats_list], y)
+        self.models.append(model)
+
+    def predict(self, X: pd.DataFrame, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
+        predictions = np.zeros(len(X))
+        for weight, model in zip(self.weights, self.models):
+            predictions += model.predict(X[feats_list]) * weight
+        return predictions
+
+
 class KFoldModel(BaseEstimator, TransformerMixin):
 
     def __init__(self, folds, model_class, model_params, fit_params, resample_conf={}, split_params={}):

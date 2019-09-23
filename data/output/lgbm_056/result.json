@@ -1,0 +1,120 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "metric": "auc",
+    "boosting_type": "gbdt",
+    "learning_rate": 0.007,
+    "max_depth": -1,
+    "is_unbalance": true,
+    "boost_from_average": false,
+    "verbose": -1,
+    "save_binary": true,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337,
+    "colsample_bytree": 0.38,
+    "lambda_l1": 0.2,
+    "lambda_l2": 9.2,
+    "max_bin": 325,
+    "min_data_in_leaf": 46,
+    "min_gain_to_split": 0.0,
+    "min_sum_hessian_in_leaf": 9.0,
+    "num_leaves": 560
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 0.99999629787057,
+    "val_score": 0.916441799873802,
+    "best_iteration": 1675,
+    "elapsed_time": "46.39 min.",
+    "feature_importance_top10": {
+      "V258": 2387944.2162539065,
+      "R_emaildomain": 1290261.090926528,
+      "V294": 1189249.886638403,
+      "C14": 1168033.7264159322,
+      "cents_2_cat": 1134502.87641979,
+      "C13": 1055555.4181900527,
+      "C1_fq_enc": 948491.2634381279,
+      "V317": 734773.2484989613,
+      "V257": 681247.7996783257,
+      "V70": 589329.0935794711
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.916441799873802
+    }
+  },
+  "features": [
+    [
+      "TimeToLastTransaction",
+      {}
+    ],
+    [
+      "CentsAsCategory",
+      {
+        "round_num": 2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}
