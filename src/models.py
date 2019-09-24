@@ -419,6 +419,66 @@ class LastMonthOut(BaseEstimator, TransformerMixin):
             Resampler, self.resample_method
         )(X_tr, y_tr, **self.resample_params)
         self.model = self.model_class(self.model_params, self.fit_params)
+        val_pred, results = self.model.train_and_validate(X_tr[feats_list], y_tr, X_val[feats_list], y_val)
+        self.results['result'] = results
+        self.results['trials'] = {'Full': {'val_score': results['val_score']}}
+
+        if self.retrain_on_full:
+            logger.info('retrain model with full training data')
+            if self.model_class == LightGBM:
+                self.fit_params['num_boost_round'] = results['best_iteration']
+                self.fit_params['early_stopping_rounds'] = None
+            self.model = self.model_class(self.model_params, self.fit_params)
+            self.model.fit(X[feats_list], y)
+
+    def predict(self, X: pd.DataFrame, feats_list=None):
+        if feats_list is None:
+            feats_list = list(X.columns)
+        return self.model.predict(X[feats_list])
+
+
+class AkasyanamaSplit(BaseEstimator, TransformerMixin):
+
+    def __init__(self, model_class, model_params, fit_params, resample_conf={}, retrain_on_full=True):
+        self.val_pred = None
+        self.model_class = model_class
+        self.model_params = model_params
+        self.fit_params = fit_params
+        self.resample_method = resample_conf.get("method", "no_resample")
+        self.resample_params = resample_conf.get("params", {})
+        self.retrain_on_full = retrain_on_full
+        self.results = {
+            'model_params': copy.deepcopy(model_params),
+            'fit_params': copy.deepcopy(fit_params)
+        }
+
+    def _train_val_split(self, X: pd.DataFrame, y: pd.DataFrame, lag_days=10, val_days=20):
+        X['TARGET'] = y
+
+        max_dt = X['TransactionDT'].max()
+        val_start = max_dt - (val_days * 60 * 60 * 24)
+        dev_end = max_dt - (val_days * 60 * 60 * 24 + lag_days * 60 * 60 * 24)
+
+        trn_X = X[X['TransactionDT'] <= dev_end]
+        trn_y = trn_X['TARGET']
+        val_X = X[X['TransactionDT'] >= val_start]
+        val_y = val_X['TARGET']
+
+        del trn_X['TARGET'], val_X['TARGET']
+
+        return trn_X, trn_y, val_X, val_y
+
+    def fit(self, X: pd.DataFrame, y: pd.Series, feats_list=None):
+        from sklearn.metrics import roc_auc_score
+
+        if feats_list is None:
+            feats_list = list(X.columns)
+
+        X_tr, y_tr, X_val, y_val = self._train_val_split(X, y)
+        X_tr, y_tr = getattr(
+            Resampler, self.resample_method
+        )(X_tr, y_tr, **self.resample_params)
+        self.model = self.model_class(self.model_params, self.fit_params)
         self.val_pred, results = self.model.train_and_validate(X_tr[feats_list], y_tr, X_val[feats_list], y_val)
         self.results['result'] = results
         self.results['trials'] = {'Full': {'val_score': results['val_score']}}
