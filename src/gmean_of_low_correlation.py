@@ -23,12 +23,13 @@ def main():
         # my subs
         "../data/output/lgbm_045/submission.csv",
         "../data/output/lgbm_055/submission.csv",
+        "../data/output/lgbm_056/submission.csv"
     ]
     scores = []
     for i in range(len(all_files)):
         scores.append(float('.' + all_files[i].split(".")[3]))
     # my subs
-    for s, path in zip([0.9499, 0.9515], my_subs):
+    for s, path in zip([0.9499, 0.9515, 0.9507], my_subs):
         scores.append(s)
         all_files.append(path)
     
@@ -83,7 +84,7 @@ def main():
 
     top_mean = 0
     s = 0
-    for n in [0, 1, 2, 5, 26]:
+    for n in [0, 1, 2, 3, 6, 27]:
         top_mean += concat_sub.iloc[:,n]*scores[top[n]]
         s += scores[top[n]]
     top_mean /= s
@@ -92,9 +93,9 @@ def main():
     print(describe(m_gmean))
 
     concat_sub['isFraud'] = m_gmean
-    if not os.path.exists('../data/output/stack_gmean_010'):
-        os.makedirs('../data/output/stack_gmean_010')
-    concat_sub[['isFraud']].to_csv('../data/output/stack_gmean_010/submission.csv')
+    if not os.path.exists('../data/output/stack_gmean_011'):
+        os.makedirs('../data/output/stack_gmean_011')
+    concat_sub[['isFraud']].to_csv('../data/output/stack_gmean_011/submission.csv')
 
 
 if __name__ == "__main__":
