@@ -252,7 +252,10 @@ class Prediction:
         else:
             oof_path = os.path.join(out_dir, 'val_prediction.csv')
         sub_path = os.path.join(out_dir, 'submission.csv')
-        self.oof = pd.read_csv(oof_path).rename(columns={TARGET_COLUMN: conf_name})
+        try:
+            self.oof = pd.read_csv(oof_path).rename(columns={TARGET_COLUMN: conf_name})
+        except:
+            self.oof = None
         self.sub = pd.read_csv(sub_path).rename(columns={TARGET_COLUMN: conf_name})
 
     def create_feature(self):
