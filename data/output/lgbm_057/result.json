@@ -1,0 +1,123 @@
+{
+  "model_params": {
+    "objective": "binary",
+    "metric": "auc",
+    "boosting_type": "gbdt",
+    "learning_rate": 0.007,
+    "max_depth": -1,
+    "is_unbalance": true,
+    "boost_from_average": false,
+    "verbose": -1,
+    "save_binary": true,
+    "seed": 1337,
+    "feature_fraction_seed": 1337,
+    "bagging_seed": 1337,
+    "drop_seed": 1337,
+    "data_random_seed": 1337,
+    "colsample_bytree": 0.38,
+    "lambda_l1": 0.2,
+    "lambda_l2": 9.2,
+    "max_bin": 325,
+    "min_data_in_leaf": 46,
+    "min_gain_to_split": 0.0,
+    "min_sum_hessian_in_leaf": 9.0,
+    "num_leaves": 560
+  },
+  "fit_params": {
+    "verbose_eval": 100,
+    "early_stopping_rounds": 100
+  },
+  "result": {
+    "trn_score": 0.9999443749926781,
+    "val_score": 0.9433601954656384,
+    "best_iteration": 1426,
+    "elapsed_time": "99.42 min.",
+    "feature_importance_top10": {
+      "R_emaildomain": 3714587.9769773483,
+      "V258": 3625886.118985176,
+      "cents_2_cat": 2062469.9882164001,
+      "C14": 1654234.190132141,
+      "V294": 1617567.7195272446,
+      "V317": 1529277.149928093,
+      "C13": 1472389.8082499504,
+      "C1_fq_enc": 1420569.2678432465,
+      "V70": 1325667.7485351562,
+      "V257": 1015996.011343956
+    }
+  },
+  "trials": {
+    "Full": {
+      "val_score": 0.9433601954656384
+    }
+  },
+  "features": [
+    [
+      "DiffVFeatures",
+      {
+        "step": -1,
+        "groupby_col": "card1"
+      }
+    ],
+    [
+      "CentsAsCategory",
+      {
+        "round_num": 2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

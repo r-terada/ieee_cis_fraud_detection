@@ -1611,3 +1611,31 @@ class TimeToLastTransaction(BaseFeature):
         ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_time_to_last_transaction' for col in uids]
 
         return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
+class DiffVFeatures(BaseFeature):
+
+    def __init__(self, step=1, groupby_col='card1'):
+        super().__init__()
+        self.step = step
+        self.groupby_col = groupby_col
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_step_{self.step}_{self.groupby_col}'
+
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
+        for df in [train_transaction, test_transaction]:
+            df = add_uids(df)
+
+        v_cols = [c for c in train_transaction.columns if c.startswith('V')]
+
+        ret_cols = [JOIN_KEY_COLUMN]
+        for df in [train_transaction, test_transaction]:
+            gr_ = df.groupby([self.groupby_col])
+            for v_col in tqdm(v_cols):
+                df[f'{v_col}_diff_{self.step}_by_{self.groupby_col}'] = gr_[v_col].shift(0) - gr_[v_col].shift(self.step)
+                ret_cols.append(f'{v_col}_diff_{self.step}_by_{self.groupby_col}')
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]

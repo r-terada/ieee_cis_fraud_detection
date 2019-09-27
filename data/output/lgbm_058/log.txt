@@ -1,0 +1,127 @@
+2019-09-27 08:53:29,260 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'treat cents as category',
+ 'features': [['DiffVFeatures', {'groupby_col': 'card1', 'step': 1}],
+              ['CentsAsCategory', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'model_params': {'bagging_seed': 1337,
+                            'boost_from_average': False,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.38,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'is_unbalance': True,
+                            'lambda_l1': 0.2,
+                            'lambda_l2': 9.2,
+                            'learning_rate': 0.007,
+                            'max_bin': 325,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'min_data_in_leaf': 46,
+                            'min_gain_to_split': 0.0,
+                            'min_sum_hessian_in_leaf': 9.0,
+                            'num_leaves': 560,
+                            'objective': 'binary',
+                            'save_binary': True,
+                            'seed': 1337,
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'retrain_on_full': True},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-27 08:53:29,262 [    INFO] [ID] read features from pickled file.
+2019-09-27 08:53:29,285 [    INFO] [DiffVFeatures_step_1_card1] no pickled file. create feature.
+2019-09-27 08:53:29,286 [    INFO] [Raw] read train.
+2019-09-27 08:53:48,603 [    INFO] [Raw] read test.
+2019-09-27 08:55:47,595 [    INFO] [DiffVFeatures_step_1_card1] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/DiffVFeatures_step_1_card1_train.pkl
+2019-09-27 08:56:07,795 [    INFO] [DiffVFeatures_step_1_card1] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/DiffVFeatures_step_1_card1_test.pkl
+2019-09-27 08:56:15,886 [    INFO] [DiffVFeatures_step_1_card1] head of feature
+2019-09-27 08:56:16,801 [    INFO] [DiffVFeatures_step_1_card1]    TransactionID  V1_diff_1_by_card1  V2_diff_1_by_card1  V3_diff_1_by_card1  V4_diff_1_by_card1  V5_diff_1_by_card1  ...  V334_diff_1_by_card1  V335_diff_1_by_card1  V336_diff_1_by_card1  V337_diff_1_by_card1  V338_diff_1_by_card1  V339_diff_1_by_card1
+0        2987000                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+1        2987001                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+2        2987002                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+3        2987003                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+4        2987004                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+
+[5 rows x 679 columns]
+   TransactionID  V1_diff_1_by_card1  V2_diff_1_by_card1  V3_diff_1_by_card1  V4_diff_1_by_card1  V5_diff_1_by_card1  ...  V334_diff_1_by_card1  V335_diff_1_by_card1  V336_diff_1_by_card1  V337_diff_1_by_card1  V338_diff_1_by_card1  V339_diff_1_by_card1
+0        3663549                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+1        3663550                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+2        3663551                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+3        3663552                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+4        3663553                 NaN                 NaN                 NaN                 NaN                 NaN  ...                   NaN                   NaN                   NaN                   NaN                   NaN                   NaN
+
+[5 rows x 679 columns]
+2019-09-27 08:56:50,928 [    INFO] [CentsAsCategory_round_by_2] read features from pickled file.
+2019-09-27 08:57:00,936 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-27 08:57:06,745 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-27 08:57:14,771 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-27 08:57:20,440 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-27 08:57:26,105 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-27 08:57:33,838 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-27 08:59:50,022 [    INFO] head of features
+   TransactionID  V1_diff_1_by_card1  V2_diff_1_by_card1  V3_diff_1_by_card1  V4_diff_1_by_card1  V5_diff_1_by_card1  V6_diff_1_by_card1  V7_diff_1_by_card1  ...  id_38  DeviceType  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+1        2987001                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+2        2987002                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+3        2987003                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+4        2987004                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      1           1           9                358                   9         11783           3573          4294
+
+[5 rows x 1518 columns]
+None
+   TransactionID  V1_diff_1_by_card1  V2_diff_1_by_card1  V3_diff_1_by_card1  V4_diff_1_by_card1  V5_diff_1_by_card1  V6_diff_1_by_card1  V7_diff_1_by_card1  ...  id_38  DeviceType  DeviceInfo  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+1        3663550                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+2        3663551                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+3        3663552                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+4        3663553                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN                 NaN  ...      2           2      811091             811091              811091        811091         811091        811091
+
+[5 rows x 1517 columns]
+None
+2019-09-27 08:59:50,143 [    INFO] start training
+2019-09-27 09:10:40,262 [   DEBUG] [100]	training's auc: 0.980546	valid_1's auc: 0.916793
+2019-09-27 09:17:08,862 [   DEBUG] [200]	training's auc: 0.987849	valid_1's auc: 0.922589
+2019-09-27 09:23:44,307 [   DEBUG] [300]	training's auc: 0.992565	valid_1's auc: 0.927812
+2019-09-27 09:30:37,285 [   DEBUG] [400]	training's auc: 0.99547	valid_1's auc: 0.932361
+2019-09-27 09:37:31,760 [   DEBUG] [500]	training's auc: 0.997265	valid_1's auc: 0.935829
+2019-09-27 09:44:27,533 [   DEBUG] [600]	training's auc: 0.9983	valid_1's auc: 0.938391
+2019-09-27 09:51:16,718 [   DEBUG] [700]	training's auc: 0.998921	valid_1's auc: 0.940281
+2019-09-27 09:58:02,564 [   DEBUG] [800]	training's auc: 0.999293	valid_1's auc: 0.941362
+2019-09-27 10:04:41,926 [   DEBUG] [900]	training's auc: 0.999524	valid_1's auc: 0.942108
+2019-09-27 10:11:17,339 [   DEBUG] [1000]	training's auc: 0.999677	valid_1's auc: 0.942508
+2019-09-27 10:17:45,301 [   DEBUG] [1100]	training's auc: 0.999779	valid_1's auc: 0.942729
+2019-09-27 10:24:03,290 [   DEBUG] [1200]	training's auc: 0.999852	valid_1's auc: 0.943051
+2019-09-27 10:30:14,530 [   DEBUG] [1300]	training's auc: 0.999904	valid_1's auc: 0.943102
+2019-09-27 10:36:11,139 [   DEBUG] [1400]	training's auc: 0.999937	valid_1's auc: 0.943206
+2019-09-27 10:41:54,613 [   DEBUG] [1500]	training's auc: 0.999959	valid_1's auc: 0.943297
+2019-09-27 10:46:40,172 [    INFO] best_iteration: 1471, train_score: 0.999953, valid_score: 0.943333
+2019-09-27 10:46:40,650 [    INFO] retrain model with full training data
+2019-09-27 13:26:38,901 [    INFO] start prediction
+2019-09-27 13:48:45,536 [    INFO] [ID] read features from pickled file.
+2019-09-27 13:48:45,700 [    INFO] save results
+2019-09-27 13:48:45,719 [    INFO] save val_pred
+2019-09-27 13:48:45,724 [    INFO] [DT_M] read features from pickled file.
+2019-09-27 13:48:46,301 [    INFO] save submission
