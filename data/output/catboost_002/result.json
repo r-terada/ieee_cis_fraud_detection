@@ -1,0 +1,198 @@
+{
+  "folds": "GroupKFold(n_splits=6)",
+  "model_params": {
+    "n_estimators": 10000,
+    "early_stopping_rounds": 100,
+    "loss_function": "Logloss",
+    "eval_metric": "AUC",
+    "learning_rate": 0.05,
+    "max_depth": 8,
+    "random_seed": 1337
+  },
+  "fit_params": {
+    "use_best_model": true,
+    "verbose_eval": 100
+  },
+  "trials": {
+    "Fold1": {
+      "trn_score": 0.9611375310019407,
+      "val_score": 0.8961604491004757,
+      "best_iteration": 1174,
+      "elapsed_time": "71.45 min.",
+      "feature_importance_top10": {
+        "M4": 2.1418536243003987,
+        "C14": 1.8200406821117345,
+        "C13": 1.5936433037952797,
+        "C1_fq_enc": 1.4985589685101037,
+        "V317": 1.2082029382917323,
+        "C1": 0.9890604155244608,
+        "uid_D7_std": 0.9076905574529404,
+        "R_emaildomain": 0.8881168446358579,
+        "C13_fq_enc": 0.8356371116608582,
+        "V283": 0.8253087162647272
+      }
+    },
+    "Fold2": {
+      "trn_score": 0.9825031437839569,
+      "val_score": 0.9312902006475562,
+      "best_iteration": 2762,
+      "elapsed_time": "141.53 min.",
+      "feature_importance_top10": {
+        "M4": 1.7912308940520563,
+        "C13": 1.591139479096258,
+        "C14": 1.2549217770093504,
+        "M5": 1.2074113276530132,
+        "C1_fq_enc": 1.0189118028343973,
+        "C13_fq_enc": 0.9057700225016849,
+        "C1": 0.8964656148840624,
+        "P_emaildomain": 0.8164327395650359,
+        "V317": 0.7958199620470265,
+        "C14_fq_enc": 0.748201008395784
+      }
+    },
+    "Fold3": {
+      "trn_score": 0.9885437675636483,
+      "val_score": 0.9322700913816079,
+      "best_iteration": 3682,
+      "elapsed_time": "183.57 min.",
+      "feature_importance_top10": {
+        "C13": 1.838129763367929,
+        "M4": 1.6625966358924558,
+        "C14": 1.2260628254413968,
+        "C1": 0.9854740294421857,
+        "M5": 0.9823576837169691,
+        "uid4_fq_enc": 0.82086659558683,
+        "C13_fq_enc": 0.774714185434302,
+        "uid5_fq_enc": 0.7353606389523856,
+        "C1_fq_enc": 0.7159200317665435,
+        "addr1": 0.7068152666499288
+      }
+    },
+    "Fold4": {
+      "trn_score": 0.9653139692654693,
+      "val_score": 0.9197488210046711,
+      "best_iteration": 1475,
+      "elapsed_time": "80.62 min.",
+      "feature_importance_top10": {
+        "C13": 2.4260094646662353,
+        "M5": 1.4290030649811678,
+        "C14": 1.33848511732096,
+        "M4": 1.2503626420796705,
+        "V70": 1.2274643024942153,
+        "C1_fq_enc": 1.1709944746079095,
+        "C14_fq_enc": 1.1236249445532327,
+        "C13_fq_enc": 0.9932672708937998,
+        "R_emaildomain": 0.9860474035155539,
+        "card6": 0.9655931564579917
+      }
+    },
+    "Fold5": {
+      "trn_score": 0.9843040874912473,
+      "val_score": 0.9343643825619988,
+      "best_iteration": 3063,
+      "elapsed_time": "155.35 min.",
+      "feature_importance_top10": {
+        "C13": 1.980197671453192,
+        "M5": 1.2698577540065075,
+        "M4": 1.1996369879637843,
+        "C14": 1.1005022069385788,
+        "C1": 0.8643580449795879,
+        "C13_fq_enc": 0.8379304042738144,
+        "C1_fq_enc": 0.8168375496190088,
+        "R_emaildomain": 0.77976245033979,
+        "P_emaildomain": 0.6745335958672322,
+        "uid5_fq_enc": 0.6520073161460209
+      }
+    },
+    "Fold6": {
+      "trn_score": 0.9857932641874143,
+      "val_score": 0.9398711357060671,
+      "best_iteration": 3294,
+      "elapsed_time": "166.49 min.",
+      "feature_importance_top10": {
+        "C13": 1.631928161458288,
+        "M4": 1.425087954873876,
+        "M5": 1.0229829095536875,
+        "C14": 0.9545454596047611,
+        "C1_fq_enc": 0.9225421997856309,
+        "P_emaildomain": 0.9071854180798253,
+        "C13_fq_enc": 0.8883891378762113,
+        "C14_fq_enc": 0.8001644681207274,
+        "uid4_fq_enc": 0.6980149269501271,
+        "C1": 0.6806187142425454
+      }
+    },
+    "Full": {
+      "val_score": 0.9248599971472775,
+      "val_score_mean": 0.925617513400396,
+      "val_score_std": 0.014481423911160586
+    }
+  },
+  "features": [
+    [
+      "TimeToLastTransaction",
+      {}
+    ],
+    [
+      "CentsAsCategory",
+      {
+        "round_num": 2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -1
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -2
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -3
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -4
+      }
+    ],
+    [
+      "TimeToFutureTransaction",
+      {
+        "step": -5
+      }
+    ],
+    [
+      "KonstantinFeature2",
+      {}
+    ]
+  ],
+  "cols_to_drop": [
+    "TransactionID",
+    "TransactionDT",
+    "isFraud",
+    "DT",
+    "DT_M",
+    "DT_W",
+    "DT_D",
+    "DT_hour",
+    "DT_day_week",
+    "DT_day_month",
+    "DT_M_total",
+    "DT_W_total",
+    "DT_D_total",
+    "uid",
+    "uid2",
+    "uid3",
+    "uid4",
+    "uid5",
+    "bank_type"
+  ]
+}

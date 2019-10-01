@@ -1,0 +1,88 @@
+2019-09-30 18:03:10,363 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': '',
+ 'features': [['TimeToLastTransaction', {}],
+              ['CentsAsCategory', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'use_best_model': True, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'early_stopping_rounds': 100,
+                            'eval_metric': 'AUC',
+                            'learning_rate': 0.05,
+                            'loss_function': 'Logloss',
+                            'max_depth': 8,
+                            'n_estimators': 10000,
+                            'random_seed': 1337},
+           'name': 'CatBoost',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-09-30 18:03:10,365 [    INFO] [ID] read features from pickled file.
+2019-09-30 18:03:10,397 [    INFO] [TimeToLastTransaction_concat_True] read features from pickled file.
+2019-09-30 18:03:11,126 [    INFO] [CentsAsCategory_round_by_2] read features from pickled file.
+2019-09-30 18:03:11,628 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-09-30 18:03:12,314 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-09-30 18:03:12,978 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-09-30 18:03:13,682 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-09-30 18:03:14,487 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-09-30 18:03:15,298 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-09-30 18:05:40,906 [    INFO] head of features
+   TransactionID  card1_time_to_last_transaction  card2_time_to_last_transaction  card3_time_to_last_transaction  card5_time_to_last_transaction  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000                      32882952.0                             NaN                      34127936.0                      29030022.0  ...             811091              811091        811091         811091        811091
+1        2987001                      34127264.0                      34127264.0                      34127936.0                      34127264.0  ...             811091              811091        811091         811091        811091
+2        2987002                      34115568.0                      34127856.0                      34127868.0                      34127792.0  ...             811091              811091        811091         811091        811091
+3        2987003                      34122700.0                      34126280.0                      34127840.0                      34127128.0  ...             811091              811091        811091         811091        811091
+4        2987004                      34101256.0                      34126700.0                      34127832.0                      34127160.0  ...                358                   9         11783           3573          4294
+
+[5 rows x 850 columns]
+None
+   TransactionID  card1_time_to_last_transaction  card2_time_to_last_transaction  card3_time_to_last_transaction  card5_time_to_last_transaction  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549                      15619139.0                      15810929.0                      15811113.0                      15811102.0  ...             811091              811091        811091         811091        811091
+1        3663550                      15807487.0                      15810890.0                      15811074.0                      15811063.0  ...             811091              811091        811091         811091        811091
+2        3663551                      15394162.0                      15710606.0                      15811027.0                      15811016.0  ...             811091              811091        811091         811091        811091
+3        3663552                      15800523.0                      15808081.0                      15811027.0                      15810951.0  ...             811091              811091        811091         811091        811091
+4        3663553                      15807660.0                      15807660.0                      15811020.0                      15810308.0  ...             811091              811091        811091         811091        811091
+
+[5 rows x 849 columns]
+None
+2019-09-30 18:05:41,010 [    INFO] start training
+2019-09-30 18:07:25,005 [    INFO] fold 1
+2019-09-30 19:19:00,464 [    INFO] best_iteration: 1174, train_score: 0.961138, valid_score: 0.896160
+2019-09-30 19:19:00,619 [    INFO] fold 2
+2019-09-30 21:40:40,085 [    INFO] best_iteration: 2762, train_score: 0.982503, valid_score: 0.931290
+2019-09-30 21:40:40,276 [    INFO] fold 3
+2019-10-01 00:44:21,860 [    INFO] best_iteration: 3682, train_score: 0.988544, valid_score: 0.932270
+2019-10-01 00:44:21,994 [    INFO] fold 4
+2019-10-01 02:05:06,295 [    INFO] best_iteration: 1475, train_score: 0.965314, valid_score: 0.919749
+2019-10-01 02:05:06,431 [    INFO] fold 5
+2019-10-01 04:40:30,899 [    INFO] best_iteration: 3063, train_score: 0.984304, valid_score: 0.934364
+2019-10-01 04:40:31,030 [    INFO] fold 6
+2019-10-01 07:27:06,078 [    INFO] best_iteration: 3294, train_score: 0.985793, valid_score: 0.939871
+2019-10-01 07:27:53,499 [    INFO] CV score: 0.9248600
+2019-10-01 07:27:53,650 [    INFO] start prediction
+2019-10-01 07:49:48,251 [    INFO] [ID] read features from pickled file.
+2019-10-01 07:49:48,350 [    INFO] save results
+2019-10-01 07:49:48,356 [    INFO] save oof
+2019-10-01 07:49:50,518 [    INFO] save submission
