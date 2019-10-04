@@ -1613,6 +1613,46 @@ class TimeToLastTransaction(BaseFeature):
         return train_transaction[ret_cols], test_transaction[ret_cols]
 
 
+class NumFollowingTransaction(BaseFeature):
+
+    def __init__(self, concat=True):
+        super().__init__()
+        self.concat = concat
+
+    @property
+    def _name(self) -> str:
+        return f'{self.__class__.__name__}_concat_{self.concat}'
+
+    def _create_feature(self):
+        train_transaction, train_identity, test_transaction, test_identity = Raw.read_csvs()
+        for df in [train_transaction, test_transaction]:
+            df['DT'] = df['TransactionDT'].apply(lambda x: (START_DATE + datetime.timedelta(seconds = x)))
+
+        for df in [train_transaction, test_transaction]:
+            df = add_uids(df)
+
+        uids = ['card1', 'card2', 'card3', 'card5', 'uid', 'uid2', 'uid3', 'uid4', 'uid5', 'bank_type']
+
+        if self.concat:
+            temp_df = pd.concat([train_transaction, test_transaction])
+            temp_df['temp'] = 1
+            for col in uids:
+                num_following_transaction = temp_df.iloc[::-1].groupby(col)['temp'].cumsum().iloc[::-1] - 1
+                train_transaction[f'{col}_num_following_transaction'] = num_following_transaction.iloc[:len(train_transaction)]
+                test_transaction[f'{col}_num_following_transaction'] = num_following_transaction.iloc[len(train_transaction):]
+
+        else:
+            for df in [train_transaction, test_transaction]:
+                df['temp'] = 1
+                for col in uids:
+                    df[f'{col}_num_following_transaction'] = df.iloc[::-1].groupby(col)['temp'].cumsum().iloc[::-1] - 1
+
+
+        ret_cols = [JOIN_KEY_COLUMN] + [f'{col}_num_following_transaction' for col in uids]
+
+        return train_transaction[ret_cols], test_transaction[ret_cols]
+
+
 class DiffVFeatures(BaseFeature):
 
     def __init__(self, step=1, groupby_col='card1'):

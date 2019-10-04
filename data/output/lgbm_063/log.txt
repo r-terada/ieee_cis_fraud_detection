@@ -1,0 +1,246 @@
+2019-10-02 03:22:25,941 [    INFO] {'cols_to_drop': ['TransactionID',
+                  'TransactionDT',
+                  'isFraud',
+                  'DT',
+                  'DT_M',
+                  'DT_W',
+                  'DT_D',
+                  'DT_hour',
+                  'DT_day_week',
+                  'DT_day_month',
+                  'DT_M_total',
+                  'DT_W_total',
+                  'DT_D_total',
+                  'uid',
+                  'uid2',
+                  'uid3',
+                  'uid4',
+                  'uid5',
+                  'bank_type'],
+ 'descriptions': 'NumFollowingTransaction concat=true',
+ 'features': [['NumFollowingTransaction', {'concat': True}],
+              ['TimeToLastTransaction', {}],
+              ['CentsAsCategory', {'round_num': 2}],
+              ['TimeToFutureTransaction', {'step': -1}],
+              ['TimeToFutureTransaction', {'step': -2}],
+              ['TimeToFutureTransaction', {'step': -3}],
+              ['TimeToFutureTransaction', {'step': -4}],
+              ['TimeToFutureTransaction', {'step': -5}],
+              ['KonstantinFeature2', {}]],
+ 'model': {'fit_params': {'early_stopping_rounds': 100, 'verbose_eval': 100},
+           'kfold_class': 'GroupKFold',
+           'kfold_params': {'n_splits': 6},
+           'model_params': {'bagging_seed': 1337,
+                            'boost_from_average': False,
+                            'boosting_type': 'gbdt',
+                            'colsample_bytree': 0.38,
+                            'data_random_seed': 1337,
+                            'drop_seed': 1337,
+                            'feature_fraction_seed': 1337,
+                            'is_unbalance': True,
+                            'lambda_l1': 0.2,
+                            'lambda_l2': 9.2,
+                            'learning_rate': 0.007,
+                            'max_bin': 325,
+                            'max_depth': -1,
+                            'metric': 'auc',
+                            'min_data_in_leaf': 46,
+                            'min_gain_to_split': 0.0,
+                            'min_sum_hessian_in_leaf': 9.0,
+                            'num_leaves': 560,
+                            'objective': 'binary',
+                            'save_binary': True,
+                            'seed': 1337,
+                            'verbose': -1},
+           'name': 'LightGBM',
+           'split_params': {'group_key': 'DT_M'}},
+ 'resample': {'method': 'no_resample', 'params': {}}}
+2019-10-02 03:22:25,944 [    INFO] [ID] read features from pickled file.
+2019-10-02 03:22:25,962 [    INFO] [NumFollowingTransaction_concat_True] no pickled file. create feature.
+2019-10-02 03:22:25,962 [    INFO] [Raw] read train.
+2019-10-02 03:22:46,245 [    INFO] [Raw] read test.
+2019-10-02 03:26:07,351 [    INFO] [NumFollowingTransaction_concat_True] save train features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/NumFollowingTransaction_concat_True_train.pkl
+2019-10-02 03:26:07,445 [    INFO] [NumFollowingTransaction_concat_True] save test features to /Users/rintaro/.ghq/github.com/r-terada/sasakama_kaggle/ieee_cis_fraud_detection/src/../data/cache/features/NumFollowingTransaction_concat_True_test.pkl
+2019-10-02 03:26:07,473 [    INFO] [NumFollowingTransaction_concat_True] head of feature
+2019-10-02 03:26:07,536 [    INFO] [NumFollowingTransaction_concat_True]    TransactionID  card1_num_following_transaction  card2_num_following_transaction  card3_num_following_transaction  ...  uid3_num_following_transaction  uid4_num_following_transaction  uid5_num_following_transaction  bank_type_num_following_transaction
+0        2987000                               55                               -2                           956844  ...                               1                               0                               1                                  308
+1        2987001                             1337                             5592                           956843  ...                             104                              20                              97                                44081
+2        2987002                             1793                            70495                           956842  ...                              45                               3                              44                               101291
+3        2987003                             7634                            11286                           956841  ...                             361                             141                             353                                47058
+4        2987004                               29                            27224                           956840  ...                               0                               0                               0                                44080
+
+[5 rows x 11 columns]
+   TransactionID  card1_num_following_transaction  card2_num_following_transaction  card3_num_following_transaction  ...  uid3_num_following_transaction  uid4_num_following_transaction  uid5_num_following_transaction  bank_type_num_following_transaction
+0        3663549                               74                            37345                           435557  ...                              64                              37                              64                               245832
+1        3663550                              960                            37344                           435556  ...                             829                              98                             684                               245831
+2        3663551                               32                               75                           435555  ...                              32                               4                              31                               245830
+3        3663552                              838                            11341                           435554  ...                              11                              11                              11                                44801
+4        3663553                             1216                             1331                           435553  ...                             960                             462                             952                                21119
+
+[5 rows x 11 columns]
+2019-10-02 03:26:08,057 [    INFO] [TimeToLastTransaction_concat_True] read features from pickled file.
+2019-10-02 03:26:08,698 [    INFO] [CentsAsCategory_round_by_2] read features from pickled file.
+2019-10-02 03:26:09,181 [    INFO] [TimeToFutureTransaction_step_-1] read features from pickled file.
+2019-10-02 03:26:09,953 [    INFO] [TimeToFutureTransaction_step_-2] read features from pickled file.
+2019-10-02 03:26:10,982 [    INFO] [TimeToFutureTransaction_step_-3] read features from pickled file.
+2019-10-02 03:26:11,730 [    INFO] [TimeToFutureTransaction_step_-4] read features from pickled file.
+2019-10-02 03:26:12,585 [    INFO] [TimeToFutureTransaction_step_-5] read features from pickled file.
+2019-10-02 03:26:13,466 [    INFO] [KonstantinFeature2] read features from pickled file.
+2019-10-02 03:28:12,314 [    INFO] head of features
+   TransactionID  card1_num_following_transaction  card2_num_following_transaction  card3_num_following_transaction  card5_num_following_transaction  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        2987000                               55                               -2                           956844                              308  ...             811091              811091        811091         811091        811091
+1        2987001                             1337                             5592                           956843                            49490  ...             811091              811091        811091         811091        811091
+2        2987002                             1793                            70495                           956842                           102929  ...             811091              811091        811091         811091        811091
+3        2987003                             7634                            11286                           956841                            47060  ...             811091              811091        811091         811091        811091
+4        2987004                               29                            27224                           956840                            49489  ...                358                   9         11783           3573          4294
+
+[5 rows x 860 columns]
+None
+   TransactionID  card1_num_following_transaction  card2_num_following_transaction  card3_num_following_transaction  card5_num_following_transaction  ...  DeviceInfo_device  DeviceInfo_version  id_30_device  id_30_version  id_31_device
+0        3663549                               74                            37345                           435557                           256990  ...             811091              811091        811091         811091        811091
+1        3663550                              960                            37344                           435556                           256989  ...             811091              811091        811091         811091        811091
+2        3663551                               32                               75                           435555                           256988  ...             811091              811091        811091         811091        811091
+3        3663552                              838                            11341                           435554                            45789  ...             811091              811091        811091         811091        811091
+4        3663553                             1216                             1331                           435553                            21119  ...             811091              811091        811091         811091        811091
+
+[5 rows x 859 columns]
+None
+2019-10-02 03:28:12,454 [    INFO] start training
+2019-10-02 03:29:47,100 [    INFO] fold 1
+2019-10-02 03:35:07,421 [   DEBUG] [100]	training's auc: 0.982574	valid_1's auc: 0.87886
+2019-10-02 03:39:25,465 [   DEBUG] [200]	training's auc: 0.98909	valid_1's auc: 0.885501
+2019-10-02 03:43:39,597 [   DEBUG] [300]	training's auc: 0.993324	valid_1's auc: 0.891133
+2019-10-02 03:48:31,045 [   DEBUG] [400]	training's auc: 0.995887	valid_1's auc: 0.895287
+2019-10-02 03:51:47,344 [   DEBUG] [500]	training's auc: 0.997462	valid_1's auc: 0.898167
+2019-10-02 03:55:00,821 [   DEBUG] [600]	training's auc: 0.998418	valid_1's auc: 0.900858
+2019-10-02 03:58:13,320 [   DEBUG] [700]	training's auc: 0.998982	valid_1's auc: 0.902629
+2019-10-02 04:01:21,544 [   DEBUG] [800]	training's auc: 0.999335	valid_1's auc: 0.904162
+2019-10-02 04:04:30,098 [   DEBUG] [900]	training's auc: 0.999562	valid_1's auc: 0.905594
+2019-10-02 04:07:32,387 [   DEBUG] [1000]	training's auc: 0.999714	valid_1's auc: 0.906781
+2019-10-02 04:10:33,547 [   DEBUG] [1100]	training's auc: 0.999818	valid_1's auc: 0.907961
+2019-10-02 04:13:30,181 [   DEBUG] [1200]	training's auc: 0.999882	valid_1's auc: 0.908798
+2019-10-02 04:16:21,108 [   DEBUG] [1300]	training's auc: 0.999926	valid_1's auc: 0.909254
+2019-10-02 04:19:10,263 [   DEBUG] [1400]	training's auc: 0.999952	valid_1's auc: 0.909776
+2019-10-02 04:21:52,328 [   DEBUG] [1500]	training's auc: 0.99997	valid_1's auc: 0.91012
+2019-10-02 04:24:28,402 [   DEBUG] [1600]	training's auc: 0.999982	valid_1's auc: 0.910399
+2019-10-02 04:27:01,350 [   DEBUG] [1700]	training's auc: 0.999989	valid_1's auc: 0.910719
+2019-10-02 04:29:30,932 [   DEBUG] [1800]	training's auc: 0.999992	valid_1's auc: 0.910784
+2019-10-02 04:32:42,458 [    INFO] best_iteration: 1778, train_score: 0.999992, valid_score: 0.910812
+2019-10-02 04:32:42,631 [    INFO] fold 2
+2019-10-02 04:36:50,607 [   DEBUG] [100]	training's auc: 0.982184	valid_1's auc: 0.926733
+2019-10-02 04:39:59,726 [   DEBUG] [200]	training's auc: 0.988952	valid_1's auc: 0.931555
+2019-10-02 04:43:15,282 [   DEBUG] [300]	training's auc: 0.993205	valid_1's auc: 0.934882
+2019-10-02 04:46:35,851 [   DEBUG] [400]	training's auc: 0.9959	valid_1's auc: 0.938109
+2019-10-02 04:49:58,558 [   DEBUG] [500]	training's auc: 0.997469	valid_1's auc: 0.941049
+2019-10-02 04:53:18,255 [   DEBUG] [600]	training's auc: 0.998397	valid_1's auc: 0.943223
+2019-10-02 04:56:34,560 [   DEBUG] [700]	training's auc: 0.998962	valid_1's auc: 0.945062
+2019-10-02 04:59:53,194 [   DEBUG] [800]	training's auc: 0.999333	valid_1's auc: 0.946264
+2019-10-02 05:03:07,032 [   DEBUG] [900]	training's auc: 0.999566	valid_1's auc: 0.947406
+2019-10-02 05:06:20,042 [   DEBUG] [1000]	training's auc: 0.999719	valid_1's auc: 0.948241
+2019-10-02 05:09:25,417 [   DEBUG] [1100]	training's auc: 0.999818	valid_1's auc: 0.948803
+2019-10-02 05:12:27,689 [   DEBUG] [1200]	training's auc: 0.999882	valid_1's auc: 0.949155
+2019-10-02 05:15:26,843 [   DEBUG] [1300]	training's auc: 0.999923	valid_1's auc: 0.949386
+2019-10-02 05:18:21,389 [   DEBUG] [1400]	training's auc: 0.999949	valid_1's auc: 0.949484
+2019-10-02 05:21:09,715 [   DEBUG] [1500]	training's auc: 0.999967	valid_1's auc: 0.949616
+2019-10-02 05:23:52,777 [   DEBUG] [1600]	training's auc: 0.999979	valid_1's auc: 0.94968
+2019-10-02 05:26:37,000 [   DEBUG] [1700]	training's auc: 0.999987	valid_1's auc: 0.949765
+2019-10-02 05:29:11,845 [   DEBUG] [1800]	training's auc: 0.999992	valid_1's auc: 0.949873
+2019-10-02 05:31:44,287 [   DEBUG] [1900]	training's auc: 0.999994	valid_1's auc: 0.949963
+2019-10-02 05:34:11,435 [   DEBUG] [2000]	training's auc: 0.999996	valid_1's auc: 0.949933
+2019-10-02 05:35:27,228 [    INFO] best_iteration: 1914, train_score: 0.999994, valid_score: 0.949986
+2019-10-02 05:35:27,470 [    INFO] fold 3
+2019-10-02 05:39:41,176 [   DEBUG] [100]	training's auc: 0.981238	valid_1's auc: 0.924526
+2019-10-02 05:42:53,322 [   DEBUG] [200]	training's auc: 0.988209	valid_1's auc: 0.929283
+2019-10-02 05:46:12,792 [   DEBUG] [300]	training's auc: 0.992719	valid_1's auc: 0.933257
+2019-10-02 05:49:36,430 [   DEBUG] [400]	training's auc: 0.995577	valid_1's auc: 0.937087
+2019-10-02 05:53:01,480 [   DEBUG] [500]	training's auc: 0.997276	valid_1's auc: 0.939923
+2019-10-02 05:56:26,382 [   DEBUG] [600]	training's auc: 0.998283	valid_1's auc: 0.94217
+2019-10-02 05:59:47,985 [   DEBUG] [700]	training's auc: 0.998883	valid_1's auc: 0.944174
+2019-10-02 06:03:10,877 [   DEBUG] [800]	training's auc: 0.999277	valid_1's auc: 0.945574
+2019-10-02 06:06:32,731 [   DEBUG] [900]	training's auc: 0.999527	valid_1's auc: 0.946636
+2019-10-02 06:09:49,937 [   DEBUG] [1000]	training's auc: 0.999693	valid_1's auc: 0.947592
+2019-10-02 06:12:58,710 [   DEBUG] [1100]	training's auc: 0.9998	valid_1's auc: 0.948337
+2019-10-02 06:16:05,029 [   DEBUG] [1200]	training's auc: 0.999871	valid_1's auc: 0.948725
+2019-10-02 06:19:06,604 [   DEBUG] [1300]	training's auc: 0.999917	valid_1's auc: 0.949148
+2019-10-02 06:22:05,758 [   DEBUG] [1400]	training's auc: 0.999947	valid_1's auc: 0.949421
+2019-10-02 06:24:58,767 [   DEBUG] [1500]	training's auc: 0.999966	valid_1's auc: 0.949676
+2019-10-02 06:27:46,220 [   DEBUG] [1600]	training's auc: 0.99998	valid_1's auc: 0.949871
+2019-10-02 06:30:32,425 [   DEBUG] [1700]	training's auc: 0.999988	valid_1's auc: 0.950033
+2019-10-02 06:33:12,213 [   DEBUG] [1800]	training's auc: 0.999992	valid_1's auc: 0.950303
+2019-10-02 06:35:48,074 [   DEBUG] [1900]	training's auc: 0.999995	valid_1's auc: 0.950391
+2019-10-02 06:38:21,267 [   DEBUG] [2000]	training's auc: 0.999996	valid_1's auc: 0.950391
+2019-10-02 06:40:49,927 [   DEBUG] [2100]	training's auc: 0.999998	valid_1's auc: 0.950466
+2019-10-02 06:43:13,515 [   DEBUG] [2200]	training's auc: 0.999999	valid_1's auc: 0.950531
+2019-10-02 06:45:31,172 [   DEBUG] [2300]	training's auc: 0.999999	valid_1's auc: 0.950616
+2019-10-02 06:48:40,808 [    INFO] best_iteration: 2297, train_score: 0.999999, valid_score: 0.950622
+2019-10-02 06:48:40,986 [    INFO] fold 4
+2019-10-02 06:52:49,436 [   DEBUG] [100]	training's auc: 0.981021	valid_1's auc: 0.91924
+2019-10-02 06:56:02,842 [   DEBUG] [200]	training's auc: 0.988125	valid_1's auc: 0.924674
+2019-10-02 06:59:19,420 [   DEBUG] [300]	training's auc: 0.992687	valid_1's auc: 0.929105
+2019-10-02 07:02:42,216 [   DEBUG] [400]	training's auc: 0.995566	valid_1's auc: 0.933366
+2019-10-02 07:06:07,724 [   DEBUG] [500]	training's auc: 0.997298	valid_1's auc: 0.936696
+2019-10-02 07:09:30,919 [   DEBUG] [600]	training's auc: 0.998329	valid_1's auc: 0.93889
+2019-10-02 07:12:53,611 [   DEBUG] [700]	training's auc: 0.998935	valid_1's auc: 0.940613
+2019-10-02 07:16:13,439 [   DEBUG] [800]	training's auc: 0.99931	valid_1's auc: 0.94156
+2019-10-02 07:19:33,001 [   DEBUG] [900]	training's auc: 0.999541	valid_1's auc: 0.94223
+2019-10-02 07:22:46,932 [   DEBUG] [1000]	training's auc: 0.999699	valid_1's auc: 0.942796
+2019-10-02 07:25:55,829 [   DEBUG] [1100]	training's auc: 0.999801	valid_1's auc: 0.943059
+2019-10-02 07:29:00,266 [   DEBUG] [1200]	training's auc: 0.999871	valid_1's auc: 0.94327
+2019-10-02 07:32:02,528 [   DEBUG] [1300]	training's auc: 0.999916	valid_1's auc: 0.943216
+2019-10-02 07:32:41,154 [    INFO] best_iteration: 1204, train_score: 0.999873, valid_score: 0.943294
+2019-10-02 07:32:41,316 [    INFO] fold 5
+2019-10-02 07:36:52,444 [   DEBUG] [100]	training's auc: 0.980797	valid_1's auc: 0.934427
+2019-10-02 07:40:06,202 [   DEBUG] [200]	training's auc: 0.987748	valid_1's auc: 0.938204
+2019-10-02 07:43:25,915 [   DEBUG] [300]	training's auc: 0.992344	valid_1's auc: 0.941296
+2019-10-02 07:46:51,097 [   DEBUG] [400]	training's auc: 0.995314	valid_1's auc: 0.944254
+2019-10-02 07:50:21,865 [   DEBUG] [500]	training's auc: 0.997093	valid_1's auc: 0.946229
+2019-10-02 07:53:46,560 [   DEBUG] [600]	training's auc: 0.998146	valid_1's auc: 0.947847
+2019-10-02 07:57:12,381 [   DEBUG] [700]	training's auc: 0.998791	valid_1's auc: 0.949099
+2019-10-02 08:00:35,551 [   DEBUG] [800]	training's auc: 0.999202	valid_1's auc: 0.949921
+2019-10-02 08:03:55,282 [   DEBUG] [900]	training's auc: 0.999471	valid_1's auc: 0.950626
+2019-10-02 08:07:13,747 [   DEBUG] [1000]	training's auc: 0.999647	valid_1's auc: 0.951295
+2019-10-02 08:10:23,792 [   DEBUG] [1100]	training's auc: 0.99977	valid_1's auc: 0.951802
+2019-10-02 08:13:31,456 [   DEBUG] [1200]	training's auc: 0.999854	valid_1's auc: 0.952206
+2019-10-02 08:16:35,367 [   DEBUG] [1300]	training's auc: 0.999906	valid_1's auc: 0.95248
+2019-10-02 08:19:34,998 [   DEBUG] [1400]	training's auc: 0.999939	valid_1's auc: 0.952682
+2019-10-02 08:22:33,633 [   DEBUG] [1500]	training's auc: 0.999962	valid_1's auc: 0.952848
+2019-10-02 08:25:25,162 [   DEBUG] [1600]	training's auc: 0.999976	valid_1's auc: 0.953074
+2019-10-02 08:28:14,444 [   DEBUG] [1700]	training's auc: 0.999986	valid_1's auc: 0.953204
+2019-10-02 08:30:58,330 [   DEBUG] [1800]	training's auc: 0.999993	valid_1's auc: 0.953346
+2019-10-02 08:33:36,567 [   DEBUG] [1900]	training's auc: 0.999996	valid_1's auc: 0.953378
+2019-10-02 08:36:11,388 [   DEBUG] [2000]	training's auc: 0.999998	valid_1's auc: 0.953446
+2019-10-02 08:38:43,779 [   DEBUG] [2100]	training's auc: 0.999998	valid_1's auc: 0.953486
+2019-10-02 08:41:09,545 [   DEBUG] [2200]	training's auc: 0.999999	valid_1's auc: 0.953563
+2019-10-02 08:43:30,747 [   DEBUG] [2300]	training's auc: 0.999999	valid_1's auc: 0.953663
+2019-10-02 08:45:47,161 [   DEBUG] [2400]	training's auc: 0.999999	valid_1's auc: 0.953693
+2019-10-02 08:47:58,892 [   DEBUG] [2500]	training's auc: 0.999999	valid_1's auc: 0.953715
+2019-10-02 08:50:08,864 [   DEBUG] [2600]	training's auc: 0.999999	valid_1's auc: 0.953728
+2019-10-02 08:52:54,603 [    INFO] best_iteration: 2580, train_score: 0.999999, valid_score: 0.953756
+2019-10-02 08:52:54,827 [    INFO] fold 6
+2019-10-02 08:57:04,743 [   DEBUG] [100]	training's auc: 0.980212	valid_1's auc: 0.930695
+2019-10-02 09:00:18,924 [   DEBUG] [200]	training's auc: 0.987384	valid_1's auc: 0.937264
+2019-10-02 09:03:39,385 [   DEBUG] [300]	training's auc: 0.992211	valid_1's auc: 0.942061
+2019-10-02 09:07:06,117 [   DEBUG] [400]	training's auc: 0.995304	valid_1's auc: 0.94601
+2019-10-02 09:10:33,533 [   DEBUG] [500]	training's auc: 0.997123	valid_1's auc: 0.94907
+2019-10-02 09:13:59,052 [   DEBUG] [600]	training's auc: 0.998182	valid_1's auc: 0.951552
+2019-10-02 09:17:24,664 [   DEBUG] [700]	training's auc: 0.99881	valid_1's auc: 0.953487
+2019-10-02 09:20:49,752 [   DEBUG] [800]	training's auc: 0.999219	valid_1's auc: 0.95513
+2019-10-02 09:24:11,040 [   DEBUG] [900]	training's auc: 0.999479	valid_1's auc: 0.956226
+2019-10-02 09:27:29,691 [   DEBUG] [1000]	training's auc: 0.999647	valid_1's auc: 0.957067
+2019-10-02 09:30:41,587 [   DEBUG] [1100]	training's auc: 0.999761	valid_1's auc: 0.957717
+2019-10-02 09:33:51,361 [   DEBUG] [1200]	training's auc: 0.999838	valid_1's auc: 0.958065
+2019-10-02 09:36:57,077 [   DEBUG] [1300]	training's auc: 0.99989	valid_1's auc: 0.958324
+2019-10-02 09:40:00,693 [   DEBUG] [1400]	training's auc: 0.999924	valid_1's auc: 0.958585
+2019-10-02 09:42:56,666 [   DEBUG] [1500]	training's auc: 0.999949	valid_1's auc: 0.958678
+2019-10-02 09:45:49,893 [   DEBUG] [1600]	training's auc: 0.999966	valid_1's auc: 0.958776
+2019-10-02 09:48:41,047 [   DEBUG] [1700]	training's auc: 0.999979	valid_1's auc: 0.95884
+2019-10-02 09:51:28,422 [   DEBUG] [1800]	training's auc: 0.999986	valid_1's auc: 0.958931
+2019-10-02 09:54:07,199 [   DEBUG] [1900]	training's auc: 0.999992	valid_1's auc: 0.959006
+2019-10-02 09:56:49,573 [   DEBUG] [2000]	training's auc: 0.999995	valid_1's auc: 0.959052
+2019-10-02 09:59:39,132 [    INFO] best_iteration: 1980, train_score: 0.999994, valid_score: 0.959072
+2019-10-02 10:00:20,070 [    INFO] CV score: 0.9398043
+2019-10-02 10:00:20,190 [    INFO] start prediction
+2019-10-02 10:25:49,041 [    INFO] [ID] read features from pickled file.
+2019-10-02 10:25:49,147 [    INFO] save results
+2019-10-02 10:25:49,158 [    INFO] save oof
+2019-10-02 10:25:51,440 [    INFO] save submission
